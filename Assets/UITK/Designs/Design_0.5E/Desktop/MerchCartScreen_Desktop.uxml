@@ -1,0 +1,58 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container-desktop">
+            <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label label-desktop KS-extrabold-text" />
+            <ui:VisualElement name="TabsContainer" class="tabs-container-desktop">
+                <ui:Button text="MERCHANDISE" parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+                <ui:Button text="CART" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cart_merch" class="button selected-tab KS-regular-text" style="flex-shrink: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" class="bottom-container-desktop">
+            <ui:VisualElement name="LeftContainer" style="flex-grow: 1; flex-basis: 50%;">
+                <ui:VisualElement name="modes" style="flex-grow: 1;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="circle-icon" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="circle-icon selected-circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; align-items: stretch; justify-content: flex-end;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="hide" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/hide2.png?fileID=2800000&amp;guid=bd817e651350e4f9baef29feec5ccca8&amp;type=3#hide2&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="screenshot" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/camera2.png?fileID=2800000&amp;guid=b97f35647030c49e48610e1a8675a35b&amp;type=3#camera2&apos;); -unity-background-scale-mode: scale-and-crop;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightContainer" style="flex-grow: 1; flex-basis: 50%; flex-direction: row;">
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 34%;" />
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 66%;">
+                    <ui:VisualElement class="specs-container" style="flex-basis: 90%;">
+                        <ui:Label tabindex="-1" text="CART" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cart_tab" class="button KS-regular-text" style="margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; flex-basis: 5%; background-color: rgba(0, 0, 0, 0.92);" />
+                        <ui:Label tabindex="-1" text="Merch Store" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); margin-right: 30px; margin-bottom: 20px; margin-left: 30px; margin-top: 30px; -unity-font-style: bold;" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-right: 30px; margin-left: 30px; margin-bottom: 20px;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row; flex-basis: auto; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; align-self: auto;">
+                                <ui:Label tabindex="-1" text="T-shirt x" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="false" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="White" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); left: 114px; position: absolute;" />
+                                <ui:Label tabindex="-1" text="10" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Count" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 70px;" />
+                                <ui:Label tabindex="-1" text="M" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Size" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 91px;" />
+                                <ui:Label tabindex="-1" text="x" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); visibility: hidden;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$100.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-right: 30px; margin-left: 30px; margin-bottom: 20px; display: none;">
+                            <ui:Label tabindex="-1" text="Jacket/White/L x 1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="$120.00" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-bottom: 20px; margin-right: 30px; margin-left: 30px; margin-top: 80%; border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-right: 30px; margin-bottom: 60px; margin-left: 30px;">
+                            <ui:Label tabindex="-1" text="GRAND TOTAL" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                            <ui:Label tabindex="-1" text="$220.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ButtonsContainer" class="buttons-container">
+                        <ui:Button text="BACK" parse-escape-sequences="true" display-tooltip-when-elided="true" name="back_merch" class="button gray-button KS-regular-text" />
+                        <ui:Button text="CONFIRM" parse-escape-sequences="true" display-tooltip-when-elided="true" name="confirm_merch" class="button gray-button KS-regular-text" style="-unity-text-align: middle-right; flex-basis: auto;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

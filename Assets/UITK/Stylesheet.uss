@@ -1,0 +1,317 @@
+.bottom-container {
+    padding-right: 3%;
+    padding-bottom: 10%;
+    padding-left: 3%;
+    flex-basis: 50%;
+    justify-content: space-around;
+}
+
+.button {
+    flex-basis: 100px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    -unity-text-align: middle-left;
+    color: rgb(219, 219, 219);
+    background-color: rgba(0, 0, 0, 0.71);
+    border-top-color: rgb(219, 219, 219);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+}
+
+.foldout {
+    background-color: rgba(0, 0, 0, 0.59);
+    color: rgb(219, 219, 219);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    margin-right: 1%;
+    margin-bottom: 3%;
+    margin-left: 1%;
+    border-top-color: rgb(219, 219, 219);
+    border-top-width: 0.5px;
+    margin-top: 0;
+}
+
+.foldout-container {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.top-container {
+    flex-basis: 50%;
+}
+
+.icon {
+    width: 96px;
+    height: 48px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgba(36, 36, 36, 0.59);
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgb(219, 219, 219);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.label {
+    -unity-text-align: upper-center;
+    -unity-font-style: bold-and-italic;
+    font-size: 18px;
+    color: rgb(219, 219, 219);
+    background-color: rgba(0, 0, 0, 0.59);
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 4%;
+    margin-left: 4%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 12%;
+    margin-top: 0;
+}
+
+.global-nav {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.59);
+    margin-right: 4%;
+    margin-left: 4%;
+    padding-bottom: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    margin-bottom: 4%;
+}
+
+.new-global-nav {
+    align-items: flex-end;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.top-container-desktop {
+    flex-grow: 0;
+    flex-basis: 10%;
+    margin-bottom: 2%;
+}
+
+.bottom-container-desktop {
+    flex-grow: 0;
+    flex-basis: 90%;
+    flex-direction: row;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+}
+
+.label-desktop {
+    background-color: rgba(0, 0, 0, 0.78);
+    margin-right: 0;
+    margin-left: 0;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tabs-container-desktop {
+    flex-grow: 0;
+    flex-direction: row;
+    flex-shrink: 0;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.78);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-top: 0;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+}
+
+.tab {
+    flex-basis: 100%;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    background-color: rgba(0, 0, 0, 0.92);
+}
+
+.selected-tab {
+    flex-basis: 100%;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    background-color: rgb(73, 73, 73);
+    color: rgb(146, 242, 225);
+}
+
+.circle-icon {
+    background-image: url('project://database/Assets/UITK/Images/motorcycle.png?fileID=2800000&guid=f631ed56e974642c798fe6401ba74620&type=3#motorcycle');
+    -unity-background-scale-mode: scale-to-fit;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    background-color: rgba(39, 38, 38, 0.51);
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    -unity-slice-left: 6;
+    -unity-slice-top: 6;
+    -unity-slice-right: 6;
+    -unity-slice-bottom: 6;
+    -unity-slice-scale: 1.5px;
+}
+
+.selected-circle-icon {
+    background-color: rgba(235, 127, 0, 0.63);
+}
+
+.square-icon {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 60px;
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 20px;
+    margin-left: 0;
+    flex-basis: auto;
+}
+
+.specs-container {
+    flex-grow: 0;
+    flex-basis: 100%;
+    background-color: rgba(0, 0, 0, 0.71);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.price-container {
+    flex-grow: 0;
+    flex-basis: 30%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.71);
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.buttons-container {
+    flex-grow: 0;
+    flex-basis: 10%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.selected-button {
+    flex-basis: auto;
+    background-color: rgba(146, 242, 225, 0.72);
+    color: rgb(0, 0, 0);
+}
+
+.gray-button {
+    background-color: rgba(0, 0, 0, 0.71);
+}
+
+.progress-bar {
+    margin-top: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    top: 3px;
+}
+
+.colour-container {
+    flex-direction: row;
+    margin-top: 25px;
+    margin-right: 10px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+}
+
+.colour-icon {
+    background-image: url('project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialWhite.png?fileID=2800000&guid=dd78f7547827e6341a6c708da04c6205&type=3#button_MaterialWhite');
+    background-color: rgba(188, 188, 188, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    -unity-background-scale-mode: scale-to-fit;
+    width: 48px;
+    height: 60px;
+    flex-shrink: 1;
+    margin-right: 25px;
+    margin-left: 25px;
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+}
+
+.size-button {
+    background-color: rgb(57, 57, 57);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgb(219, 219, 219);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+    color: rgb(255, 255, 255);
+    flex-basis: 72px;
+}
+
+.KS-extrabold-text {
+    font-size: 30px;
+    -unity-font-style: italic;
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-ExtraBold.ttf?fileID=12800000&guid=143afdd0463e74cb79ba8b2de1a7e49c&type=3#KumbhSans-ExtraBold');
+}
+
+.KS-regular-text {
+    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular');
+    -unity-font-definition: initial;
+    font-size: 18px;
+}
+
+.KS-regular-text-14px {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular');
+    -unity-font-definition: initial;
+}

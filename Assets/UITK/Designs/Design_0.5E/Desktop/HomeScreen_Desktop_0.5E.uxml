@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container-desktop">
+            <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label label-desktop KS-extrabold-text" style="background-color: rgba(0, 0, 0, 0.78);" />
+            <ui:VisualElement name="TabsContainer" class="tabs-container-desktop" style="background-color: rgba(0, 0, 0, 0.78);">
+                <ui:Button text="BIKES" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike_tab" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+                <ui:Button text="MERCHANDISE" parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch_tab" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+                <ui:Button text="VIDEOS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="video_tab" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" class="bottom-container-desktop">
+            <ui:VisualElement name="LeftContainer" style="flex-grow: 1; flex-basis: 50%;">
+                <ui:VisualElement name="modes" style="flex-grow: 1;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="circle-icon selected-circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="circle-icon" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; align-items: stretch; justify-content: flex-end;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="hide" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/hide2.png?fileID=2800000&amp;guid=bd817e651350e4f9baef29feec5ccca8&amp;type=3#hide2&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="screenshot" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/camera2.png?fileID=2800000&amp;guid=b97f35647030c49e48610e1a8675a35b&amp;type=3#camera2&apos;); -unity-background-scale-mode: scale-and-crop;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightContainer" style="flex-grow: 1; flex-basis: 50%; flex-direction: row;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

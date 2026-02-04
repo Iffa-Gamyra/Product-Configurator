@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6224919542409845935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699971503616049995}
+  - component: {fileID: 8438354557411125354}
+  - component: {fileID: 4945541076512268460}
+  - component: {fileID: 2512325261004055562}
+  - component: {fileID: 4804910866025048192}
+  m_Layer: 5
+  m_Name: UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &699971503616049995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224919542409845935}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8438354557411125354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224919542409845935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 2cb754e87ffb3234483036172f6bb74a, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: df985e56981434057be918249f46a51b,
+    type: 3}
+  m_SortingOrder: 0
+--- !u!114 &4945541076512268460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224919542409845935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13221ddbebf454e17ae5c30fba07dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPosition: {fileID: 0}
+--- !u!114 &2512325261004055562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224919542409845935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8273b4a302eda4f8685a4f7f1fa58ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bikeA: {fileID: 0}
+  bikeB: {fileID: 0}
+  bikeC: {fileID: 0}
+--- !u!114 &4804910866025048192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224919542409845935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ae2f011615ad847ae00e9793e425f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankMesh: {fileID: 0}
+  badgeMesh: {fileID: 0}
+  seatMesh: {fileID: 0}
+  bodyWhiteMat: {fileID: 2100000, guid: ffdd462558bd46242a77383e3c98c01c, type: 2}
+  bodySilverMat: {fileID: 2100000, guid: 25402d51c02d6b34f9884ae5ffd76772, type: 2}
+  bodyAluminMat: {fileID: 2100000, guid: 8eb98738ab59f0447aa5f002d2660653, type: 2}
+  bodyCarbonMat: {fileID: 2100000, guid: 2be88ea2912805d4fb8ca5d4ff0911bd, type: 2}
+  bodyBlackMat: {fileID: 2100000, guid: 534931f5fea3f9743b6be90dad88e968, type: 2}
+  badgeSilverMat: {fileID: 2100000, guid: 1a2b1ce89fa34b74d97cb8fbd5b51aa4, type: 2}
+  badgeBlackMat: {fileID: 2100000, guid: 52cc4f54bbdb0264db8204dcc66e9f8e, type: 2}
+  seatTanMat: {fileID: 2100000, guid: ca790ac3c53c3d44aaa12c3518e027e6, type: 2}
+  seatBlackMat: {fileID: 2100000, guid: 397f5d841dfcdb745bab98a4eed1e3eb, type: 2}

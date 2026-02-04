@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="C-SERIES" parse-escape-sequences="true" display-tooltip-when-elided="true" class="top-container" style="-unity-text-align: upper-center; -unity-font-style: bold-and-italic; font-size: 18px; color: rgb(219, 219, 219); padding-top: 12%; flex-basis: 10%; margin-top: 0;" />
+        <ui:Button text="WELCOME" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start" style="flex-basis: 85%; background-color: rgba(188, 188, 188, 0); -unity-text-align: lower-center; color: rgb(219, 219, 219); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 18px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);" />
+        <ui:Label tabindex="-1" text="TAP TO BEGIN" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; flex-basis: 5%; color: rgb(99, 99, 99); font-size: 12px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-shrink: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

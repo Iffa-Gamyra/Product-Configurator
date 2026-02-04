@@ -1,0 +1,21 @@
+
+dressshirt-2_shirt		1
+dressshirt_ss_shirt		2
+hoody				1
+poloshirt			3
+suitjacket			1
+sweater-1			1
+sweater-2			1
+t-shirt				3
+tuxedosuit			1
+vesttuxedo			1
+
+boardshorts			2
+dressshirt-2_pants		1
+dressshirt_ss_pants		1
+pants_cargo			1
+pants_generic			1
+suit_pants			1
+sweatpants			1
+swimshorts			3
+tuxedo_pant			1

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="WelcomeScreen_Desktop" src="project://database/Assets/UITK/WelcomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=30f79524e826b40d8aef65921449c98f&amp;type=3#WelcomeScreen_Desktop" />
+    <ui:Template name="HomeScreen_Desktop" src="project://database/Assets/UITK/Design_0.32E/Desktop/BikesScreen_Desktop_Old.uxml?fileID=9197481963319205126&amp;guid=6c4282aeba36645a4b0ee4c8d47e86aa&amp;type=3#BikesScreen_Desktop_Old" />
+    <ui:Template name="CustomizeScreen_Desktop" src="project://database/Assets/UITK/Design_0.32E/Desktop/CustomiseScreen_Desktop_Old.uxml?fileID=9197481963319205126&amp;guid=133245963c5504381b3c57091449a81c&amp;type=3#CustomiseScreen_Desktop_Old" />
+    <ui:Template name="InspectScreen_Desktop" src="project://database/Assets/UITK/Design_0.32E/Desktop/InspectScreen_Desktop_Old.uxml?fileID=9197481963319205126&amp;guid=12f13cdc8e95d4b93a3038da64c7feba&amp;type=3#InspectScreen_Desktop_Old" />
+    <ui:Instance template="WelcomeScreen_Desktop" name="WelcomeScreen" style="flex-grow: 1;" />
+    <ui:Instance template="HomeScreen_Desktop" name="BikesScreen" style="display: none; flex-grow: 1;" />
+    <ui:Instance template="CustomizeScreen_Desktop" name="CustomiseScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="InspectScreen_Desktop" name="InspectScreen" style="display: none; flex-grow: 1;" />
+</ui:UXML>

@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="HomeScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/HomeScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=2a797968236db41cfba1f182f86c91df&amp;type=3#HomeScreen_Mobile" />
+    <ui:Template name="BikesScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/BikesScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=4c0f211908df64aa19084acc88f20208&amp;type=3#BikesScreen_Mobile" />
+    <ui:Template name="WelcomeScreen_Mobile" src="project://database/Assets/UITK/Designs/WelcomeScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=8b1d4ef2344a9451a8e8dabe85fe2192&amp;type=3#WelcomeScreen_Mobile" />
+    <ui:Template name="CustomiseScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/CustomiseScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=49f173e594b624ae99781a74ae6cb8d5&amp;type=3#CustomiseScreen_Mobile" />
+    <ui:Template name="BikeCartScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/BikeCartScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=d1faa8d3c08034d06bee78c6a95515d9&amp;type=3#BikeCartScreen_Mobile" />
+    <ui:Template name="ReserveScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/ReserveScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=2c3258ec68bc64dcda982eeaad5f3420&amp;type=3#ReserveScreen_Mobile" />
+    <ui:Template name="MerchScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/MerchScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=5e21026986a7540d79f6eac5fa8df642&amp;type=3#MerchScreen_Mobile" />
+    <ui:Template name="MerchCartScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/MerchCartScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=03fb8763f15c74d809d70b48140faf19&amp;type=3#MerchCartScreen_Mobile" />
+    <ui:Template name="VideoScreen_Mobile" src="project://database/Assets/UITK/Designs/Design_0.5E/Mobile/VideoScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=4080701354b1340428d7a2676903994d&amp;type=3" />
+    <ui:Instance template="WelcomeScreen_Mobile" name="WelcomeScreen" style="flex-grow: 1; display: flex;" />
+    <ui:Instance template="HomeScreen_Mobile" name="HomeScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="BikesScreen_Mobile" name="BikesScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="CustomiseScreen_Mobile" name="CustomiseScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="BikeCartScreen_Mobile" name="BikeCartScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="ReserveScreen_Mobile" name="ReserveScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="MerchScreen_Mobile" name="MerchScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="MerchCartScreen_Mobile" name="MerchCartScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="VideoScreen_Mobile" name="VideoScreen" style="flex-grow: 1; display: none;" />
+</ui:UXML>

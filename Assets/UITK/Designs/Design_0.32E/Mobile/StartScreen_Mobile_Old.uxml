@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="WelcomeScreen" src="project://database/Assets/UITK/WelcomeScreen.uxml?fileID=9197481963319205126&amp;guid=8b1d4ef2344a9451a8e8dabe85fe2192&amp;type=3#WelcomeScreen" />
+    <ui:Template name="HomeScreen_Updated" src="project://database/Assets/UITK/HomeScreen_Updated.uxml?fileID=9197481963319205126&amp;guid=4c13b5f4de6ec461c8cf24d3f781a4ff&amp;type=3#HomeScreen_Updated" />
+    <ui:Template name="CustomizeScreen_Updated" src="project://database/Assets/UITK/CustomizeScreen_Updated.uxml?fileID=9197481963319205126&amp;guid=19dc49d9e059e4bae84a629646e7f1e3&amp;type=3#CustomizeScreen_Updated" />
+    <ui:Template name="InspectScreen_Mobile" src="project://database/Assets/UITK/InspectScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=753e34660b0324506a519629ce4c0552&amp;type=3#InspectScreen_Mobile" />
+    <ui:Instance template="WelcomeScreen" name="WelcomeScreen" style="flex-grow: 1;" />
+    <ui:Instance template="HomeScreen_Updated" name="HomeScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="CustomizeScreen_Updated" name="CustomizeScreen" style="display: none; flex-grow: 1;" />
+    <ui:Instance template="InspectScreen_Mobile" name="InspectScreen" style="flex-grow: 1; display: none;" />
+</ui:UXML>

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container">
+            <ui:Label tabindex="-1" text="C-SERIES" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label" />
+            <ui:Foldout class="global-nav">
+                <ui:VisualElement name="Modes" style="flex-direction: row; margin-right: 30px;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="icon selected-circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/motorcycle.png?fileID=2800000&amp;guid=f631ed56e974642c798fe6401ba74620&amp;type=3#motorcycle&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 3; -unity-slice-top: 3; -unity-slice-right: 3; -unity-slice-bottom: 3;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                </ui:VisualElement>
+            </ui:Foldout>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

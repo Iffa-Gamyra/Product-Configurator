@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container">
+            <ui:Label tabindex="-1" text="C-SERIES" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label" />
+            <ui:Foldout class="global-nav">
+                <ui:VisualElement name="Modes" style="flex-direction: row; margin-right: 30px;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="icon selected-circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/motorcycle.png?fileID=2800000&amp;guid=f631ed56e974642c798fe6401ba74620&amp;type=3#motorcycle&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 3; -unity-slice-top: 3; -unity-slice-right: 3; -unity-slice-bottom: 3;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 7; -unity-slice-top: 7; -unity-slice-right: 7; -unity-slice-bottom: 7;" />
+                </ui:VisualElement>
+            </ui:Foldout>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" class="bottom-container">
+            <ui:VisualElement class="foldout-container">
+                <ui:Foldout text="BIKES" class="foldout">
+                    <ui:VisualElement style="flex-direction: row; justify-content: space-around; margin-right: 30px; margin-top: 15px; margin-bottom: 15px;">
+                        <ui:Button text="ALPHA" parse-escape-sequences="true" display-tooltip-when-elided="true" name="alpha" style="background-color: rgba(0, 0, 0, 0.59); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255); overflow: hidden; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;" />
+                        <ui:Button text="DELTA" parse-escape-sequences="true" display-tooltip-when-elided="true" name="delta" style="background-color: rgba(0, 0, 0, 0.59); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;" />
+                    </ui:VisualElement>
+                </ui:Foldout>
+            </ui:VisualElement>
+            <ui:VisualElement name="ButtonsContainer" style="flex-grow: 0; flex-direction: row;">
+                <ui:Button text="BACK" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" style="visibility: hidden;" />
+                <ui:VisualElement name="TabsContainer" style="flex-grow: 1; top: 20%; justify-content: flex-end;">
+                    <ui:Label tabindex="-1" text="SELECT" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: lower-center; color: rgb(219, 219, 219); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                    <ui:VisualElement style="flex-direction: row; justify-content: center;">
+                        <ui:Label tabindex="-1" text="____" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-top: 0; padding-top: 0; color: rgb(219, 219, 219); -unity-font-style: bold;" />
+                        <ui:Label tabindex="-1" text="____" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: normal; margin-top: 0; padding-top: 0; color: rgba(219, 219, 219, 0.39);" />
+                        <ui:Label tabindex="-1" text="____" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-top: 0; padding-top: 0; color: rgba(219, 219, 219, 0.39);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Button text="NEXT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="next_bike" class="button" style="-unity-text-align: middle-right; flex-basis: 108px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

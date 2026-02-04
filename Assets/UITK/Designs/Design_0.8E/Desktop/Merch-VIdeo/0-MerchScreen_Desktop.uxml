@@ -1,0 +1,223 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <Style src="project://database/Assets/UITK/Stylesheet_0.8E.uss?fileID=7433441132597879392&amp;guid=42244b06f07724e8b9aff270568391b8&amp;type=3#Stylesheet_0.8E" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container-blk-bkgrnd">
+            <ui:Button text="MERCHANDISE" parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="KS-regular-text gray-txt-header" style="color: rgb(253, 191, 72);" />
+            <ui:Label tabindex="-1" text="/" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(120, 120, 120); -unity-text-align: middle-left; font-size: 15px;" />
+            <ui:Button text="SHIPPING DETAILS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch_shipping_details_tab" class="KS-regular-text orng-txt-header" style="color: rgb(120, 120, 120);" />
+            <ui:Label tabindex="-1" text="/" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(120, 120, 120); -unity-text-align: middle-left; font-size: 15px;" />
+            <ui:Button text="CART" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cart_merch_tab" class="KS-regular-text gray-txt-header" />
+            <ui:Label tabindex="-1" text="MERCHANDISE" parse-escape-sequences="true" display-tooltip-when-elided="true" class="gray-diagonal-header" style="width: 140%; -unity-text-align: middle-right; border-right-width: 25px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" class="bottom-container-flex">
+            <ui:VisualElement name="LeftContainer" class="bottom-container-left">
+                <ui:VisualElement name="modes" style="flex-grow: 1;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="selected-circle-icon circle-icon" style="background-color: rgba(39, 38, 38, 0.51);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;); background-color: rgba(235, 127, 0, 0.63);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; justify-content: flex-end;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="hide" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/hide2.png?fileID=2800000&amp;guid=bd817e651350e4f9baef29feec5ccca8&amp;type=3#hide2&apos;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0.25); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="screenshot" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/camera2.png?fileID=2800000&amp;guid=b97f35647030c49e48610e1a8675a35b&amp;type=3#camera2&apos;); -unity-background-scale-mode: scale-and-crop; background-color: rgba(0, 0, 0, 0.25); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;" />
+                    <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label-desktop KS-extrabold-text" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightContainer" style="flex-grow: 1; flex-basis: 50%; flex-direction: row; display: flex;">
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 40%;" />
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 63%; background-color: rgba(26, 26, 26, 0.9);">
+                    <ui:VisualElement name="ButtonsContainer" style="flex-direction: row; justify-content: space-between; margin-top: 30px; margin-right: 20px; margin-bottom: 30px; margin-left: 20px;">
+                        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="back_merch" class="KS-regular-text" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); background-color: rgba(72, 220, 253, 0); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-right: 12px; padding-left: 12px; flex-direction: row; padding-top: 0; padding-bottom: 0; height: 26px; display: flex; visibility: hidden; overflow: hidden;">
+                            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-image: url(&apos;project://database/Assets/UITK/Images/Polygon%203%20(3).png?fileID=2800000&amp;guid=d4fd8944d3f9e4ebf85028ff6ba211dd&amp;type=3#Polygon 3 (3)&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                            <ui:Label tabindex="-1" text="HOME" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; color: rgb(255, 255, 255); letter-spacing: 5px; word-spacing: 10px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0; margin-right: 0;" />
+                        </ui:Button>
+                        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="next_merch_shipping" class="KS-regular-text" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); background-color: rgb(72, 220, 253); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-right: 12px; padding-left: 12px; flex-direction: row; padding-top: 0; padding-bottom: 0; height: 26px;">
+                            <ui:Label tabindex="-1" text="SHIPPING DETAILS" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; color: rgb(0, 0, 0); letter-spacing: 5px; word-spacing: 10px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0;" />
+                            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-image: url(&apos;project://database/Assets/UITK/Images/Polygon%203%20(4).png?fileID=2800000&amp;guid=2f3a83dacb43f484ebdaf017793574f4&amp;type=3#Polygon 3 (4)&apos;); -unity-background-scale-mode: scale-to-fit; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ConfigContainer" class="specs-container" style="background-color: rgba(0, 0, 0, 0); border-right-width: 20px; border-left-width: 20px;">
+                        <ui:Label tabindex="-1" text="MERCHANDISE" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button KS-regular-text" style="margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; background-color: rgba(0, 0, 0, 0); flex-basis: 8%; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" />
+                        <ui:VisualElement style="flex-direction: row; -unity-text-align: middle-left; margin-top: 15px; margin-bottom: 4px; margin-right: 20px; margin-left: 20px;">
+                            <ui:Button text="T-SHIRT" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button selected-button KS-regular-text" style="border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; flex-basis: 40%;" />
+                            <ui:Label tabindex="-1" text="$50.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_price" class="KS-regular-text" style="color: rgb(0, 0, 0); background-color: rgba(146, 242, 225, 0.72); margin-top: 2px; margin-right: 0; margin-bottom: 2px; margin-left: 0; flex-basis: 30%; flex-shrink: 1; border-top-color: rgb(219, 219, 219); border-top-width: 0.5px; border-right-width: 0.5px; border-bottom-width: 0.5px; border-left-width: 0.5px;" />
+                            <ui:VisualElement style="background-color: rgba(146, 242, 225, 0.72); border-top-right-radius: 8px; border-bottom-right-radius: 8px; padding-top: 4px; padding-right: 12px; padding-bottom: 4px; padding-left: 12px; margin-top: 2px; margin-bottom: 2px; flex-basis: 30%; border-top-color: rgb(219, 219, 219); border-top-width: 0.5px; border-right-width: 0.5px; border-bottom-width: 0.5px; border-left-width: 0.5px;">
+                                <ui:VisualElement style="flex-basis: 20%;" />
+                                <ui:VisualElement style="flex-direction: row; -unity-text-align: middle-left; flex-basis: 60%;">
+                                    <ui:Button text="-" parse-escape-sequences="true" display-tooltip-when-elided="true" name="less_Shirt" style="background-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px;" />
+                                    <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Count" style="background-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-right-color: rgb(149, 149, 149); border-left-color: rgb(149, 149, 149); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px;" />
+                                    <ui:Button text="+" parse-escape-sequences="true" display-tooltip-when-elided="true" name="more_Shirt" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(255, 255, 255); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-right-radius: 4px; border-bottom-right-radius: 4px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement style="flex-basis: 20%;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container" style="margin-right: 20px; margin-left: 20px; margin-top: 10px; margin-bottom: 10px; justify-content: space-around;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="shirt_white" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/Ellipse%2021.png?fileID=2800000&amp;guid=7c49d32fe9e05c54a93fe012d9ada859&amp;type=3#Ellipse 21&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="shirt_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/Ellipse%2020.png?fileID=2800000&amp;guid=6e1e3dd06f53eb54dad142bb250f6a2e&amp;type=3#Ellipse 20&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="shirt_blue" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/Ellipse%2023.png?fileID=2800000&amp;guid=c8c1b62d573ac0c4782f7935e1524385&amp;type=3#Ellipse 23&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; margin-right: 20px; margin-left: 20px; justify-content: space-around; margin-top: 10px; margin-bottom: 10px;">
+                            <ui:Button text="S" parse-escape-sequences="true" display-tooltip-when-elided="true" name="S_Shirt" class="size-button KS-regular-text-14px" />
+                            <ui:Button text="M" parse-escape-sequences="true" display-tooltip-when-elided="true" name="M_Shirt" class="size-button KS-regular-text-14px" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);" />
+                            <ui:Button text="L" parse-escape-sequences="true" display-tooltip-when-elided="true" name="L_Shirt" class="size-button KS-regular-text-14px" />
+                            <ui:Button text="XL" parse-escape-sequences="true" display-tooltip-when-elided="true" name="XL_Shirt" class="size-button KS-regular-text-14px" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; -unity-text-align: middle-left; margin-top: 15px; margin-right: 20px; margin-bottom: 4px; margin-left: 20px; display: none;">
+                            <ui:Button text="JACKET" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" style="border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; flex-basis: 40%; background-color: rgba(0, 0, 0, 0.92);" />
+                            <ui:Label tabindex="-1" text="$120.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_price" style="color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.92); margin-top: 2px; margin-right: 0; margin-bottom: 2px; margin-left: 0; flex-basis: 30%; flex-shrink: 1; border-top-color: rgb(219, 219, 219); border-top-width: 0.5px; border-right-width: 0.5px; border-bottom-width: 0.5px; border-left-width: 0.5px;" />
+                            <ui:VisualElement style="background-color: rgba(0, 0, 0, 0.92); border-top-right-radius: 8px; border-bottom-right-radius: 8px; padding-top: 4px; padding-right: 12px; padding-bottom: 4px; padding-left: 12px; margin-top: 2px; margin-bottom: 2px; flex-basis: 30%; border-top-color: rgb(219, 219, 219); border-top-width: 0.5px; border-right-width: 0.5px; border-bottom-width: 0.5px; border-left-width: 0.5px;">
+                                <ui:VisualElement style="flex-basis: 20%;" />
+                                <ui:VisualElement style="flex-direction: row; -unity-text-align: middle-left; flex-basis: 60%;">
+                                    <ui:Button text="-" parse-escape-sequences="true" display-tooltip-when-elided="true" name="more_Jacket" style="background-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px;" />
+                                    <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_count" style="background-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-right-color: rgb(149, 149, 149); border-left-color: rgb(149, 149, 149); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px;" />
+                                    <ui:Button text="+" parse-escape-sequences="true" display-tooltip-when-elided="true" name="more_Jacket" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(255, 255, 255); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-right-radius: 4px; border-bottom-right-radius: 4px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement style="flex-basis: 20%;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container" style="margin-right: 20px; margin-left: 20px; margin-top: 10px; margin-bottom: 10px; justify-content: space-around; display: none;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_White" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/Ellipse%2021.png?fileID=2800000&amp;guid=7c49d32fe9e05c54a93fe012d9ada859&amp;type=3#Ellipse 21&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_Black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/Ellipse%2020.png?fileID=2800000&amp;guid=6e1e3dd06f53eb54dad142bb250f6a2e&amp;type=3#Ellipse 20&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; margin-right: 20px; margin-left: 20px; justify-content: space-around; margin-top: 10px; margin-bottom: 10px; display: none;">
+                            <ui:Button text="S" parse-escape-sequences="true" display-tooltip-when-elided="true" name="S_Jacket" class="size-button" />
+                            <ui:Button text="M" parse-escape-sequences="true" display-tooltip-when-elided="true" name="M_Jacket" class="size-button" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);" />
+                            <ui:Button text="L" parse-escape-sequences="true" display-tooltip-when-elided="true" name="L_Jacket" class="size-button" />
+                            <ui:Button text="XL" parse-escape-sequences="true" display-tooltip-when-elided="true" name="XL_Jacket" class="size-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PriceContainer" class="price-container" style="background-color: rgba(0, 0, 0, 0); top: -55px; border-right-width: 20px; border-left-width: 20px;">
+                        <ui:Label tabindex="-1" text="Merch Store" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; background-color: rgba(0, 0, 0, 0);" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:Label tabindex="-1" text="T-shirt x" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 0;" />
+                            <ui:Label tabindex="-1" text="10" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Count" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); left: 70px;" />
+                            <ui:Label tabindex="-1" text="(M)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_Size" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); left: 93px; position: absolute;" />
+                            <ui:Label tabindex="-1" text="$100.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between; display: none;">
+                            <ui:Label tabindex="-1" text="Jacket x" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_count" style="color: rgb(255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="(L)" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="Jacket_Size" style="color: rgb(255, 255, 255);" />
+                            <ui:Label tabindex="-1" text="$120.00" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Jacket_price" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-bottom: 25px; margin-top: 25px; border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:Label tabindex="-1" text="GRAND TOTAL" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                            <ui:Label tabindex="-1" text="$220" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Shirt_price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightContainer" style="flex-grow: 1; flex-basis: 50%; flex-direction: row; display: none;">
+                <ui:VisualElement class="middle-container" />
+                <ui:VisualElement class="right-side-panel-container">
+                    <ui:VisualElement name="ConfigContainer" class="right-side-panel-top-container">
+                        <ui:VisualElement name="ButtonsContainer" style="flex-direction: row; justify-content: space-between; margin-top: 30px; margin-right: 20px; margin-bottom: 30px; margin-left: 20px;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="back_bike" class="KS-regular-text" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); background-color: rgba(72, 220, 253, 0); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-right: 12px; padding-left: 12px; flex-direction: row; padding-top: 0; padding-bottom: 0; height: 26px;">
+                                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-image: url(&apos;project://database/Assets/UITK/Images/Polygon%203%20(3).png?fileID=2800000&amp;guid=d4fd8944d3f9e4ebf85028ff6ba211dd&amp;type=3#Polygon 3 (3)&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                                <ui:Label tabindex="-1" text="CHOOSE MODEL" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; color: rgb(255, 255, 255); letter-spacing: 5px; word-spacing: 10px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0; margin-right: 0;" />
+                            </ui:Button>
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="next_bike" class="KS-regular-text" style="border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); background-color: rgb(72, 220, 253); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-right: 12px; padding-left: 12px; flex-direction: row; padding-top: 0; padding-bottom: 0; height: 26px;">
+                                <ui:Label tabindex="-1" text="GO TO CART" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; color: rgb(0, 0, 0); letter-spacing: 5px; word-spacing: 10px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0;" />
+                                <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-image: url(&apos;project://database/Assets/UITK/Images/Polygon%203%20(4).png?fileID=2800000&amp;guid=2f3a83dacb43f484ebdaf017793574f4&amp;type=3#Polygon 3 (4)&apos;); -unity-background-scale-mode: scale-to-fit; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                            </ui:Button>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; height: 8%;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_body" class="inspect-button" />
+                            <ui:Label tabindex="-1" text="BODY COLOUR" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text panel-titles" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container" style="margin-top: 10px; margin-bottom: 25px; margin-right: 20px; margin-left: 20px;">
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_white" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_white.png?fileID=2800000&amp;guid=2032de4ec103441a898682554f2e6b61&amp;type=3#sprite_white&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="WHITE" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_silver" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_silver.png?fileID=2800000&amp;guid=625343de1ab1f42f18646dee840455a8&amp;type=3#sprite_silver&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="SILVER" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_alumin" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_aluminium.png?fileID=2800000&amp;guid=b48bc3dbdfcb74093bbe40631c8154ac&amp;type=3#sprite_aluminium&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="ALUMINIUM" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_carbon" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_carbon.png?fileID=2800000&amp;guid=5924be9ea0876432aadb4efd731ebd4a&amp;type=3#sprite_carbon&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="CARBON" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_black.png?fileID=2800000&amp;guid=664363a88c9dc4247807201cd72b2424&amp;type=3#sprite_black&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="BLACK" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="background-color: rgb(209, 209, 209); height: 0.3%;" />
+                        <ui:VisualElement style="flex-direction: row; height: 8%; margin-top: 25px;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_badge" class="inspect-button" />
+                            <ui:Label tabindex="-1" text="BADGING" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text panel-titles" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container" style="margin-top: 10px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="badge_silver" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_badgingSilver.png?fileID=2800000&amp;guid=ab5b031d0c329424c9424717e7a58dc1&amp;type=3#sprite_badgingSilver&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="SILVER" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="badge_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_badgingBlack.png?fileID=2800000&amp;guid=859da7735f9d64a82bff4a27c6e6b46d&amp;type=3#sprite_badgingBlack&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="BLACK" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="background-color: rgb(209, 209, 209); height: 0.3%;" />
+                        <ui:VisualElement style="flex-direction: row; height: 8%; margin-top: 25px;">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_seat" class="inspect-button" />
+                            <ui:Label tabindex="-1" text="SEAT TRIMMING" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text panel-titles" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container" style="margin-top: 10px; margin-bottom: 25px; margin-right: 20px; margin-left: 20px;">
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="seat_tan" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_tanLeather.png?fileID=2800000&amp;guid=8e1bce7030e584029b07b1b6884cfea1&amp;type=3#sprite_tanLeather&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="TAN" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                            <ui:VisualElement>
+                                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="seat_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/sprite_blackLeather.png?fileID=2800000&amp;guid=3021403df14fd41f39da0b5e9f529220&amp;type=3#sprite_blackLeather&apos;); margin-bottom: 10px; width: 60px;" />
+                                <ui:Label tabindex="-1" text="BLACK" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text" style="color: rgb(255, 255, 255); -unity-text-align: upper-center; font-size: 10px;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="background-color: rgb(209, 209, 209); height: 0.5%;" />
+                    <ui:VisualElement name="PriceContainer" class="right-side-panel-bottom-container">
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Model: C-Series " parse-escape-sequences="false" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Alpha" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Model_Type" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 123px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$26,990" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Model_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Body Colour: " parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Radiate Aluminium" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Body_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 101px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="+$2,000" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Body_Color_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Badging:" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Dark Chrome" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Badge_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); width: 89px; position: absolute; left: 73px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Badge_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Seat Trim:" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Tan" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Seat_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); width: 22px; position: absolute; left: 80px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Seat_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-bottom: 25px; border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: flex-end;">
+                            <ui:Label tabindex="-1" text="GRAND TOTAL" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-align: lower-left;" />
+                            <ui:Label tabindex="-1" text="$28,990" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TotalLabel" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

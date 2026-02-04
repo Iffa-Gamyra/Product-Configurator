@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="WelcomeScreen_Desktop" src="project://database/Assets/UITK/Designs/WelcomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=30f79524e826b40d8aef65921449c98f&amp;type=3#WelcomeScreen_Desktop" />
+    <ui:Template name="HomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/HomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=5ec45ee19065b4f68956f27d714ec31f&amp;type=3#HomeScreen_Desktop" />
+    <ui:Template name="AlphaBikeScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/AlphaBikeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=a7698c6501ef5491bb859c35eb7429da&amp;type=3#AlphaBikeScreen_Desktop" />
+    <ui:Template name="DeltaBikeScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/DeltaBikeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=ad7bf61e6c98149c38de03ee4f41d070&amp;type=3#DeltaBikeScreen_Desktop" />
+    <ui:Template name="CustomiseScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/CustomiseScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=f45870a70dfb54beb97a4d10da7390de&amp;type=3#CustomiseScreen_Desktop" />
+    <ui:Template name="CartScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/BikeCartScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=9ac224d9317ef48c69e1cbcf0e93e712&amp;type=3#BikeCartScreen_Desktop" />
+    <ui:Template name="ReserveScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/ReserveScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=40efb4cf5a2b54abf8238db9edc22f8a&amp;type=3#ReserveScreen_Desktop" />
+    <ui:Template name="MerchScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/MerchScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=2edd0199317eb4e7b9c79d84c7850fcc&amp;type=3#MerchScreen_Desktop" />
+    <ui:Template name="MerchCartScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/MerchCartScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=9ce9d5a40bc5e4b5a926079654f2ebf3&amp;type=3#MerchCartScreen_Desktop" />
+    <ui:Template name="VideoScreen_Desktop" src="project://database/Assets/UITK/Designs/Design_0.5E/Desktop/VideoScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=a4f17c858ba8345e9bb3a9a1ddd9dc38&amp;type=3#VideoScreen_Desktop" />
+    <ui:Instance template="WelcomeScreen_Desktop" name="WelcomeScreen" style="flex-grow: 1; display: flex;" />
+    <ui:Instance template="HomeScreen_Desktop" name="HomeScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="AlphaBikeScreen_Desktop" name="AlphaBikeScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="DeltaBikeScreen_Desktop" name="DeltaBikeScreen" style="display: none; flex-grow: 1;" />
+    <ui:Instance template="CustomiseScreen_Desktop" name="CustomiseScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="CartScreen_Desktop" name="BikeCartScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="ReserveScreen_Desktop" name="ReserveScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="MerchScreen_Desktop" name="MerchScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="MerchCartScreen_Desktop" name="MerchCartScreen" style="flex-grow: 1; display: none;" />
+    <ui:Instance template="VideoScreen_Desktop" name="VideoScreen" style="flex-grow: 1; display: none;" />
+</ui:UXML>

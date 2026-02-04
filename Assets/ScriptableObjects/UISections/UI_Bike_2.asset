@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e43d8fe7ef4d843ab05de620c657ae, type: 3}
+  m_Name: UI_Bike_2
+  m_EditorClassIdentifier: Assembly-CSharp::UISection
+  sectionName: UI_Bike_2
+  uxmlAsset: {fileID: 9197481963319205126, guid: 0747fdfe921314f91821e3cd6fab6e6c,
+    type: 3}
+  cameraPositionIndex: 2
+  sectionType: 2

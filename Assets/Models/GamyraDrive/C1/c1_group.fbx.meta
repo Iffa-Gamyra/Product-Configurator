@@ -1,0 +1,259 @@
+fileFormatVersion: 2
+guid: d01bf59219f4c234c989def443eb10f2
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ai_seatBeltStrap
+    second: {fileID: 2100000, guid: 289072770da4f394993e8e7bbfe83df5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ai_seatbelt
+    second: {fileID: 2100000, guid: a985ec64f7a8dca4993932be3319a4fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: b1_simulatorMonitorSet_motorbike_baseenclosure1
+    second: {fileID: 2100000, guid: ae9809467cbb1d548a6dcd1315942a67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_Shell
+    second: {fileID: 2100000, guid: 7714f21ea24974240aa4553ee7f3d0d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_console
+    second: {fileID: 2100000, guid: 6187ce9f5c9201a4d9a3370a97321276, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_lgMonitor
+    second: {fileID: 2100000, guid: 92e7fcad66bce544c8d9fa00be54c9a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_lgTVBrackets
+    second: {fileID: 2100000, guid: 03240e089f0e7c940ab5ae8de409e7aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_metalBrackets
+    second: {fileID: 2100000, guid: b647bbfa357110549823f5849883cc48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_monitorDisplay
+    second: {fileID: 2100000, guid: 5b4dd3ed5afaadd4cbf75265acf8dfab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_motionPlatform
+    second: {fileID: 2100000, guid: 638d6e147ddb1a4499c83ac2e8004567, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: c1_set_c1_pedals
+    second: {fileID: 2100000, guid: 499674b1b3067054e862a218202add72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_Aluminum
+    second: {fileID: 2100000, guid: a6528cdad3a6f3a4eb8d2cbbde9abf58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_Aluminum.001
+    second: {fileID: 2100000, guid: a6528cdad3a6f3a4eb8d2cbbde9abf58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intAluminiumButtons
+    second: {fileID: 2100000, guid: c5f9f259485863a4b8df3e2aa961c5d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intAluminiumButtons.001
+    second: {fileID: 2100000, guid: c5f9f259485863a4b8df3e2aa961c5d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intLeatherBlack
+    second: {fileID: 2100000, guid: c4961bb6827bd6846bebbf0968d2208d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intLeatherBlack.001
+    second: {fileID: 2100000, guid: 15bdc5fd33c9f4d49904d5a64e792a84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intLeatherSteeringWheel
+    second: {fileID: 2100000, guid: c578b70fdbfb73348a1c74162905e3ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intLeatherSteeringWheel.001
+    second: {fileID: 2100000, guid: b185fd0afd2b9b44eb9a195e44c2ea28, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intPlasticDk.001
+    second: {fileID: 2100000, guid: 9275563e09dc97e4490561e9fd4f08fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intPlasticDkPlain.001
+    second: {fileID: 2100000, guid: 9275563e09dc97e4490561e9fd4f08fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intSeatPattern
+    second: {fileID: 2100000, guid: 6fe608b07f783024da6f2607d5c93dc9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intSteeringStitches
+    second: {fileID: 2100000, guid: 15bdc5fd33c9f4d49904d5a64e792a84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intSteeringStitches.001
+    second: {fileID: 2100000, guid: 15bdc5fd33c9f4d49904d5a64e792a84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intStitchesGrey.001
+    second: {fileID: 2100000, guid: 3551190f8373bb046a333cb3497242ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intTexButtons.001
+    second: {fileID: 2100000, guid: 8fa308216edb9174c9a0d1412df478f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_car_sim_intTexDevicesIllum
+    second: {fileID: 2100000, guid: fac9a0a0e8461ee4ab3d4b9aab23d5a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_interior_dashboard
+    second: {fileID: 2100000, guid: 8bca91194ba3ab64a9c3b716074589cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: car_sim_seat_stitches
+    second: {fileID: 2100000, guid: af2ac8ed357c97442942f668303db10d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: motorbike1_actuator
+    second: {fileID: 2100000, guid: e89d625976a79ea46b06f54c46d914e0, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 10
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

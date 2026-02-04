@@ -1,0 +1,100 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="TopContainer" class="top-container-desktop">
+            <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label label-desktop KS-extrabold-text" />
+            <ui:VisualElement name="TabsContainer" class="tabs-container-desktop">
+                <ui:Button text="SELECT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+                <ui:Button text="CUSTOMISE" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Customisation_tab" class="button selected-tab KS-regular-text" style="flex-shrink: 1;" />
+                <ui:Button text="CART" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cart_tab" class="button tab KS-regular-text" style="flex-shrink: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" class="bottom-container-desktop">
+            <ui:VisualElement name="LeftContainer" style="flex-grow: 1; flex-basis: 50%;">
+                <ui:VisualElement name="modes" style="flex-grow: 1;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="home" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="selected-circle-icon circle-icon" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="merch" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;);" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="video" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/play3.png?fileID=2800000&amp;guid=a9878384dacd347338696c34cdef1e38&amp;type=3#play3&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; align-items: stretch; justify-content: flex-end;">
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="hide" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/hide2.png?fileID=2800000&amp;guid=bd817e651350e4f9baef29feec5ccca8&amp;type=3#hide2&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="screenshot" class="button square-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/camera2.png?fileID=2800000&amp;guid=b97f35647030c49e48610e1a8675a35b&amp;type=3#camera2&apos;); -unity-background-scale-mode: scale-and-crop;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightContainer" style="flex-grow: 1; flex-basis: 50%; flex-direction: row;">
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 34%;" />
+                <ui:VisualElement style="flex-grow: 1; flex-basis: 66%;">
+                    <ui:VisualElement name="ConfigContainer" class="specs-container">
+                        <ui:VisualElement style="flex-direction: row; height: 8%;">
+                            <ui:Label tabindex="-1" text="BODY COLOUR" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button KS-regular-text" style="margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-basis: 85%; background-color: rgba(0, 0, 0, 0.92);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_body" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; background-image: url(&apos;project://database/Assets/UITK/Images/focus2.png?fileID=2800000&amp;guid=01d826e540d9549ff81d4bd4223f4ca4&amp;type=3#focus2&apos;); flex-basis: 15%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0.92);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_white" class="colour-icon" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_silver" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialSilver.png?fileID=2800000&amp;guid=0f5190e22b1e60d4cb12039c699ef088&amp;type=3#button_MaterialSilver&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_alumin" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialAluminium.png?fileID=2800000&amp;guid=3d08246f32325534cae19ffaa4a63122&amp;type=3#button_MaterialAluminium&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_carbon" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialCarbonFibre.png?fileID=2800000&amp;guid=f526c0ddb46a32f4797fcf8ec6cb4a09&amp;type=3#button_MaterialCarbonFibre&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="body_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialBlack.png?fileID=2800000&amp;guid=4f8bda2bfed8de247842d0a7b70ba32e&amp;type=3#button_MaterialBlack&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; height: 8%;">
+                            <ui:Label tabindex="-1" text="BADGING" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button KS-regular-text" style="margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-basis: 85%; background-color: rgba(0, 0, 0, 0.92);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_badge" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-image: url(&apos;project://database/Assets/UITK/Images/focus2.png?fileID=2800000&amp;guid=01d826e540d9549ff81d4bd4223f4ca4&amp;type=3#focus2&apos;); -unity-background-scale-mode: scale-to-fit; flex-basis: 15%; background-color: rgba(0, 0, 0, 0.92);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="badge_silver" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialSilver.png?fileID=2800000&amp;guid=0f5190e22b1e60d4cb12039c699ef088&amp;type=3#button_MaterialSilver&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="badge_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialBlack.png?fileID=2800000&amp;guid=4f8bda2bfed8de247842d0a7b70ba32e&amp;type=3#button_MaterialBlack&apos;);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; height: 8%;">
+                            <ui:Label tabindex="-1" text="SEAT TRIMMING" parse-escape-sequences="true" display-tooltip-when-elided="true" class="button KS-regular-text" style="margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-basis: 85%; background-color: rgba(0, 0, 0, 0.92);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect_seat" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-image: url(&apos;project://database/Assets/UITK/Images/focus2.png?fileID=2800000&amp;guid=01d826e540d9549ff81d4bd4223f4ca4&amp;type=3#focus2&apos;); -unity-background-scale-mode: scale-to-fit; flex-basis: 15%; background-color: rgba(0, 0, 0, 0.92);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="colour-container">
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="seat_tan" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialTan.png?fileID=2800000&amp;guid=855a26dec2375494ba6c2dacc9366eea&amp;type=3#button_MaterialTan&apos;);" />
+                            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="seat_black" class="colour-icon" style="background-image: url(&apos;project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialBlack.png?fileID=2800000&amp;guid=4f8bda2bfed8de247842d0a7b70ba32e&amp;type=3#button_MaterialBlack&apos;);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PriceContainer" class="price-container">
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Model: C-Series " parse-escape-sequences="false" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Alpha" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Model_Type" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 123px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$26,990" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Model_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Body Colour: " parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Radiate Aluminium" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Body_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); position: absolute; left: 101px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="+$2,000" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Body_Color_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Badging:" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Dark Chrome" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Badge_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); width: 89px; position: absolute; left: 73px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Badge_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                                <ui:Label tabindex="-1" text="Seat Trim:" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                                <ui:Label tabindex="-1" text="Tan" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Seat_Color" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); width: 22px; position: absolute; left: 80px;" />
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="$0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Seat_Price" class="KS-regular-text-14px" style="color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-bottom: 25px; border-bottom-color: rgb(255, 255, 255); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;" />
+                        <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
+                            <ui:Label tabindex="-1" text="GRAND TOTAL" parse-escape-sequences="true" display-tooltip-when-elided="true" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+                            <ui:Label tabindex="-1" text="$28,990" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TotalLabel" class="KS-regular-text-14px" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ButtonsContainer" class="buttons-container">
+                        <ui:Button text="BACK" parse-escape-sequences="true" display-tooltip-when-elided="true" name="back_bike" class="button gray-button KS-regular-text" />
+                        <ui:Button text="NEXT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="next_bike" class="button gray-button KS-regular-text" style="-unity-text-align: middle-right;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

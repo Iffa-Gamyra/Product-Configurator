@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <ui:VisualElement class="top-container">
+        <ui:Label tabindex="-1" text="C-SERIES" parse-escape-sequences="true" display-tooltip-when-elided="true" class="label" style="background-color: rgba(0, 0, 0, 0);" />
+        <ui:Foldout class="new-global-nav">
+            <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="homebutton" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/home2.png?fileID=2800000&amp;guid=263d650118b6d48bd8f9658a4ac49d09&amp;type=3#home2&apos;); width: 50px; height: 30px;" />
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="bike" class="circle-icon" style="width: 50px; height: 30px;" />
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="shirt" class="circle-icon" style="background-image: url(&apos;project://database/Assets/UITK/Images/t-shirt.png?fileID=2800000&amp;guid=eefa0119ede924a5b9fadde1b789434a&amp;type=3#t-shirt&apos;); -unity-background-scale-mode: scale-to-fit; width: 50px; height: 30px;" />
+            </ui:VisualElement>
+        </ui:Foldout>
+    </ui:VisualElement>
+    <ui:VisualElement class="bottom-container">
+        <ui:VisualElement class="foldout-container">
+            <ui:Button text="TAP TO INSPECT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspect" style="background-color: rgba(188, 188, 188, 0); font-size: 12px; color: rgb(99, 99, 99); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);" />
+            <ui:Foldout text="BIKES" class="foldout">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                    <ui:Button text="ICON01" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bikeA" style="background-color: rgba(0, 0, 0, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);" />
+                    <ui:Button text="ICON02" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bikeB" style="background-color: rgba(0, 0, 0, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);" />
+                    <ui:Button text="ICON03" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bikeC" style="background-color: rgba(0, 0, 0, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);" />
+                </ui:VisualElement>
+            </ui:Foldout>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" class="button" style="background-color: rgba(0, 0, 0, 0); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0);" />
+            <ui:VisualElement style="flex-grow: 1; justify-content: flex-end; max-width: none; -unity-text-align: lower-center; top: 20%;">
+                <ui:Label tabindex="-1" text="SELECT" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: lower-center; color: rgb(219, 219, 219); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row; -unity-text-align: upper-center; justify-content: center;">
+                    <ui:Label tabindex="-1" text="____" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-top: 0; padding-top: 0; color: rgb(219, 219, 219); -unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" text="____" parse-escape-sequences="true" display-tooltip-when-elided="true" style="margin-top: 0; padding-top: 0; color: rgba(219, 219, 219, 0.39);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="NEXT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="next_cust" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
