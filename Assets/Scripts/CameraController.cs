@@ -49,16 +49,23 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        bool uiBlocked = UIBlockerRaycast.Instance != null && UIBlockerRaycast.Instance.IsPointerOverBlocker();
+
         if (cameraPosition != null)
             oldPosition = cameraPosition.Cornea.Lerp.GetCurrentIndex;
 
         if (canRotate && !cameraLerpScript.IsActive)
         {
             previousStatus = true;
-            HandleTouchInput();
-            HandleRotation();
-            HandleZoom();
+
+            if (!uiBlocked)
+            {
+                HandleTouchInput();
+                HandleRotation();
+                HandleZoom();
+            }
         }
+
         else if (!canRotate && previousStatus && !cameraLerpScript.IsActive)
         {
             cameraPosition?.goToPosition(oldPosition);

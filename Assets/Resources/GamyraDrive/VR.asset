@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: VR
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  modelName: GamyraDrive VR
+  id: VR
+  modelPrefab: {fileID: 3743956991312595127, guid: e06eb5d9f4dc7c049b62307c68ce2437,
+    type: 3}
+  specs:
+  - label: Display Mode
+    type: 0
+    value: VR
+    current: 0
+    max: 0
+    toggle: 0
+  - label: VR Support
+    type: 3
+    value: 0
+    current: 0
+    max: 0
+    toggle: 1
+  - label: Control Type
+    type: 0
+    value: Steering Wheel & Pedals
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Reporting
+    type: 3
+    value: 0
+    current: 0
+    max: 0
+    toggle: 1
+  - label: Scenario Features
+    type: 4
+    value: VR|Eye Tracking|External Display|Night Driving|Weather
+    current: 0
+    max: 0
+    toggle: 0
+  inspectPoints:
+  - label: VR Headset
+    cameraAnchor: {fileID: 2898172547577889592, guid: 458963a662ea7fd41b57b816e2fcbcd6,
+      type: 3}
+  - label: Display
+    cameraAnchor: {fileID: 7115524111434368234, guid: 2c4a4cbd75e0cd44f94a97d277a47dea,
+      type: 3}
+  - label: Driver Controls
+    cameraAnchor: {fileID: 7083552539847587241, guid: 5b6efcbe6c7e24249a5a5c0dee726d9a,
+      type: 3}
+  - label: Pedal Set
+    cameraAnchor: {fileID: 3098550162023322469, guid: 06437cb1a4ed4b741a548f3fa9337ce8,
+      type: 3}
+  - label: Seat
+    cameraAnchor: {fileID: 7311552528326645783, guid: c943368ebe17f33479de7c544c642ce0,
+      type: 3}

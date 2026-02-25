@@ -13,290 +13,288 @@ public class HomeScreen : MonoBehaviour
     public DecalController decalController;
 
     [Header("Targets")]
-    public Transform bikeTarget;
+    public Transform rotationTarget;
     public Transform spawnPoint;
+
+    [Header("Fixed Camera Anchors")]
+    public Transform swoopPosition;
+    public Transform startPosition;
+    public Transform modelViewPosition;
+    public Transform videoPosition;
 
     [Header("UI Document")]
     public UIDocument uiDocument;
 
-    [Header("UI Sections (ScriptableObjects)")]
-    public UISection homeSection;
-    public UISection videoSection;
-    public UISection[] bikeSections;   // 4
+    [Header("UI Sections")]
+    public VisualTreeAsset homeUxml;
+    public VisualTreeAsset videoUxml;
+    public VisualTreeAsset[] modelUxmlPages;  
 
-    [Header("Bike Models (ScriptableObjects)")]
-    public BikeModel modelA;
-    public BikeModel modelB;
+    [Header("GamyraDrive Models")]
+    [SerializeField] private string resourcesPath = "GamyraDrive";
+    [SerializeField] private string defaultModelId = "B1";
 
-    [Header("GamyraDrive Models (ScriptableObjects)")]
-    public SimulatorModel B1;
-    public SimulatorModel C1;
-    public SimulatorModel S1;
-    public SimulatorModel L6;
-    public SimulatorModel VR;
-    public SimulatorModel MC;
-    private SimulatorModel currentSimModel;
-    public string selectedSimModel = "B1";   // default
-    private Dictionary<string, SimulatorModel> simLookup;
-    private GameObject currentModelInstance;             // the spawned model in the scene
+    [Header("UI Model Selection Templates")]
+    public VisualTreeAsset modelButtonTemplate;
 
+    [Header("Spec Row Templates")]
+    public VisualTreeAsset specRowTextTemplate;
+    public VisualTreeAsset specRowBarTemplate;
+    public VisualTreeAsset specRowToggleTemplate;
+    public VisualTreeAsset specRowChipsTemplate;
 
-    [Header("Cart Store")]
-    public CartStore cartStore;
+    [Header("Inspect Row Template")]
+    public VisualTreeAsset inspectRowTemplate;
 
     [Header("Video")]
     public float video_FOV;
     public float normal_FOV;
 
-    // ===== runtime =====
-    private VisualElement root;          // DOC ROOT (old behavior)
-    private VisualTreeAsset currentTree; // currently loaded tree
+
+    // Camera index map (CorneaCameraDirector.LerpCameraPositions)
+    private const int CAM_SWOOP = 0;
+    private const int CAM_START = 1;
+    private const int CAM_MODEL_VIEW = 2;
+    private const int CAM_VIDEO = 3;
+    private const int FIRST_DYNAMIC_CAM = 4;
+
+    // Runtime UI
+    private VisualElement root;
+    private VisualTreeAsset currentTree;
 
     private VideoPlayer videoPlayer;
-    private Button playButton, pauseButton;
+    private Button playButton, pauseButton, muteButton, unmuteButton;
     private ProgressBar progressBar;
 
-    private Label totalLabel;
-    private Label modelTypeLabel, modelPriceLabel;
-    private Label bodyColorLabel, bodyColorPriceLabel;
-    private Label badgeColorLabel, badgePriceLabel;
-    private Label seatColorLabel, seatPriceLabel;
-    private Button alphaButton, deltaButton;
+    private VisualElement modelsContainer;
+    private Label selectedModel;
+    private VisualElement specsListContainer;
+    private VisualElement inspectListContainer;
 
+    private bool uiHidden = false;
+
+    // Model data
+    private List<SimulatorModel> loadedModels = new();
+    private Dictionary<string, SimulatorModel> modelById = new();
+    private SimulatorModel currentSimModel;
+    public string selectedSimModel = "B1";
+    private GameObject currentModelInstance;
+
+    // Buttons
+    private readonly Dictionary<string, Button> modelButtons = new();
+    private readonly List<Button> inspectButtons = new();
+    private int activeInspectIndex = -1;
+
+    // UI actions
     private Dictionary<string, Action> actions;
-    private Dictionary<string, Action> bikeActions;
-
-    private readonly Dictionary<string, int> selections = new Dictionary<string, int>();
-
-    // Flow state
-    private string currentUI = "";
-    private int bikeIndex = 0;
-
-
-    // Focus state
-    public bool isFocused = false;
-    private int currentPosition = -1;
-
-    // Bike/shirt state
-    private BikeModel currentBikeModel;
-    public string selectedModel = "Model A";
-
-
-    // Cart keys
-    private const string CART_MODEL = "Model";
-    private const string CART_BODY = "Body";
-    private const string CART_SEAT = "Seat";
-    private const string CART_BADGE = "Badge";
-
 
 
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
 
-
-        // Build lookup for sim selection
-        simLookup = new Dictionary<string, SimulatorModel>(StringComparer.OrdinalIgnoreCase)
-    {
-        { B1.modelName, B1 },
-        { C1.modelName, C1 },
-        { S1.modelName, S1 },
-        { L6.modelName, L6 },
-        { VR.modelName, VR },
-        { MC.modelName, MC },
-    };
+        LoadModelsFromResources();   
         BuildActions();
-        BuildBikeActions();
+        BuildCameraRigBaseOnly();
 
     }
     void Start()
     {
-        Debug.Log("HomeScreen Awake()");
-
         root = uiDocument.rootVisualElement;
 
-        VisualElement welcomeScreen = root.Q("WelcomeScreen");
-        VisualElement homeScreen = root.Q("HomeScreen");
+        var welcomeScreen = root.Q("WelcomeScreen");
+        var homeScreen = root.Q("HomeScreen");
 
-        WelcomeScreenManager wsManager = new WelcomeScreenManager(welcomeScreen);
-        wsManager.Start = () =>
+        if(welcomeScreen != null && homeScreen != null)
         {
-            cameraPosition.goToPosition(1);
-            welcomeScreen.Display(false);
-            homeScreen.Display(true);
+            WelcomeScreenManager wsManager = new WelcomeScreenManager(welcomeScreen);
+            wsManager.Start = () =>
+            {
+                cameraPosition.goToPosition(CAM_START);
+                welcomeScreen.Display(false);
+                homeScreen.Display(true);
 
-            if (videoPlayer != null && !videoPlayer.isPrepared) videoPlayer.Prepare();
-        };
+                if (videoPlayer != null && !videoPlayer.isPrepared) videoPlayer.Prepare();
+            };
+        }
 
         if (videoPlayer != null)
             videoPlayer.prepareCompleted += OnVideoPrepared;
 
-        ChangeColorBody(0);
-        ChangeColorBadge(0);
-        ChangeColorSeat(0);
-        SelectSimModel("B1");
+        SelectSimModel(string.IsNullOrEmpty(selectedSimModel) ? defaultModelId : selectedSimModel);
     }
+
     private void OnEnable()
     {
         if (uiDocument == null) return;
 
-        // Old behavior: bind against document root
         root = uiDocument.rootVisualElement;
 
-        if (currentBikeModel == null)
-            currentBikeModel = modelA;
-
-
-        // If nothing loaded yet, assume we're on home
         if (currentTree == null && uiDocument.visualTreeAsset != null)
             currentTree = uiDocument.visualTreeAsset;
 
         CacheUI();
         BindButtons();
-        RestoreState();
+        BuildModelButtonsIfNeeded();
+        PopulateCurrentPage();
     }
 
     private void Update()
     {
-        // progress bar (update even when paused)
         if (progressBar != null && videoPlayer != null && videoPlayer.length > 0.0001)
             progressBar.value = (float)(videoPlayer.time / videoPlayer.length) * 100f;
 
-        if (cameraController == null || currentTree == null) return;
+        if (cameraController != null)
+            cameraController.canRotate = IsAnyModelPageActive();
 
-        bool isBike0 = IsCurrent(bikeSections, 0);
-        bool isBike1 = IsCurrent(bikeSections, 1);
-        bool isBike2 = IsCurrent(bikeSections, 2);
-        bool isBike3 = IsCurrent(bikeSections, 3);
+    }
 
-        if ((isBike0 || isBike1) && !isFocused) cameraController.canRotate = true;
-        else if (isBike1 && isFocused) cameraController.canRotate = false;
-        else if (!isBike1) { cameraController.canRotate = false; isFocused = false; }
+    // -------------------------
+    // Loading models
+    // -------------------------
+    private void LoadModelsFromResources()
+    {
+        loadedModels = Resources.LoadAll<SimulatorModel>(resourcesPath).ToList();
 
-        if ((isBike2 || isBike3) && !isFocused)
-            cameraController.canRotate = true;
+        modelById.Clear();
+        foreach (var m in loadedModels)
+        {
+            if (m == null) continue;
+            if (string.IsNullOrWhiteSpace(m.id)) continue;
+            if (modelById.ContainsKey(m.id)) continue;
+            modelById[m.id] = m;
+        }
+
+        loadedModels = loadedModels
+            .Where(m => m != null && !string.IsNullOrWhiteSpace(m.id))
+            .OrderBy(m => m.id)
+            .ToList();
+
+        if (string.IsNullOrEmpty(selectedSimModel))
+            selectedSimModel = defaultModelId;
+
+        if (!modelById.ContainsKey(selectedSimModel) && loadedModels.Count > 0)
+            selectedSimModel = loadedModels[0].id;
+    }
+
+    // -------------------------
+    // Camera rig (simple)
+    // -------------------------
+    private void BuildCameraRigBaseOnly()
+    {
+        if (cameraPosition == null || cameraPosition.Cornea == null) return;
+
+        // Always ensure 0..3 exists
+        var rig = new Transform[FIRST_DYNAMIC_CAM];
+        rig[CAM_SWOOP] = swoopPosition;
+        rig[CAM_START] = startPosition;
+        rig[CAM_MODEL_VIEW] = modelViewPosition;
+        rig[CAM_VIDEO] = videoPosition;
+
+        cameraPosition.Cornea.LerpCameraPositions = rig;
+    }
+
+    private void BuildCameraRigForModel(SimulatorModel model)
+    {
+        if (cameraPosition == null || cameraPosition.Cornea == null) return;
+
+        int inspectCount = (model != null && model.inspectPoints != null) ? model.inspectPoints.Length : 0;
+        var rig = new Transform[FIRST_DYNAMIC_CAM + inspectCount];
+
+        // Fixed slots
+        rig[CAM_SWOOP] = swoopPosition;
+        rig[CAM_START] = startPosition;
+        rig[CAM_MODEL_VIEW] = modelViewPosition;
+        rig[CAM_VIDEO] = videoPosition;
+
+        // Inspect slots
+        for (int i = 0; i < inspectCount; i++)
+        {
+            var p = model.inspectPoints[i];
+            rig[FIRST_DYNAMIC_CAM + i] = (p != null) ? p.cameraAnchor : null;
+        }
+
+        cameraPosition.Cornea.LerpCameraPositions = rig;
+        activeInspectIndex = -1;
     }
 
     // =======================
-    // UXML swapping (TRUE old-style rendering)
+    // Decal Controller
     // =======================
+    private enum UIMode { Home, Video, Model }
 
+    private void SetDecalForMode(UIMode mode)
+    {
+        if (decalController == null) return;
+
+        bool wantDecal = (mode == UIMode.Model);
+
+        // Match your old behavior: model mode = decal visible, otherwise hidden
+        if (wantDecal && !decalController.IsOpaque)
+            decalController.StartFadeInAndScaleUp();
+        else if (!wantDecal && decalController.IsOpaque)
+            decalController.StartFadeOutAndScaleDown();
+    }
+
+    // =======================
+    // UXML swapping
+    // =======================
     private void LoadUXML(VisualTreeAsset uxml)
     {
         if (uxml == null || uiDocument == null) return;
 
-        // CRITICAL: this fixes “rendering wrong” issues
         uiDocument.visualTreeAsset = uxml;
-
-        // After changing visualTreeAsset, reacquire root
         root = uiDocument.rootVisualElement;
         currentTree = uxml;
 
         CacheUI();
         BindButtons();
-        RestoreState();
+        BuildModelButtonsIfNeeded();
+        PopulateCurrentPage();
+        UIBlockerRaycast.Instance?.Recache();
+
     }
 
-    private void GoHome()
-    {
-        ChangeCameraPosition(1);
-        SetTargets(false, false);
-        PauseVideo();
-        ChangeVideoFOV("Normal");
-        isFocused = false;
-        currentPosition = -1;
-
-        if (homeSection != null) LoadUXML(homeSection.uxmlAsset);
-    }
-
-    // =======================
-    // Actions (IDs unchanged, but split)
-    // =======================
-
+    // -------------------------
+    // Navigation / Actions
+    // -------------------------
     private void BuildActions()
     {
         actions = new Dictionary<string, Action>
         {
-            ["home"] = () => { GoHome(); HandleButtonClick("bike"); },
+            ["homeModeButton"] = GoHome,
 
-            ["video"] = () => { HandleButtonClick("video"); OpenVideo(); },
-            ["video_tab"] = () => { HandleButtonClick("video_tab"); OpenVideo(); },
+            ["videoModeButton"] = OpenVideo,
+            ["videoTabButton"] = OpenVideo,
+
+            ["modelModeButton"] = OpenModelRoot,
+            ["modelTabButton"] = OpenModelRoot,
 
             ["play-button"] = PlayVideo,
             ["pause-button"] = PauseVideo,
+            ["mute-button"] = MuteVideo,
+            ["unmute-button"] = UnmuteVideo,
 
+            ["modelTCButton"] = () => OpenModelPage(0),
+            ["specsTCButton"] = () => OpenModelPage(1),
+            ["inspectTCButton"] = () => OpenModelPage(2),
+
+            ["specsButton"] = () => OpenModelPage(1),
+            ["inspectButton"] = () => OpenModelPage(2),
+            ["viewModelsButton"] = () => OpenModelPage(0),
+            ["viewSpecsButton"] = () => OpenModelPage(1),
+
+            ["doneButton"] = GoHome,
+
+            ["hide"] = ToggleUIVisibility,
             ["screenshot"] = TakeScreenshot,
-
-
         };
     }
-    private void BuildBikeActions()
-    {
-        bikeActions = new Dictionary<string, Action>
-        {
-            ["bike"] = () => { HandleButtonClick("bike"); OpenBikeRoot(); },
-            ["bike_tab"] = () => { HandleButtonClick("bike_tab"); OpenBikeRoot(); },
-
-            ["alpha"] = () => { currentBikeModel = modelA; SelectModel("Model A"); SwitchSpecs("Model A"); },
-            ["delta"] = () => { currentBikeModel = modelB; SelectModel("Model B"); SwitchSpecs("Model B"); },
-
-            // 6 simulator selections
-            ["B1"] = () => SelectSimModel("B1"),
-            ["C1"] = () => SelectSimModel("C1"),
-            ["S1"] = () => SelectSimModel("S1"),
-            ["L6"] = () => SelectSimModel("L6"),
-            ["VR"] = () => SelectSimModel("VR"),
-            ["MC"] = () => SelectSimModel("MC"),
-
-
-            ["Customisation_tab"] = () => { bikeIndex = 1; LoadUXML(bikeSections[1].uxmlAsset); },
-            ["Customisation_tab_delta"] = () => { bikeIndex = 1; LoadUXML(bikeSections[2].uxmlAsset); },
-
-            ["next_bike"] = () =>
-            {
-                if (bikeSections != null && bikeIndex < bikeSections.Length - 1)
-                    LoadUXML(bikeSections[++bikeIndex].uxmlAsset);
-            },
-            ["back_bike"] = () =>
-            {
-                if (bikeIndex > 0) LoadUXML(bikeSections[--bikeIndex].uxmlAsset);
-                SetTargets(true, false);
-                if (cameraController != null) cameraController.SetTarget(bikeTarget, true);
-            },
-
-            ["cart_tab"] = () =>
-            {
-                bikeIndex = 2;
-                LoadUXML(bikeSections[2].uxmlAsset);
-                SetTargets(true, false);
-                if (cameraController != null) cameraController.SetTarget(bikeTarget, true);
-
-            },
-            ["reserve"] = () => LoadUXML(bikeSections[3].uxmlAsset),
-            ["reserve_tab"] = () => { bikeIndex = 3; LoadUXML(bikeSections[3].uxmlAsset); },
-            ["confirm_bike"] = GoHome,
-
-            ["body_white"] = () => ChangeColorBody(0),
-            ["body_silver"] = () => ChangeColorBody(1),
-            ["body_alumin"] = () => ChangeColorBody(2),
-            ["body_carbon"] = () => ChangeColorBody(3),
-            ["body_black"] = () => ChangeColorBody(4),
-
-            ["badge_silver"] = () => ChangeColorBadge(0),
-            ["badge_black"] = () => ChangeColorBadge(1),
-
-            ["seat_tan"] = () => ChangeColorSeat(0),
-            ["seat_black"] = () => ChangeColorSeat(1),
-
-            ["inspect_body"] = () => { Inspect(3, "body"); SetTargets(false, false); },
-            ["inspect_badge"] = () => { Inspect(5, "badge"); SetTargets(false, false); },
-            ["inspect_seat"] = () => { Inspect(4, "seat"); SetTargets(false, false); },
-        };
-    }
-
 
     private void BindButtons()
     {
+        if (actions == null || root == null) return;
+
         foreach (var kv in actions)
         {
             var btn = root.Q<Button>(kv.Key);
@@ -305,277 +303,351 @@ public class HomeScreen : MonoBehaviour
             btn.clicked -= kv.Value;
             btn.clicked += kv.Value;
         }
-        foreach (var kv in bikeActions)
-        {
-            var btn = root.Q<Button>(kv.Key);
-            if (btn == null) continue;
-
-            btn.clicked -= kv.Value;
-            btn.clicked += kv.Value;
-        }
     }
 
-    private void CacheUI()
+    private void GoHome()
     {
-        playButton = root.Q<Button>("play-button");
-        pauseButton = root.Q<Button>("pause-button");
-        progressBar = root.Q<ProgressBar>("progress-bar");
-
-        alphaButton = root.Q<Button>("alpha");
-        deltaButton = root.Q<Button>("delta");
-
-        modelTypeLabel = root.Q<Label>("Model_Type");
-        modelPriceLabel = root.Q<Label>("Model_Price");
-
-        bodyColorLabel = root.Q<Label>("Body_Color");
-        bodyColorPriceLabel = root.Q<Label>("Body_Color_Price");
-
-        badgeColorLabel = root.Q<Label>("Badge_Color");
-        badgePriceLabel = root.Q<Label>("Badge_Price");
-
-        seatColorLabel = root.Q<Label>("Seat_Color");
-        seatPriceLabel = root.Q<Label>("Seat_Price");
-
-        totalLabel = root.Q<Label>("TotalLabel");
-    }
-
-    private void RestoreState()
-    {
-
-        if (selections.TryGetValue("body", out var b)) ChangeColorBody(b);
-        if (selections.TryGetValue("badge", out var ba)) ChangeColorBadge(ba);
-        if (selections.TryGetValue("seat", out var se)) ChangeColorSeat(se);
-
-        //SelectModel(selectedModel);
-        SelectSimModel(selectedSimModel);
-        UpdateTotalLabel();
-        SwitchSpecs(selectedModel);
-        UpdateTotalLabel();
+        BuildCameraRigBaseOnly();
+        cameraPosition.goToPosition(CAM_START);
+        PauseVideo();
+        ChangeVideoFOV(false);
+        SetRotationTargetActive(false);
+        SetDecalForMode(UIMode.Home);
+        LoadUXML(homeUxml);
     }
 
     private void OpenVideo()
     {
-        ChangeVideoFOV("Video");
-        ChangeCameraPosition(6);
-        SetTargets(false, false);
-        if (videoSection != null) LoadUXML(videoSection.uxmlAsset);
-        // disable play button until ready
-        if (playButton != null && !videoPlayer.isPrepared)
+        BuildCameraRigBaseOnly();
+        ChangeVideoFOV(true);
+        cameraPosition.goToPosition(CAM_VIDEO);
+        SetRotationTargetActive(false);
+        SetDecalForMode(UIMode.Video);
+        LoadUXML(videoUxml); 
+        if (playButton != null && videoPlayer != null && !videoPlayer.isPrepared) 
             playButton.SetEnabled(false);
     }
 
-    private void OnVideoPrepared(VideoPlayer source)
+    private void OpenModelRoot()
     {
-        if (playButton != null)
-            playButton.SetEnabled(true);
-    }
+        if (!HasModelPages(1))
+        {
+            Debug.LogError("modelUxmlPages not assigned. Needs at least [0]=Models page.");
+            return;
+        }
 
-    private void OpenBikeRoot()
-    {
-        Debug.Log("OpenBikeRoot() called");
         PauseVideo();
-        ChangeVideoFOV("Normal");
-        ChangeCameraPosition(2);
-        SetTargets(true, false);
-        if (cameraController != null) cameraController.SetTarget(bikeTarget, true);
+        ChangeVideoFOV(false);
 
-        bikeIndex = 0;
-        if (bikeSections != null && bikeSections.Length > 0) LoadUXML(bikeSections[0].uxmlAsset);
+        BuildCameraRigForModel(currentSimModel);
+
+        cameraPosition.goToPosition(CAM_MODEL_VIEW);
+        SetRotationTargetActive(true);
+
+        if (cameraController != null)
+            cameraController.SetTarget(rotationTarget, true);
+
+        SetDecalForMode(UIMode.Model);
+        LoadUXML(modelUxmlPages[0]);
     }
 
-    // =======================
-    // CartStore-driven selections
-    // =======================
-
-    private void SelectSimModel(string name)
+    private void OpenModelPage(int pageIndex)
     {
-        selectedSimModel = name;
-        Debug.Log($"SelectSimModel({name}) called");
-        // Resolve which ScriptableObject to use
-        switch (name)
+        if (!HasModelPages(pageIndex + 1))
         {
-            case "B1": currentSimModel = B1; break;
-            case "C1": currentSimModel = C1; break;
-            case "S1": currentSimModel = S1; break;
-            case "L6": currentSimModel = L6; break;
-            case "VR": currentSimModel = VR; break;
-            case "MC": currentSimModel = MC; break;
-            default: currentSimModel = B1; break;
+            Debug.LogError($"modelUxmlPages missing page index {pageIndex}. Assign 0=Models,1=Specs,2=Inspect.");
+            return;
         }
 
-        if (currentSimModel == null || currentSimModel.model == null) return;
+        // Keep camera in model view for all model pages
+       // BuildCameraRigForModel(currentSimModel);
+       // cameraPosition.goToPosition(CAM_MODEL_VIEW);
+       // SetRotationTargetActive(true);
+        //SetDecalForMode(UIMode.Video);
+        LoadUXML(modelUxmlPages[pageIndex]);
+    }
 
-        // Destroy previous spawned sim
+    private bool HasModelPages(int minCount)
+        => modelUxmlPages != null
+           && modelUxmlPages.Length >= minCount
+           && modelUxmlPages.Take(minCount).All(p => p != null);
+
+    // -------------------------
+    // Model selection / spawning
+    // -------------------------
+    private void SelectSimModel(string id)
+    {
+        selectedSimModel = id;
+
+        if (!modelById.TryGetValue(id, out currentSimModel) || currentSimModel == null)
+        {
+            Debug.LogWarning($"SelectSimModel: id '{id}' not found in Resources/{resourcesPath}");
+            UpdateModelSelectionUI();
+            return;
+        }
+
+        if (currentSimModel.modelPrefab == null)
+        {
+            Debug.LogWarning($"SelectSimModel: model '{id}' has no prefab assigned.");
+            UpdateModelSelectionUI();
+            return;
+        }
+
         if (currentModelInstance != null)
             Destroy(currentModelInstance);
 
-        // Spawn selected sim
         Vector3 pos = spawnPoint != null ? spawnPoint.position : Vector3.zero;
-        Quaternion rot = currentSimModel.model.transform.rotation;
+        Quaternion rot = currentSimModel.modelPrefab.transform.rotation;
+        currentModelInstance = Instantiate(currentSimModel.modelPrefab, pos, rot);
 
-        currentModelInstance = Instantiate(currentSimModel.model, pos, rot);
-        Debug.Log($"Spawning at {(spawnPoint ? spawnPoint.position : Vector3.zero)}");
+        // rebuild camera rig to include this model’s inspect anchors
+        BuildCameraRigForModel(currentSimModel);
 
-        // UI + cart
-        if (modelTypeLabel != null) modelTypeLabel.text = currentSimModel.modelName;
-        if (modelPriceLabel != null) modelPriceLabel.text = $"${currentSimModel.basePrice:N0}";
-        if (cartStore != null) cartStore.SetItem(CART_MODEL, currentSimModel.basePrice);
-
-        UpdateTotalLabel();
+        UpdateModelSelectionUI();
+        PopulateCurrentPage();
     }
 
-
-    private void SelectModel(string name)
+    // -------------------------
+    // UI Cache + Dynamic lists
+    // -------------------------
+    private void CacheUI()
     {
-        selectedModel = name;
-        currentBikeModel = (name == "Model B") ? modelB : modelA;
-        if (currentBikeModel == null) return;
+        playButton = root?.Q<Button>("play-button");
+        pauseButton = root?.Q<Button>("pause-button");
+        muteButton = root?.Q<Button>("mute-button");
+        unmuteButton = root?.Q<Button>("unmute-button");
+        progressBar = root?.Q<ProgressBar>("progress-bar");
 
-        // remove previous spawned bike (if any)
-        if (currentModelInstance != null)
-            Destroy(currentModelInstance);
-
-        // spawn the selected model prefab
-        Vector3 pos = spawnPoint != null ? spawnPoint.position : Vector3.zero;
-        Quaternion rot = currentBikeModel.model.transform.rotation;
-
-        currentModelInstance = Instantiate(currentBikeModel.model, pos, rot);
-
-
-        if (modelTypeLabel != null) modelTypeLabel.text = currentBikeModel.modelName;
-        if (modelPriceLabel != null) modelPriceLabel.text = $"${currentBikeModel.basePrice:N0}";
-        if (cartStore != null) cartStore.SetItem(CART_MODEL, currentBikeModel.basePrice);
+        modelsContainer = root?.Q<VisualElement>("Models");
+        specsListContainer = root?.Q<VisualElement>("SpecsContainer");
+        inspectListContainer = root?.Q<VisualElement>("InspectContainer");
+        selectedModel = root?.Q<Label>("selectedModel");
     }
 
-    private void ChangeColorBody(int i)
+    private void BuildModelButtonsIfNeeded()
     {
-        var opt = GetOpt(currentBikeModel?.bodyColors, i); if (opt == null) return;
-        ApplyMaterialByTag("body", opt.material);
-        if (bodyColorLabel != null) bodyColorLabel.text = opt.displayName;
-        if (bodyColorPriceLabel != null) bodyColorPriceLabel.text = $"${opt.price:N0}";
-        if (cartStore != null) cartStore.SetItem(CART_BODY, opt.price);
-        HighlightButtons(new[] { "body_white", "body_silver", "body_alumin", "body_carbon", "body_black" }, i, "body");
-    }
+        if (modelsContainer == null || modelButtonTemplate == null) return;
 
-    private void ChangeColorSeat(int i)
-    {
-        var opt = GetOpt(currentBikeModel?.seatColors, i); if (opt == null) return;
-        ApplyMaterialByTag("seat", opt.material);
-        if (seatColorLabel != null) seatColorLabel.text = opt.displayName;
-        if (seatPriceLabel != null) seatPriceLabel.text = $"${opt.price:N0}";
-        if(cartStore!=null) cartStore.SetItem(CART_SEAT,opt.price);
-        HighlightButtons(new[] { "seat_tan", "seat_black" }, i, "seat");
-    }
+        modelButtons.Clear();
+        modelsContainer.Clear();
 
-    private void ChangeColorBadge(int i)
-    {
-        var opt = GetOpt(currentBikeModel?.badgeColors, i); if (opt == null) return;
-        ApplyMaterialByTag("badge", opt.material);
-        if (badgeColorLabel != null) badgeColorLabel.text = opt.displayName;
-        if (badgePriceLabel != null) badgePriceLabel.text = $"${opt.price:N0}";
-        if (cartStore != null) cartStore.SetItem(CART_BADGE, opt.price);
-        HighlightButtons(new[] { "badge_silver", "badge_black" }, i, "badge");
-    }
-
-
-    private void UpdateTotalLabel()
-    {
-        if (totalLabel == null) return;
-        if (cartStore == null) { totalLabel.text = "$0"; return; }
-        cartStore.RecalculateTotal();
-        totalLabel.text = $"${cartStore.totalPrice:N0}";
-    }
-
-    private void SwitchSpecs(string model)
-    {
-        var specsAlpha = root.Q("Specs_Alpha");
-        var specsDelta = root.Q("Specs_Delta");
-        if (alphaButton == null || deltaButton == null) return;
-
-        bool isA = (model == "Model A");
-        if (specsAlpha != null) specsAlpha.style.display = isA ? DisplayStyle.Flex : DisplayStyle.None;
-        if (specsDelta != null) specsDelta.style.display = isA ? DisplayStyle.None : DisplayStyle.Flex;
-
-        SetModelButtonStyle(alphaButton, isA);
-        SetModelButtonStyle(deltaButton, !isA);
-    }
-
-    private void SetModelButtonStyle(Button button, bool isSelected)
-    {
-        if (button == null) return;
-        if (isSelected)
+        foreach (var m in loadedModels)
         {
-            button.style.backgroundColor = new StyleColor(new Color32(146, 242, 225, 255));
-            button.style.color = new StyleColor(Color.black);
-        }
-        else
-        {
-            button.style.backgroundColor = new StyleColor(new Color32(0, 0, 0, 150));
-            button.style.color = new StyleColor(Color.white);
-        }
-    }
+            if (m == null || string.IsNullOrWhiteSpace(m.id)) continue;
 
-    private void HighlightButtons(string[] buttonIds, int selectedIndex, string group)
-    {
-        Color32 selectedBorderColor = new Color32(0, 190, 250, 255);
-
-        for (int i = 0; i < buttonIds.Length; i++)
-        {
-            var button = root.Q<Button>(buttonIds[i]);
-            if (button == null) continue;
-
-            if (i == selectedIndex)
+            var instance = modelButtonTemplate.Instantiate();
+            var btn = instance.Q<Button>("modelButtonTemplate");
+            if (btn == null)
             {
-                button.style.borderBottomWidth = 2;
-                button.style.borderBottomColor = new StyleColor(selectedBorderColor);
+                Debug.LogError("Model button named 'modelButtonTemplate' not found inside modelButtonTemplate UXML.");
+                continue;
             }
-            else button.style.borderBottomWidth = 0;
+
+            btn.name = m.id;
+            btn.text = m.modelName;
+            btn.clicked += () => SelectSimModel(m.id);
+
+            modelsContainer.Add(instance);
+            modelButtons[m.id] = btn;
         }
 
-        selections[group] = selectedIndex;
+        UpdateModelSelectionUI();
     }
 
-    private void Inspect(int pos, string part)
+    private void UpdateModelSelectionUI()
     {
-        var inspectButtons = new[]
-        {
-            root.Q<Button>("inspect_body"),
-            root.Q<Button>("inspect_badge"),
-            root.Q<Button>("inspect_seat")
-        };
+        foreach (var kv in modelButtons)
+            kv.Value.EnableInClassList("active", kv.Key == selectedSimModel);
 
-        if (currentPosition == pos) isFocused = !isFocused;
-        else isFocused = true;
+        if (selectedModel != null && currentSimModel != null)
+            selectedModel.text = currentSimModel.modelName;
+    }
 
-        if (isFocused)
+    private void PopulateCurrentPage()
+    {
+        UpdateModelSelectionUI();   
+
+        if (currentSimModel == null) return;
+
+        if (IsCurrent(modelUxmlPages, 1))
+            PopulateSpecsUI(currentSimModel);
+
+        if (IsCurrent(modelUxmlPages, 2))
+            PopulateInspectUI(currentSimModel);
+    }
+
+    private void PopulateSpecsUI(SimulatorModel model)
+    {
+        if (specsListContainer == null) return;
+
+        specsListContainer.Clear();
+        if (model.specs == null) return;
+
+        foreach (var spec in model.specs)
         {
-            foreach (var btn in inspectButtons)
+            VisualElement row = null;
+
+            switch (spec.type)
             {
-                if (btn == null) continue;
+                case SimulatorModel.SpecType.Text:
+                    row = specRowTextTemplate?.Instantiate();
+                    if (row == null) break;
+                    row.Q<Label>("specLabel").text = spec.label;
+                    row.Q<Label>("specValue").text = spec.value;
+                    break;
 
-                if (btn.name == $"inspect_{part}")
+                case SimulatorModel.SpecType.Bar:
+                    row = specRowBarTemplate?.Instantiate();
+                    if (row == null) break;
+                    row.Q<Label>("specLabel").text = spec.label;
+                    var valueLabel = row.Q<Label>("specValue");
+                    if (valueLabel != null) valueLabel.text = spec.value;
+
+                    var bar = row.Q<ProgressBar>("specBar");
+                    if (bar != null)
+                    {
+                        bar.lowValue = 0f;
+                        bar.highValue = Mathf.Max(0.0001f, spec.max);
+                        bar.value = Mathf.Clamp(spec.current, 0f, bar.highValue);
+                    }
+                    break;
+
+                case SimulatorModel.SpecType.InvertedBar:
+                    row = specRowBarTemplate?.Instantiate();
+                    if (row == null) break;
+
+                    row.Q<Label>("specLabel").text = spec.label;
+
+                    var valueLabelInv = row.Q<Label>("specValue");
+                    if (valueLabelInv != null) valueLabelInv.text = spec.value;
+
+                    var invBar = row.Q<ProgressBar>("specBar");
+                    if (invBar != null)
+                    {
+                        invBar.lowValue = 0f;
+                        invBar.highValue = Mathf.Max(0.0001f, spec.max);
+
+                        // Invert the displayed fill:
+                        float clamped = Mathf.Clamp(spec.current, 0f, invBar.highValue);
+                        invBar.value = invBar.highValue - clamped;
+                    }
+                    break;
+
+                case SimulatorModel.SpecType.Toggle:
+                    row = specRowToggleTemplate?.Instantiate();
+                    if (row == null) break;
+                    row.Q<Label>("specLabel").text = spec.label;
+
+                    var toggle = row.Q<Toggle>("specToggle");
+                    if (toggle != null)
+                    {
+                        toggle.SetEnabled(false);
+                        toggle.value = (spec.toggle == SimulatorModel.ToggleState.Yes ||
+                                        spec.toggle == SimulatorModel.ToggleState.Optional);
+                        toggle.text = spec.toggle.ToString();
+                    }
+                    break;
+
+                case SimulatorModel.SpecType.Chips:
+                    row = specRowChipsTemplate?.Instantiate();
+                    if (row == null) break;
+                    row.Q<Label>("specLabel").text = spec.label;
+
+                    var chipsContainer = row.Q<VisualElement>("chipContainer");
+                    if (chipsContainer != null)
+                    {
+                        chipsContainer.Clear();
+                        var chips = (spec.value ?? "")
+                            .Split('|')
+                            .Select(s => s.Trim())
+                            .Where(s => !string.IsNullOrEmpty(s));
+
+                        foreach (var chipText in chips)
+                        {
+                            var chip = new Label(chipText);
+                            chip.AddToClassList("chip");
+                            chipsContainer.Add(chip);
+                        }
+                    }
+                    break;
+            }
+
+            if (row != null)
+                specsListContainer.Add(row);
+        }
+    }
+
+    private void PopulateInspectUI(SimulatorModel model)
+    {
+        if (inspectListContainer == null || inspectRowTemplate == null) return;
+
+        inspectListContainer.Clear();
+        inspectButtons.Clear();
+
+        if (model.inspectPoints == null) return;
+
+        for (int i = 0; i < model.inspectPoints.Length; i++)
+        {
+            int cameraIndex = FIRST_DYNAMIC_CAM + i;
+            var point = model.inspectPoints[i];
+            if (point == null) continue;
+
+            var row = inspectRowTemplate.Instantiate();
+            if (row == null) continue;
+
+            var btn = row.Q<Button>("inspectButton");
+            var label = row.Q<Label>("inspectLabel");
+
+            if (label != null)
+                label.text = point.label;
+
+            if (btn != null)
+            {
+                inspectButtons.Add(btn);
+
+                btn.clicked += () =>
                 {
-                    btn.style.unityBackgroundImageTintColor = new StyleColor(new Color(0.9137255f, 0.49411766f, 0f, 1f));
-                    if(cameraPosition != null) cameraPosition.goToPosition(pos);
-                    currentPosition = pos;
-                }
-                else btn.style.unityBackgroundImageTintColor = new StyleColor(Color.white);
-            }
-        }
-        else
-        {
-            foreach (var btn in inspectButtons)
-                if (btn != null) btn.style.unityBackgroundImageTintColor = new StyleColor(Color.white);
+                    if (activeInspectIndex == cameraIndex)
+                    {
+                        activeInspectIndex = -1;
+                        cameraPosition.goToPosition(CAM_MODEL_VIEW);
+                    }
+                    else
+                    {
+                        activeInspectIndex = cameraIndex;
+                        cameraPosition.goToPosition(cameraIndex);
+                    }
 
-            if(cameraPosition!=null) cameraPosition.goToPosition(2);
-            currentPosition = -1;
+                    UpdateInspectSelectionUI();
+                };
+            }
+
+            inspectListContainer.Add(row);
+        }
+
+        UpdateInspectSelectionUI();
+    }
+
+    private void UpdateInspectSelectionUI()
+    {
+        for (int i = 0; i < inspectButtons.Count; i++)
+        {
+            int cameraIndex = FIRST_DYNAMIC_CAM + i;
+            var b = inspectButtons[i];
+            if (b == null) continue;
+
+            b.EnableInClassList("active", cameraIndex == activeInspectIndex);
         }
     }
 
+    // -------------------------
+    // Helpers
+    // -------------------------
     private void PlayVideo()
     {
         if (videoPlayer == null) return;
         videoPlayer.Play();
+
         if (playButton != null) playButton.style.display = DisplayStyle.None;
         if (pauseButton != null) pauseButton.style.display = DisplayStyle.Flex;
     }
@@ -584,43 +656,53 @@ public class HomeScreen : MonoBehaviour
     {
         if (videoPlayer == null) return;
         videoPlayer.Pause();
+
         if (playButton != null) playButton.style.display = DisplayStyle.Flex;
         if (pauseButton != null) pauseButton.style.display = DisplayStyle.None;
     }
 
-    private void ChangeVideoFOV(string state)
+    private void MuteVideo()
+    {
+        if (videoPlayer == null) return;
+        videoPlayer.SetDirectAudioMute(0, true);
+
+        if (muteButton != null) muteButton.style.display = DisplayStyle.None;
+        if (unmuteButton != null) unmuteButton.style.display = DisplayStyle.Flex;
+    }
+
+    private void UnmuteVideo()
+    {
+        if (videoPlayer == null) return;
+        videoPlayer.SetDirectAudioMute(0, false);
+
+        if (muteButton != null) muteButton.style.display = DisplayStyle.Flex;
+        if (unmuteButton != null) unmuteButton.style.display = DisplayStyle.None;
+    }
+
+    private void OnVideoPrepared(VideoPlayer source)
+    {
+        if (playButton != null)
+            playButton.SetEnabled(true);
+    }
+
+    private void ChangeVideoFOV(bool isVideo)
     {
         if (Camera.main == null) return;
-        Camera.main.fieldOfView = (state == "Video") ? video_FOV : normal_FOV;
+        Camera.main.fieldOfView = isVideo ? video_FOV : normal_FOV;
     }
 
-    private void ChangeCameraPosition(int pos)
+    private void SetRotationTargetActive(bool on)
     {
-        if (cameraPosition != null) cameraPosition.goToPosition(pos);
+        if (rotationTarget != null)
+            rotationTarget.gameObject.SetActive(on);
     }
 
-    private void SetTargets(bool bikeOn, bool merchOn)
-    {
-        if (bikeTarget) bikeTarget.gameObject.SetActive(bikeOn);
-    }
+    private bool IsCurrent(VisualTreeAsset[] arr, int i)
+        => arr != null && i >= 0 && i < arr.Length && arr[i] != null
+           && currentTree != null && currentTree == arr[i];
 
-    private void HandleButtonClick(string uiName)
-    {
-        if (currentUI == uiName) return;
-
-        var decalUIList = new HashSet<string> { "bike", "bike_tab", "next_bike" };
-
-        if (decalController != null)
-        {
-            if (decalUIList.Contains(currentUI) && decalController.IsOpaque)
-                decalController.StartFadeOutAndScaleDown();
-
-            if (decalUIList.Contains(uiName) && !decalController.IsOpaque)
-                decalController.StartFadeInAndScaleUp();
-        }
-
-        currentUI = uiName;
-    }
+    private bool IsAnyModelPageActive()
+        => IsCurrent(modelUxmlPages, 0) || IsCurrent(modelUxmlPages, 1) || IsCurrent(modelUxmlPages, 2);
 
     private void TakeScreenshot()
     {
@@ -628,20 +710,17 @@ public class HomeScreen : MonoBehaviour
             ScreenshotHandler.Instance.CaptureScreenshot();
     }
 
-    private bool IsCurrent(UISection[] arr, int i)
-        => arr != null && i >= 0 && i < arr.Length && arr[i] != null && arr[i].uxmlAsset != null
-           && currentTree != null && currentTree.name == arr[i].uxmlAsset.name;
-
-    private static ColorOption GetOpt(ColorOption[] arr, int i)
-        => (arr != null && i >= 0 && i < arr.Length) ? arr[i] : null;
-
-    private static void ApplyMaterialByTag(string tag, Material mat)
+    private void ToggleUIVisibility()
     {
-        if (mat == null) return;
-        var go = GameObject.FindWithTag(tag);
-        if (go == null) return;
-        var mr = go.GetComponent<MeshRenderer>();
-        if (mr == null) return;
-        mr.material = mat;
+        var right = root?.Q<VisualElement>("RightContainer");
+        if (right == null) return;
+
+        uiHidden = !uiHidden;
+
+        right.style.display = uiHidden
+            ? DisplayStyle.None
+            : DisplayStyle.Flex;
     }
+
 }
+

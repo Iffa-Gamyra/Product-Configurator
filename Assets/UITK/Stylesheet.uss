@@ -158,7 +158,7 @@
 }
 
 .circle-icon {
-    background-image: url('project://database/Assets/UITK/Images/motorcycle.png?fileID=2800000&guid=f631ed56e974642c798fe6401ba74620&type=3#motorcycle');
+    background-image: url("project://database/Assets/UITK/Images/motorcycle.png?fileID=2800000&guid=f631ed56e974642c798fe6401ba74620&type=3#motorcycle");
     -unity-background-scale-mode: scale-to-fit;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
@@ -239,8 +239,9 @@
 
 .selected-button {
     flex-basis: auto;
-    background-color: rgba(146, 242, 225, 0.72);
+    background-color: rgb(58, 58, 58);
     color: rgb(0, 0, 0);
+    position: relative;
 }
 
 .gray-button {
@@ -264,7 +265,7 @@
 }
 
 .colour-icon {
-    background-image: url('project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialWhite.png?fileID=2800000&guid=dd78f7547827e6341a6c708da04c6205&type=3#button_MaterialWhite');
+    background-image: url("project://database/Assets/UI%20Savic/UI_Config/sprites%20(new)/button_MaterialWhite.png?fileID=2800000&guid=dd78f7547827e6341a6c708da04c6205&type=3#button_MaterialWhite");
     background-color: rgba(188, 188, 188, 0);
     border-right-color: rgba(0, 0, 0, 0);
     -unity-background-scale-mode: scale-to-fit;
@@ -300,11 +301,11 @@
     font-size: 30px;
     -unity-font-style: italic;
     -unity-font-definition: initial;
-    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-ExtraBold.ttf?fileID=12800000&guid=143afdd0463e74cb79ba8b2de1a7e49c&type=3#KumbhSans-ExtraBold');
+    -unity-font: url("project://database/Assets/UITK/Fonts/KumbhSans-ExtraBold.ttf?fileID=12800000&guid=143afdd0463e74cb79ba8b2de1a7e49c&type=3#KumbhSans-ExtraBold");
 }
 
 .KS-regular-text {
-    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular');
+    -unity-font: url("project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular");
     -unity-font-definition: initial;
     font-size: 18px;
 }
@@ -312,6 +313,44 @@
 .KS-regular-text-14px {
     color: rgb(255, 255, 255);
     font-size: 16px;
-    -unity-font: url('project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular');
+    -unity-font: url("project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular");
     -unity-font-definition: initial;
+}
+
+.selected-button:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.selected-button.active {
+    background-color: rgb(116, 185, 173);
+}
+
+.selected-button:checked {
+    background-color: rgb(115, 14, 8);
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0);
+    border-left-color: rgb(221, 16, 16);
+    border-right-color: rgb(221, 16, 16);
+    border-top-color: rgb(221, 16, 16);
+    border-bottom-color: rgb(221, 16, 16);
+}
+
+.chip {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: rgb(58, 58, 58);
+    letter-spacing: 0.5px;
+    -unity-font-style: bold;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    color: rgb(252, 252, 252);
+    font-size: 16px;
+    -unity-font-definition: url("project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular");
 }

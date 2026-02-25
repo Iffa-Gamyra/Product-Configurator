@@ -1,12 +1,36 @@
-.video-progress-bar .unity-progress-bar__progress {
-    background-color: rgb(98, 176, 248);    
+.video-progress-bar {
+    height: 4px;
+    margin: 0;
+    padding: 0;
     border-radius: 3px;
-    margin: 10px;
+    overflow: hidden;
+    align-content: center;
+    align-self: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+    width: 1400px;
+}
+
+.video-progress-bar .unity-progress-bar__progress {
+    background-color: rgb(98, 176, 248);
+    border-radius: 3px;
+    margin: 0;
+    height: 4px;
+    justify-content: space-between;
+    align-content: center;
+    align-self: center;
+    width: auto;
 }
 
 .video-progress-bar .unity-progress-bar__background {
-    background-color: rgb(100, 100, 100);
-    border-radius: 10px;
+    background-color: rgba(100, 100, 100, 0.78);
+    border-radius: 3px;
+    height: 4px;
+    margin: 0;
+    align-content: center;
+    justify-content: space-between;
+    width: auto;
 }
 
 .bike-progress-bar .unity-progress-bar__progress {
@@ -19,28 +43,30 @@
 
 .unity-progress-bar__background {
     background-color: rgb(209, 218, 227);
-    border-left-color: rgba(0, 0, 0, 0);
-    border-right-color: rgba(0, 0, 0, 0);
-    border-top-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0);
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
 }
 
 .unity-progress-bar__progress {
     background-color: rgb(98, 176, 248);
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
 }
 
 .top-container-blk-bkgrnd {
     background-color: rgb(29, 29, 29);
     flex-direction: row;
     height: 5%;
+}
+
+.inspect-button.active {
+    background-image: url("project://database/Assets/UITK/Images/focus2.png?fileID=2800000&guid=01d826e540d9549ff81d4bd4223f4ca4&type=3#focus2");
+    -unity-background-scale-mode: scale-to-fit;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-color: rgba(117, 169, 237, 0);
+    width: 10%;
+    margin-left: 40px;
+    min-width: 18px;
+    min-height: 30px;
 }
 
 .orng-txt-header {
@@ -84,7 +110,7 @@
     padding-right: 12px;
     padding-bottom: 10px;
     padding-left: 80px;
-    background-image: url('project://database/Assets/UITK/Images/header_Main_BG_Right.png?fileID=2800000&guid=0093aadffc3ef40fe926ec8e5f60e2e6&type=3#header_Main_BG_Right');
+    background-image: url("project://database/Assets/UITK/Images/header_Main_BG_Right.png?fileID=2800000&guid=0093aadffc3ef40fe926ec8e5f60e2e6&type=3#header_Main_BG_Right");
     margin-right: 0;
     margin-bottom: 0;
     -unity-background-scale-mode: scale-and-crop;
@@ -129,7 +155,7 @@
 }
 
 .inspect-button {
-    background-image: url('project://database/Assets/UITK/Images/focus2.png?fileID=2800000&guid=01d826e540d9549ff81d4bd4223f4ca4&type=3#focus2');
+    background-image: url("project://database/Assets/UITK/Images/focus2.png?fileID=2800000&guid=01d826e540d9549ff81d4bd4223f4ca4&type=3#focus2");
     -unity-background-scale-mode: scale-to-fit;
     border-left-color: rgba(149, 149, 149, 0);
     border-right-color: rgba(149, 149, 149, 0);
@@ -137,7 +163,16 @@
     border-bottom-color: rgba(149, 149, 149, 0);
     background-color: rgba(188, 188, 188, 0);
     width: 10%;
-    margin-left: 30px;
+    margin-left: 40px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 0;
+    background-size: contain;
+    min-width: 18px;
+    height: auto;
+    min-height: 30px;
 }
 
 .panel-titles {

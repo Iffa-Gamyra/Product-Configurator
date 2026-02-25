@@ -1,169 +1,9 @@
 fileFormatVersion: 2
 guid: a87d07d42cc0f044e870e34b70efd9ba
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDriveB1_TV_Bracket_Mod_Fan_tvdisplay
-    second: {fileID: 2100000, guid: 9a5a35e7918c8d6419e69730d18f8980, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDriveC1_motorbike1_actuator
-    second: {fileID: 2100000, guid: e89d625976a79ea46b06f54c46d914e0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_body1
-    second: {fileID: 2100000, guid: 0ffdf851bb9542c46bb930a26cfd0c60, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_bottom1
-    second: {fileID: 2100000, guid: 04ec2b7460187164088c77737f7ace01, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_cables1
-    second: {fileID: 2100000, guid: c5013cab8e05a8d43a83dd76070acff1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_dashboard1
-    second: {fileID: 2100000, guid: d8fcf4b4f8fceb64e8555c0f5cfed6b8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_frontlampbody1
-    second: {fileID: 2100000, guid: 49f967fd522865541aba482524d6608d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_handles1
-    second: {fileID: 2100000, guid: 7a2108cadfa1cd34ca8601ee6d7e55de, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_lights1
-    second: {fileID: 2100000, guid: cca0cc55ac9c80f498ada987ce75ddc4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_mirrorbrakes1
-    second: {fileID: 2100000, guid: a306f442b3007654797c57e2cc788ceb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_pedals1
-    second: {fileID: 2100000, guid: 9e35fd5695b0d6a4bbdedde44430411e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_screws
-    second: {fileID: 2100000, guid: 52cacaeafe1e6e344b3002fc5a325c3d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_screws1
-    second: {fileID: 2100000, guid: 25aa2f82f38e7ef4fa8353a3fcc984c6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_seat1
-    second: {fileID: 2100000, guid: d2e47bc51d8700d4cadaeab785c361a4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GamyraDrive_B1Assembly_motorbike_suspension1
-    second: {fileID: 2100000, guid: 695bb11ae0643be41bce243e2829c763, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: bracing
-    second: {fileID: 2100000, guid: 2dea5f713cadc764ab35edd8ee7b724c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: bracingCoverSet
-    second: {fileID: 2100000, guid: 2714e1a7639aba446bcd62087c176211, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: monitor1_windsim
-    second: {fileID: 2100000, guid: cc7561a35bf17a945a74255c11ea041c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mozaFFB
-    second: {fileID: 2100000, guid: 934140eaafe9fd942a3eda1f9c975038, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mp_baseCover
-    second: {fileID: 2100000, guid: 3c40d27f8c4f0454c9e3998c25d83a46, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mp_lights
-    second: {fileID: 2100000, guid: 7bef785dddd1746438a130fdde201960, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: powerTopCover
-    second: {fileID: 2100000, guid: ba12ccf813d07de4eb6ef65b04773782, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: s1_enclosureFrame
-    second: {fileID: 2100000, guid: 63ef78db81340e7459d232a3e4c3e974, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: screws
-    second: {fileID: 2100000, guid: cca0373de904b2e4caad4a0a4649001d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: dbebd52b9c3e8a64fbe043f1bea1692e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: subWoofer
-    second: {fileID: 2100000, guid: 6651ec6d60752084ebfcc5973cd894a2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: transparent_mat
-    second: {fileID: 2100000, guid: 2677936cb350203479cc3a0161152274, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tvCover
-    second: {fileID: 2100000, guid: 100a24706be1acc4eab37f2862467db8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tvMount
-    second: {fileID: 2100000, guid: 6c174711db8654e43a62b2c563981760, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tvPlasticBack
-    second: {fileID: 2100000, guid: 88c22265a2d565342908bff555518755, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tvstand
-    second: {fileID: 2100000, guid: 88b4d48ab64c7894f98eea8d480933d6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: windSim
-    second: {fileID: 2100000, guid: 0e79d7c7aeece664d8e63fc9247a61fe, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -176,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -208,7 +46,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -218,13 +56,16 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
+    secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
-    secondaryUVMinLightmapResolution: 10
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1

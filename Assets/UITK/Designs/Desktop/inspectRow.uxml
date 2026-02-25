@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <Style src="project://database/Assets/UITK/Stylesheet_0.8E.uss?fileID=7433441132597879392&amp;guid=42244b06f07724e8b9aff270568391b8&amp;type=3#Stylesheet_0.8E" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="inspectRow" style="flex-direction: row; height: 8%; margin-top: 10px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; flex-grow: 1;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspectButton" class="inspect-button active" />
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="inspectLabel" text="HI" class="KS-regular-text panel-titles" />
+        </ui:VisualElement>
+        <ui:VisualElement name="horizontalBar" style="background-color: rgb(209, 209, 209); height: 3px; width: 100%; margin-top: 10px;" />
+    </ui:VisualElement>
+</ui:UXML>

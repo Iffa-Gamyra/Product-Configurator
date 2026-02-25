@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet" />
+    <Style src="project://database/Assets/UITK/Stylesheet_0.8E.uss?fileID=7433441132597879392&amp;guid=42244b06f07724e8b9aff270568391b8&amp;type=3#Stylesheet_0.8E" />
+    <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-right: 5px; margin-left: 5px; margin-top: 0;">
+        <ui:Label tabindex="-1" text="Power" parse-escape-sequences="true" display-tooltip-when-elided="true" name="specLabel" class="KS-regular-text-14px" style="margin-top: 4px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;" />
+        <ui:Toggle name="specToggle" class="KS-regular-text-14px" />
+    </ui:VisualElement>
+</ui:UXML>

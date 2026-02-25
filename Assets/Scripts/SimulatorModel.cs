@@ -1,61 +1,56 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SimulatorModel", menuName = "Simulator/Simulator")]
+[CreateAssetMenu(fileName = "SimulatorModel", menuName = "GamyraDrive/Simulator Model")]
 public class SimulatorModel : ScriptableObject
 {
-    public string modelName;          // e.g., "Simulator name"
-    public GameObject model;           //model 
-    public int basePrice;             // Base model price
-
-    [Header("Color Options")]
-    public ColorOptions[] modelColors;
-
-    [Header("Dashboard Options")]
-    public ColorOptions[] dashboardColors;
-
-    [Header("Screen Options")]
-    public NumericalOption[] screenNumber;
-
-    [Header("DoF Options")]
-    public NumericalOption[] dofOptions;
-
-    [Header("FFB Motor")]
-    public MotorOption[] motorOptions;
+    [Header("Model")]
+    public string modelName;              // "GamyraDrive C1"
+    public string id;
+    public GameObject modelPrefab;
 
     [Header("Specs")]
-    public Specs specs;
+    public SpecRow[] specs;
 
-}
+    [Header("Inspect")]
+    public InspectPoint[] inspectPoints;
+    public enum SpecType
+    {
+        Text,       // Plain label + value
+        Bar,        // ProgressBar
+        InvertedBar, //Inverted ProgressBar
+        Toggle,     // Yes / No / Optional
+        Chips       // Pills / tags
+    }
 
-[System.Serializable]
-public class ColorOptions
-{
-    public string displayName;
-    public Material material;
-    public int price;
-}
+    [Serializable]
+    public class SpecRow
+    {
+        public string label;
+        public SpecType type;
 
-[System.Serializable]
-public class NumericalOption
-{
-    public int number;
-    public int price;
-}
+        [Header("Display")]
+        public string value;          // always shown (e.g. "208°", "SCANeR 2025.2")
 
-[System.Serializable]
-public class MotorOption
-{
-    public string ffbMotor;
-    public int price;
-}
+        [Header("Bar (only if type = Bar / InvertedBar only)")]
+        public float current;         // e.g. 208
+        public float max;             // e.g. 240
 
-[System.Serializable]
-public class Specs
-{
-    public int power;
-    public int torque;
-    public int horsePower;
-    public int kph;
-    public int range;
-    public int battery;
+        [Header("Toggle (only if type = Toggle)")]
+        public ToggleState toggle;
+    }
+
+    public enum ToggleState
+    {
+        No,
+        Yes,
+        Optional
+    }
+
+    [Serializable]
+    public class InspectPoint
+    {
+        public string label;
+        public Transform cameraAnchor;
+    }
 }

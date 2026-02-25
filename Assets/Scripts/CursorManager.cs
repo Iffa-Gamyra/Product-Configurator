@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CursorManager : MonoBehaviour
 {
@@ -13,11 +14,22 @@ public class CursorManager : MonoBehaviour
     void Start()
     {
         cursorHotSpot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Start with the default cursor
+        UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Start with the default cursor
     }
 
     void Update()
     {
+        if (UIBlockerRaycast.Instance != null && UIBlockerRaycast.Instance.IsPointerOverBlocker())
+        {
+            if (isCustomCursorActive)
+            {
+                UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                isCustomCursorActive = false;
+            }
+            return;
+        }
+
+
         // Check if the left mouse button is held down
         if (Input.GetMouseButton(0))
         {
@@ -39,7 +51,7 @@ public class CursorManager : MonoBehaviour
             {
                 if (!isCustomCursorActive || !isHoldingLeftClick)
                 {
-                    Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto); // Change to custom cursor
+                    UnityEngine.Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto); // Change to custom cursor
                     isCustomCursorActive = true;
                 }
             }
@@ -47,7 +59,7 @@ public class CursorManager : MonoBehaviour
             {
                 if (isCustomCursorActive)
                 {
-                    Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
+                    UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
                     isCustomCursorActive = false;
                 }
             }
@@ -56,9 +68,12 @@ public class CursorManager : MonoBehaviour
         {
             if (isCustomCursorActive)
             {
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
+                UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
                 isCustomCursorActive = false;
             }
         }
     }
+
+
+
 }

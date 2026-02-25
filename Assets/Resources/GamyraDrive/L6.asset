@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: L6
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  modelName: GamyraDrive L6
+  id: L6
+  modelPrefab: {fileID: 7671551109584592601, guid: 88e684eea0072a4479e58ebc0de1f4fa,
+    type: 3}
+  specs:
+  - label: Display Mode
+    type: 0
+    value: Triple Screen
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Horizontal FOV
+    type: 1
+    value: "180 \xB0"
+    current: 180
+    max: 240
+    toggle: 0
+  - label: Refresh Rate
+    type: 1
+    value: 120 Hz
+    current: 120
+    max: 240
+    toggle: 0
+  - label: Motion DOF
+    type: 1
+    value: 6 DOF
+    current: 6
+    max: 6
+    toggle: 0
+  - label: Control Type
+    type: 0
+    value: Steering Wheel & Pedals
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Reporting
+    type: 3
+    value: 0
+    current: 0
+    max: 0
+    toggle: 1
+  - label: Scenario Features
+    type: 4
+    value: Unreal Engine|Digital Twin|AI Traffic|Hazard Scenarios|Reporting
+    current: 0
+    max: 0
+    toggle: 0
+  inspectPoints:
+  - label: Display
+    cameraAnchor: {fileID: 4708464470722721757, guid: 3e1dc027999ef0344922e901665e073d,
+      type: 3}
+  - label: Range Rover Cockpit
+    cameraAnchor: {fileID: 965096060703934412, guid: 5eceb5db5d0d775428d7963038c9b339,
+      type: 3}
+  - label: Driver Controls
+    cameraAnchor: {fileID: 4258863308208412947, guid: a05e70a1908b71745a313dcfa5a993f2,
+      type: 3}
+  - label: Motion Platform
+    cameraAnchor: {fileID: 7823409228215504145, guid: 5fd0bb9892904f34f8da987e1c501c57,
+      type: 3}
