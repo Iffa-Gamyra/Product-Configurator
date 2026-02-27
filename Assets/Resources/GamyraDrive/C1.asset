@@ -16,6 +16,8 @@ MonoBehaviour:
   id: C1
   modelPrefab: {fileID: 2331036031649932956, guid: 77972c55b5a237d4cb65f430aef25785,
     type: 3}
+  brochurePdfFile: C1.pdf
+  brochureDownloadName: GamyraDrive_C1.pdf
   specs:
   - label: Display Mode
     type: 0

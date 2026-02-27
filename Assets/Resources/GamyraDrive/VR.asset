@@ -16,6 +16,8 @@ MonoBehaviour:
   id: VR
   modelPrefab: {fileID: 3743956991312595127, guid: e06eb5d9f4dc7c049b62307c68ce2437,
     type: 3}
+  brochurePdfFile: B1.pdf
+  brochureDownloadName: GamyraDrive_B1.pdf
   specs:
   - label: Display Mode
     type: 0

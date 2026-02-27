@@ -16,6 +16,8 @@ MonoBehaviour:
   id: L6
   modelPrefab: {fileID: 7671551109584592601, guid: 88e684eea0072a4479e58ebc0de1f4fa,
     type: 3}
+  brochurePdfFile: L6.pdf
+  brochureDownloadName: GamyraDrive_L6.pdf
   specs:
   - label: Display Mode
     type: 0

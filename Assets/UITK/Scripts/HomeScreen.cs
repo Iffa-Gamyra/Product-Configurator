@@ -74,8 +74,10 @@ public class HomeScreen : MonoBehaviour
 
     // Model UI (scoped to specific screens)
     private VisualElement modelsContainer;        // ModelSelection
-    private Label selectedModel;                  // ModelSelection
+    private Label selectedModelInSpecScreen;                  // ModelSelection
+    private Label selectedModelInInspectScreen;                  // ModelSelection
     private VisualElement specsListContainer;      // ModelSpecs
+    private Button downloadPdfButton; // Specs screen only
     private VisualElement inspectListContainer;    // InspectModel
     private Button resetViewButton, inspectPrevButton, inspectNextButton; // InspectModel (show only when inspect point selected)
 
@@ -126,10 +128,12 @@ public class HomeScreen : MonoBehaviour
 
         CacheScreens();
 
+
         if (!uiInitialized)
         {
             CacheUI();     
-            BindButtons();  
+            BindButtons();
+            BindInfoOverlayButtons();
             BuildModelButtonsIfNeeded();
 
             // Welcome screen start hook (kept from your old flow)
@@ -157,9 +161,15 @@ public class HomeScreen : MonoBehaviour
         if (IsVisible(videoScreen) && progressBar != null && videoPlayer != null && videoPlayer.length > 0.0001)
             progressBar.value = (float)(videoPlayer.time / videoPlayer.length) * 100f;
 
-        // Allow rotation only while any model screen is visible and block when info overlay is open
+        bool overlayOpen = IsOverlayOpen();
+        bool allowRotation = IsAnyModelScreenVisible() && !overlayOpen;
+
         if (cameraController != null)
-            cameraController.canRotate = IsAnyModelScreenVisible() && !IsOverlayOpen();
+            cameraController.canRotate = allowRotation;
+
+        // Disable rotation target completely when overlay is open
+        if (rotationTarget != null)
+            rotationTarget.gameObject.SetActive(allowRotation);
     }
 
     // -------------------------
@@ -306,9 +316,6 @@ public class HomeScreen : MonoBehaviour
             ["modelModeButton"] = OpenModelRoot,
             ["modelTabButton"] = OpenModelRoot,
 
-            ["infoButton"] = ToggleInfoOverlay,
-            ["closeButton"] = ToggleInfoOverlay,
-
             ["play-button"] = PlayVideo,
             ["pause-button"] = PauseVideo,
             ["mute-button"] = MuteVideo,
@@ -323,6 +330,7 @@ public class HomeScreen : MonoBehaviour
             ["inspectButton"] = () => OpenModelPage(2),
             ["viewModelsButton"] = () => OpenModelPage(0),
             ["viewSpecsButton"] = () => OpenModelPage(1),
+            ["downloadButton"] = DownloadPdf,
 
             ["resetViewButton"] = ResetView,
             ["inspectPrevButton"] = InspectPrev,
@@ -363,6 +371,25 @@ public class HomeScreen : MonoBehaviour
         }
     }
 
+    private void BindInfoOverlayButtons()
+    {
+        if (root == null) return;
+
+        // bind all info buttons (one per screen is fine)
+        foreach (var b in root.Query<Button>("infoButton").ToList())
+        {
+            b.clicked -= ToggleInfoOverlay;
+            b.clicked += ToggleInfoOverlay;
+        }
+
+        // bind close inside overlay
+        var close = infoOverlay?.Q<Button>("closeButton");
+        if (close != null)
+        {
+            close.clicked -= ToggleInfoOverlay;
+            close.clicked += ToggleInfoOverlay;
+        }
+    }
     private void GoHome()
     {
         BuildCameraRigBaseOnly();
@@ -414,6 +441,10 @@ public class HomeScreen : MonoBehaviour
     {
         SetDecalForMode(UIMode.Model);
 
+        // Optional: if overlay is open, close it when navigating
+        if (infoOverlay != null && infoOverlay.style.display != DisplayStyle.None)
+            infoOverlay.style.display = DisplayStyle.None;
+
         if (pageIndex == 0)
         {
             ShowOnly(modelSelectionScreen);
@@ -425,6 +456,7 @@ public class HomeScreen : MonoBehaviour
         if (pageIndex == 1)
         {
             ShowOnly(modelSpecsScreen);
+            UpdateBrochureButtonState();
             if (currentSimModel != null) PopulateSpecsUI(currentSimModel);
             return;
         }
@@ -432,7 +464,13 @@ public class HomeScreen : MonoBehaviour
         if (pageIndex == 2)
         {
             ShowOnly(inspectModelScreen);
+
+            // Reset inspect state on entry (recommended)
+            activeInspectIndex = -1;
+
             if (currentSimModel != null) PopulateInspectUI(currentSimModel);
+            else UpdateInspectSelectionUI();
+
             return;
         }
     }
@@ -441,21 +479,16 @@ public class HomeScreen : MonoBehaviour
     {
         if (infoOverlay == null) return;
 
-        bool currentlyVisible = infoOverlay.style.display != DisplayStyle.None;
-        bool opening = !currentlyVisible;
+        bool isOpen = infoOverlay.style.display == DisplayStyle.Flex;
 
-        infoOverlay.style.display = opening ? DisplayStyle.Flex : DisplayStyle.None;
+        // Just toggle
+        infoOverlay.style.display = isOpen
+            ? DisplayStyle.None
+            : DisplayStyle.Flex;
 
-        if (opening)
+        // Always bring to front when opening
+        if (!isOpen)
             infoOverlay.BringToFront();
-
-        // Disable rotation target when overlay opens
-        if (rotationTarget != null)
-            rotationTarget.gameObject.SetActive(!opening);
-
-        // Optional safety
-        if (cameraController != null)
-            cameraController.canRotate = !opening;
 
     }
 
@@ -494,6 +527,8 @@ public class HomeScreen : MonoBehaviour
         // If user is on specs/inspect screens, keep content in sync
         if (IsVisible(modelSpecsScreen)) PopulateSpecsUI(currentSimModel);
         if (IsVisible(inspectModelScreen)) PopulateInspectUI(currentSimModel);
+
+        UpdateBrochureButtonState();
     }
 
     // -------------------------
@@ -512,13 +547,15 @@ public class HomeScreen : MonoBehaviour
 
         // Model selection screen
         modelsContainer = modelSelectionScreen?.Q<VisualElement>("Models");
-        selectedModel = modelSelectionScreen?.Q<Label>("selectedModel");
 
         // Specs screen
         specsListContainer = modelSpecsScreen?.Q<VisualElement>("SpecsContainer");
+        downloadPdfButton = modelSpecsScreen?.Q<Button>("downloadButton");
+        selectedModelInSpecScreen = modelSpecsScreen?.Q<Label>("selectedModel");
 
         // Inspect screen
         inspectListContainer = inspectModelScreen?.Q<VisualElement>("InspectContainer");
+        selectedModelInInspectScreen = inspectModelScreen?.Q<Label>("selectedModel");
         resetViewButton = inspectModelScreen?.Q<Button>("resetViewButton");
         inspectPrevButton = inspectModelScreen?.Q<Button>("inspectPrevButton");
         inspectNextButton = inspectModelScreen?.Q<Button>("inspectNextButton");
@@ -567,8 +604,11 @@ public class HomeScreen : MonoBehaviour
         foreach (var kv in modelButtons)
             kv.Value.EnableInClassList("active", kv.Key == selectedSimModel);
 
-        if (selectedModel != null && currentSimModel != null)
-            selectedModel.text = currentSimModel.modelName;
+        if (selectedModelInSpecScreen != null && currentSimModel != null)
+            selectedModelInSpecScreen.text = currentSimModel.modelName;
+
+        if (selectedModelInInspectScreen != null && currentSimModel != null)
+            selectedModelInInspectScreen.text = currentSimModel.modelName;
     }
 
     private void PopulateSpecsUI(SimulatorModel model)
@@ -938,5 +978,25 @@ public class HomeScreen : MonoBehaviour
 
         uiHidden = !uiHidden;
         right.style.display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
+    }
+
+    private void UpdateBrochureButtonState()
+    {
+        if (downloadPdfButton == null) return;
+
+        bool hasPdf = currentSimModel != null &&
+                      !string.IsNullOrWhiteSpace(currentSimModel.brochurePdfFile);
+
+        downloadPdfButton.SetEnabled(hasPdf);
+    }
+
+    private void DownloadPdf()
+    {
+        if (currentSimModel == null) return;
+
+        WebGLDownloadManager.Instance?.DownloadPdfFromStreamingAssets(
+            currentSimModel.brochurePdfFile,
+            currentSimModel.brochureDownloadName
+        );
     }
 }

@@ -9,6 +9,10 @@ public class SimulatorModel : ScriptableObject
     public string id;
     public GameObject modelPrefab;
 
+    [Header("Brochure PDF (StreamingAssets)")]
+    public string brochurePdfFile; 
+    public string brochureDownloadName = "Brochure.pdf"; // what the user downloads as
+
     [Header("Specs")]
     public SpecRow[] specs;
 
