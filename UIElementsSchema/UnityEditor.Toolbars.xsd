@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Accessibility" elementFormDefault="qualified" targetNamespace="UnityEditor.Inspector" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Accessibility" elementFormDefault="qualified" targetNamespace="UnityEditor.Toolbars" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
-  <xs:complexType name="ClippingPlanesType">
+  <xs:complexType name="MainToolbarKebabButtonType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
         <xs:attribute default="" name="name" type="xs:string" use="optional" />
@@ -17,9 +17,15 @@
         <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
         <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
         <xs:attribute default="" name="binding-path" type="xs:string" use="optional" />
-        <xs:attribute default="label" name="label" type="xs:string" use="optional" />
-        <xs:attribute default="(0.00, 0.00)" name="value" type="xs:string" use="optional" />
-        <xs:attribute default="false" name="is-delayed" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="text" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enable-rich-text" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="emoji-fallback-support" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="parse-escape-sequences" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="selectable" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="double-click-selects-word" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="triple-click-selects-line" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="display-tooltip-when-elided" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="icon-image" type="xs:string" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
@@ -27,5 +33,5 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ClippingPlanes" substitutionGroup="engine:VisualElement" xmlns:q1="UnityEditor.Inspector" type="q1:ClippingPlanesType" />
+  <xs:element name="MainToolbarKebabButton" substitutionGroup="engine:VisualElement" xmlns:q1="UnityEditor.Toolbars" type="q1:MainToolbarKebabButtonType" />
 </xs:schema>

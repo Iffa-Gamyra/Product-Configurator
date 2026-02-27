@@ -59,6 +59,7 @@
         <xs:attribute default="false" name="hide-mobile-input" type="xs:boolean" use="optional" />
         <xs:attribute default="Default" name="keyboard-type" xmlns:q2="UnityEditor.ShaderGraph.Drawing" type="q2:IdentifierField_keyboard-type_Type" use="optional" />
         <xs:attribute default="false" name="auto-correction" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="support-expressions" type="xs:boolean" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />

@@ -302,6 +302,7 @@
     -unity-font-style: italic;
     -unity-font-definition: initial;
     -unity-font: url("project://database/Assets/UITK/Fonts/KumbhSans-ExtraBold.ttf?fileID=12800000&guid=143afdd0463e74cb79ba8b2de1a7e49c&type=3#KumbhSans-ExtraBold");
+    color: rgb(255, 255, 255);
 }
 
 .KS-regular-text {
@@ -353,4 +354,10 @@
     color: rgb(252, 252, 252);
     font-size: 16px;
     -unity-font-definition: url("project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular");
+}
+
+.KS-regular-text.active {
+    -unity-font-definition: initial;
+    color: rgb(117, 169, 237);
+    -unity-text-outline-color: rgb(117, 169, 237);
 }

@@ -13,6 +13,11 @@
       <xs:enumeration value="TabBar" />
       <xs:enumeration value="Slider" />
       <xs:enumeration value="Toggle" />
+      <xs:enumeration value="Container" />
+      <xs:enumeration value="TextField" />
+      <xs:enumeration value="Dropdown" />
+      <xs:enumeration value="TabButton" />
+      <xs:enumeration value="ScrollView" />
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="AccessibilityHierarchyTreeViewItemType">

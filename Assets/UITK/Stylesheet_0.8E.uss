@@ -9,7 +9,7 @@
     justify-content: flex-start;
     flex-shrink: 0;
     margin-bottom: 10px;
-    width: 1400px;
+    width: 100%;
 }
 
 .video-progress-bar .unity-progress-bar__progress {
@@ -67,6 +67,7 @@
     margin-left: 40px;
     min-width: 18px;
     min-height: 30px;
+    -unity-background-image-tint-color: rgb(117, 169, 237);
 }
 
 .orng-txt-header {

@@ -22,13 +22,8 @@ public class HomeScreen : MonoBehaviour
     public Transform modelViewPosition;
     public Transform videoPosition;
 
-    [Header("UI Document")]
+    [Header("UI Document (Desktop Master)")]
     public UIDocument uiDocument;
-
-    [Header("UI Sections")]
-    public VisualTreeAsset homeUxml;
-    public VisualTreeAsset videoUxml;
-    public VisualTreeAsset[] modelUxmlPages;  
 
     [Header("GamyraDrive Models")]
     [SerializeField] private string resourcesPath = "GamyraDrive";
@@ -50,7 +45,6 @@ public class HomeScreen : MonoBehaviour
     public float video_FOV;
     public float normal_FOV;
 
-
     // Camera index map (CorneaCameraDirector.LerpCameraPositions)
     private const int CAM_SWOOP = 0;
     private const int CAM_START = 1;
@@ -58,18 +52,32 @@ public class HomeScreen : MonoBehaviour
     private const int CAM_VIDEO = 3;
     private const int FIRST_DYNAMIC_CAM = 4;
 
-    // Runtime UI
+    // Runtime UI (Desktop master root)
     private VisualElement root;
-    private VisualTreeAsset currentTree;
 
+    // Screen roots (match your Desktop instance names)
+    private VisualElement welcomeScreen;
+    private VisualElement homeScreen;
+    private VisualElement videoScreen;
+    private VisualElement modelSelectionScreen;
+    private VisualElement modelSpecsScreen;
+    private VisualElement inspectModelScreen;
+    private VisualElement infoOverlay;
+
+    //info Overlay 
+    private Button closeButton;
+
+    // Video UI (scoped to VideoScreen)
     private VideoPlayer videoPlayer;
-    private Button playButton, pauseButton, muteButton, unmuteButton;
+    private Button playButton, pauseButton, muteButton, unmuteButton, replayButton;
     private ProgressBar progressBar;
 
-    private VisualElement modelsContainer;
-    private Label selectedModel;
-    private VisualElement specsListContainer;
-    private VisualElement inspectListContainer;
+    // Model UI (scoped to specific screens)
+    private VisualElement modelsContainer;        // ModelSelection
+    private Label selectedModel;                  // ModelSelection
+    private VisualElement specsListContainer;      // ModelSpecs
+    private VisualElement inspectListContainer;    // InspectModel
+    private Button resetViewButton, inspectPrevButton, inspectNextButton; // InspectModel (show only when inspect point selected)
 
     private bool uiHidden = false;
 
@@ -88,36 +96,21 @@ public class HomeScreen : MonoBehaviour
     // UI actions
     private Dictionary<string, Action> actions;
 
+    private bool uiInitialized = false;
+
+    private enum UIMode { Home, Video, Model }
 
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
 
-        LoadModelsFromResources();   
+        LoadModelsFromResources();
         BuildActions();
         BuildCameraRigBaseOnly();
-
     }
-    void Start()
+
+    private void Start()
     {
-        root = uiDocument.rootVisualElement;
-
-        var welcomeScreen = root.Q("WelcomeScreen");
-        var homeScreen = root.Q("HomeScreen");
-
-        if(welcomeScreen != null && homeScreen != null)
-        {
-            WelcomeScreenManager wsManager = new WelcomeScreenManager(welcomeScreen);
-            wsManager.Start = () =>
-            {
-                cameraPosition.goToPosition(CAM_START);
-                welcomeScreen.Display(false);
-                homeScreen.Display(true);
-
-                if (videoPlayer != null && !videoPlayer.isPrepared) videoPlayer.Prepare();
-            };
-        }
-
         if (videoPlayer != null)
             videoPlayer.prepareCompleted += OnVideoPrepared;
 
@@ -129,25 +122,93 @@ public class HomeScreen : MonoBehaviour
         if (uiDocument == null) return;
 
         root = uiDocument.rootVisualElement;
+        if (root == null) return;
 
-        if (currentTree == null && uiDocument.visualTreeAsset != null)
-            currentTree = uiDocument.visualTreeAsset;
+        CacheScreens();
 
-        CacheUI();
-        BindButtons();
-        BuildModelButtonsIfNeeded();
-        PopulateCurrentPage();
+        if (!uiInitialized)
+        {
+            CacheUI();     
+            BindButtons();  
+            BuildModelButtonsIfNeeded();
+
+            // Welcome screen start hook (kept from your old flow)
+            if (welcomeScreen != null && homeScreen != null)
+            {
+                WelcomeScreenManager wsManager = new WelcomeScreenManager(welcomeScreen);
+                wsManager.Start = () =>
+                {
+                    cameraPosition.goToPosition(CAM_START);
+                    ShowOnly(homeScreen);
+
+                    if (videoPlayer != null && !videoPlayer.isPrepared)
+                        videoPlayer.Prepare();
+                };
+            }
+
+            uiInitialized = true;
+        }
+
     }
 
     private void Update()
     {
-        if (progressBar != null && videoPlayer != null && videoPlayer.length > 0.0001)
+        // Only update progress bar when video screen is visible 
+        if (IsVisible(videoScreen) && progressBar != null && videoPlayer != null && videoPlayer.length > 0.0001)
             progressBar.value = (float)(videoPlayer.time / videoPlayer.length) * 100f;
 
+        // Allow rotation only while any model screen is visible and block when info overlay is open
         if (cameraController != null)
-            cameraController.canRotate = IsAnyModelPageActive();
-
+            cameraController.canRotate = IsAnyModelScreenVisible() && !IsOverlayOpen();
     }
+
+    // -------------------------
+    // Screens (Desktop master)
+    // -------------------------
+    private void CacheScreens()
+    {
+        welcomeScreen = root.Q<VisualElement>("WelcomeScreen");
+        homeScreen = root.Q<VisualElement>("HomeScreen");
+        videoScreen = root.Q<VisualElement>("VideoScreen");
+        modelSelectionScreen = root.Q<VisualElement>("ModelSelection");
+        modelSpecsScreen = root.Q<VisualElement>("ModelSpecs");
+        inspectModelScreen = root.Q<VisualElement>("InspectModel");
+        infoOverlay = root.Q<VisualElement>("InfoOverlay");
+    }
+
+    private void ShowOnly(VisualElement screen)
+    {
+        SetVisible(welcomeScreen, false);
+        SetVisible(homeScreen, false);
+        SetVisible(videoScreen, false);
+        SetVisible(modelSelectionScreen, false);
+        SetVisible(modelSpecsScreen, false);
+        SetVisible(inspectModelScreen, false);
+
+        SetVisible(screen, true);
+
+        // If we leave inspect screen, clear inspect state & hide reset button
+        if (screen != inspectModelScreen)
+        {
+            activeInspectIndex = -1;
+            UpdateInspectSelectionUI();
+        }
+    }
+
+    private static void SetVisible(VisualElement ve, bool visible)
+    {
+        if (ve == null) return;
+        ve.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    private static bool IsVisible(VisualElement ve)
+        => ve != null && ve.style.display != DisplayStyle.None;
+
+    private bool IsAnyModelScreenVisible()
+        => IsVisible(modelSelectionScreen) || IsVisible(modelSpecsScreen) || IsVisible(inspectModelScreen);
+
+    private bool IsOverlayOpen()
+    => infoOverlay != null && infoOverlay.style.display != DisplayStyle.None;
 
     // -------------------------
     // Loading models
@@ -178,13 +239,12 @@ public class HomeScreen : MonoBehaviour
     }
 
     // -------------------------
-    // Camera rig (simple)
+    // Camera rig
     // -------------------------
     private void BuildCameraRigBaseOnly()
     {
         if (cameraPosition == null || cameraPosition.Cornea == null) return;
 
-        // Always ensure 0..3 exists
         var rig = new Transform[FIRST_DYNAMIC_CAM];
         rig[CAM_SWOOP] = swoopPosition;
         rig[CAM_START] = startPosition;
@@ -201,13 +261,11 @@ public class HomeScreen : MonoBehaviour
         int inspectCount = (model != null && model.inspectPoints != null) ? model.inspectPoints.Length : 0;
         var rig = new Transform[FIRST_DYNAMIC_CAM + inspectCount];
 
-        // Fixed slots
         rig[CAM_SWOOP] = swoopPosition;
         rig[CAM_START] = startPosition;
         rig[CAM_MODEL_VIEW] = modelViewPosition;
         rig[CAM_VIDEO] = videoPosition;
 
-        // Inspect slots
         for (int i = 0; i < inspectCount; i++)
         {
             var p = model.inspectPoints[i];
@@ -218,41 +276,19 @@ public class HomeScreen : MonoBehaviour
         activeInspectIndex = -1;
     }
 
-    // =======================
+    // -------------------------
     // Decal Controller
-    // =======================
-    private enum UIMode { Home, Video, Model }
-
+    // -------------------------
     private void SetDecalForMode(UIMode mode)
     {
         if (decalController == null) return;
 
         bool wantDecal = (mode == UIMode.Model);
 
-        // Match your old behavior: model mode = decal visible, otherwise hidden
         if (wantDecal && !decalController.IsOpaque)
             decalController.StartFadeInAndScaleUp();
         else if (!wantDecal && decalController.IsOpaque)
             decalController.StartFadeOutAndScaleDown();
-    }
-
-    // =======================
-    // UXML swapping
-    // =======================
-    private void LoadUXML(VisualTreeAsset uxml)
-    {
-        if (uxml == null || uiDocument == null) return;
-
-        uiDocument.visualTreeAsset = uxml;
-        root = uiDocument.rootVisualElement;
-        currentTree = uxml;
-
-        CacheUI();
-        BindButtons();
-        BuildModelButtonsIfNeeded();
-        PopulateCurrentPage();
-        UIBlockerRaycast.Instance?.Recache();
-
     }
 
     // -------------------------
@@ -270,10 +306,14 @@ public class HomeScreen : MonoBehaviour
             ["modelModeButton"] = OpenModelRoot,
             ["modelTabButton"] = OpenModelRoot,
 
+            ["infoButton"] = ToggleInfoOverlay,
+            ["closeButton"] = ToggleInfoOverlay,
+
             ["play-button"] = PlayVideo,
             ["pause-button"] = PauseVideo,
             ["mute-button"] = MuteVideo,
             ["unmute-button"] = UnmuteVideo,
+            ["replay-button"] = ReplayVideo,
 
             ["modelTCButton"] = () => OpenModelPage(0),
             ["specsTCButton"] = () => OpenModelPage(1),
@@ -284,6 +324,10 @@ public class HomeScreen : MonoBehaviour
             ["viewModelsButton"] = () => OpenModelPage(0),
             ["viewSpecsButton"] = () => OpenModelPage(1),
 
+            ["resetViewButton"] = ResetView,
+            ["inspectPrevButton"] = InspectPrev,
+            ["inspectNextButton"] = InspectNext,
+
             ["doneButton"] = GoHome,
 
             ["hide"] = ToggleUIVisibility,
@@ -291,13 +335,27 @@ public class HomeScreen : MonoBehaviour
         };
     }
 
+    // Bind within each screen to avoid name collisions across templates
     private void BindButtons()
     {
-        if (actions == null || root == null) return;
+        if (actions == null) return;
+
+        BindButtonsIn(welcomeScreen);
+        BindButtonsIn(homeScreen);
+        BindButtonsIn(videoScreen);
+        BindButtonsIn(modelSelectionScreen);
+        BindButtonsIn(modelSpecsScreen);
+        BindButtonsIn(inspectModelScreen);
+        BindButtonsIn(infoOverlay);
+    }
+
+    private void BindButtonsIn(VisualElement scope)
+    {
+        if (scope == null) return;
 
         foreach (var kv in actions)
         {
-            var btn = root.Q<Button>(kv.Key);
+            var btn = scope.Q<Button>(kv.Key);
             if (btn == null) continue;
 
             btn.clicked -= kv.Value;
@@ -309,11 +367,13 @@ public class HomeScreen : MonoBehaviour
     {
         BuildCameraRigBaseOnly();
         cameraPosition.goToPosition(CAM_START);
+
         PauseVideo();
         ChangeVideoFOV(false);
         SetRotationTargetActive(false);
         SetDecalForMode(UIMode.Home);
-        LoadUXML(homeUxml);
+
+        ShowOnly(homeScreen);
     }
 
     private void OpenVideo()
@@ -321,56 +381,83 @@ public class HomeScreen : MonoBehaviour
         BuildCameraRigBaseOnly();
         ChangeVideoFOV(true);
         cameraPosition.goToPosition(CAM_VIDEO);
+
         SetRotationTargetActive(false);
         SetDecalForMode(UIMode.Video);
-        LoadUXML(videoUxml); 
-        if (playButton != null && videoPlayer != null && !videoPlayer.isPrepared) 
+
+        ShowOnly(videoScreen);
+
+        if (playButton != null && videoPlayer != null && !videoPlayer.isPrepared)
             playButton.SetEnabled(false);
     }
 
     private void OpenModelRoot()
     {
-        if (!HasModelPages(1))
-        {
-            Debug.LogError("modelUxmlPages not assigned. Needs at least [0]=Models page.");
-            return;
-        }
-
         PauseVideo();
         ChangeVideoFOV(false);
 
         BuildCameraRigForModel(currentSimModel);
-
         cameraPosition.goToPosition(CAM_MODEL_VIEW);
-        SetRotationTargetActive(true);
 
+        SetRotationTargetActive(true);
         if (cameraController != null)
             cameraController.SetTarget(rotationTarget, true);
 
         SetDecalForMode(UIMode.Model);
-        LoadUXML(modelUxmlPages[0]);
+
+        ShowOnly(modelSelectionScreen);
+        BuildModelButtonsIfNeeded();
+        UpdateModelSelectionUI();
     }
 
     private void OpenModelPage(int pageIndex)
     {
-        if (!HasModelPages(pageIndex + 1))
+        SetDecalForMode(UIMode.Model);
+
+        if (pageIndex == 0)
         {
-            Debug.LogError($"modelUxmlPages missing page index {pageIndex}. Assign 0=Models,1=Specs,2=Inspect.");
+            ShowOnly(modelSelectionScreen);
+            BuildModelButtonsIfNeeded();
+            UpdateModelSelectionUI();
             return;
         }
 
-        // Keep camera in model view for all model pages
-       // BuildCameraRigForModel(currentSimModel);
-       // cameraPosition.goToPosition(CAM_MODEL_VIEW);
-       // SetRotationTargetActive(true);
-        //SetDecalForMode(UIMode.Video);
-        LoadUXML(modelUxmlPages[pageIndex]);
+        if (pageIndex == 1)
+        {
+            ShowOnly(modelSpecsScreen);
+            if (currentSimModel != null) PopulateSpecsUI(currentSimModel);
+            return;
+        }
+
+        if (pageIndex == 2)
+        {
+            ShowOnly(inspectModelScreen);
+            if (currentSimModel != null) PopulateInspectUI(currentSimModel);
+            return;
+        }
     }
 
-    private bool HasModelPages(int minCount)
-        => modelUxmlPages != null
-           && modelUxmlPages.Length >= minCount
-           && modelUxmlPages.Take(minCount).All(p => p != null);
+    private void ToggleInfoOverlay()
+    {
+        if (infoOverlay == null) return;
+
+        bool currentlyVisible = infoOverlay.style.display != DisplayStyle.None;
+        bool opening = !currentlyVisible;
+
+        infoOverlay.style.display = opening ? DisplayStyle.Flex : DisplayStyle.None;
+
+        if (opening)
+            infoOverlay.BringToFront();
+
+        // Disable rotation target when overlay opens
+        if (rotationTarget != null)
+            rotationTarget.gameObject.SetActive(!opening);
+
+        // Optional safety
+        if (cameraController != null)
+            cameraController.canRotate = !opening;
+
+    }
 
     // -------------------------
     // Model selection / spawning
@@ -400,11 +487,13 @@ public class HomeScreen : MonoBehaviour
         Quaternion rot = currentSimModel.modelPrefab.transform.rotation;
         currentModelInstance = Instantiate(currentSimModel.modelPrefab, pos, rot);
 
-        // rebuild camera rig to include this model’s inspect anchors
         BuildCameraRigForModel(currentSimModel);
 
         UpdateModelSelectionUI();
-        PopulateCurrentPage();
+
+        // If user is on specs/inspect screens, keep content in sync
+        if (IsVisible(modelSpecsScreen)) PopulateSpecsUI(currentSimModel);
+        if (IsVisible(inspectModelScreen)) PopulateInspectUI(currentSimModel);
     }
 
     // -------------------------
@@ -412,21 +501,37 @@ public class HomeScreen : MonoBehaviour
     // -------------------------
     private void CacheUI()
     {
-        playButton = root?.Q<Button>("play-button");
-        pauseButton = root?.Q<Button>("pause-button");
-        muteButton = root?.Q<Button>("mute-button");
-        unmuteButton = root?.Q<Button>("unmute-button");
-        progressBar = root?.Q<ProgressBar>("progress-bar");
+        // Video screen
+        playButton = videoScreen?.Q<Button>("play-button");
+        pauseButton = videoScreen?.Q<Button>("pause-button");
+        muteButton = videoScreen?.Q<Button>("mute-button");
+        unmuteButton = videoScreen?.Q<Button>("unmute-button");
+        replayButton = videoScreen?.Q<Button>("replay-button");
+        progressBar = videoScreen?.Q<ProgressBar>("progress-bar");
 
-        modelsContainer = root?.Q<VisualElement>("Models");
-        specsListContainer = root?.Q<VisualElement>("SpecsContainer");
-        inspectListContainer = root?.Q<VisualElement>("InspectContainer");
-        selectedModel = root?.Q<Label>("selectedModel");
+
+        // Model selection screen
+        modelsContainer = modelSelectionScreen?.Q<VisualElement>("Models");
+        selectedModel = modelSelectionScreen?.Q<Label>("selectedModel");
+
+        // Specs screen
+        specsListContainer = modelSpecsScreen?.Q<VisualElement>("SpecsContainer");
+
+        // Inspect screen
+        inspectListContainer = inspectModelScreen?.Q<VisualElement>("InspectContainer");
+        resetViewButton = inspectModelScreen?.Q<Button>("resetViewButton");
+        inspectPrevButton = inspectModelScreen?.Q<Button>("inspectPrevButton");
+        inspectNextButton = inspectModelScreen?.Q<Button>("inspectNextButton");
+        if (resetViewButton != null)
+            resetViewButton.style.display = DisplayStyle.None;
     }
 
     private void BuildModelButtonsIfNeeded()
     {
         if (modelsContainer == null || modelButtonTemplate == null) return;
+
+        // Only build once unless you intentionally want to rebuild every time
+        if (modelsContainer.childCount > 0 && modelButtons.Count > 0) return;
 
         modelButtons.Clear();
         modelsContainer.Clear();
@@ -445,7 +550,10 @@ public class HomeScreen : MonoBehaviour
 
             btn.name = m.id;
             btn.text = m.modelName;
-            btn.clicked += () => SelectSimModel(m.id);
+
+            // Capture id
+            string mid = m.id;
+            btn.clicked += () => SelectSimModel(mid);
 
             modelsContainer.Add(instance);
             modelButtons[m.id] = btn;
@@ -461,19 +569,6 @@ public class HomeScreen : MonoBehaviour
 
         if (selectedModel != null && currentSimModel != null)
             selectedModel.text = currentSimModel.modelName;
-    }
-
-    private void PopulateCurrentPage()
-    {
-        UpdateModelSelectionUI();   
-
-        if (currentSimModel == null) return;
-
-        if (IsCurrent(modelUxmlPages, 1))
-            PopulateSpecsUI(currentSimModel);
-
-        if (IsCurrent(modelUxmlPages, 2))
-            PopulateInspectUI(currentSimModel);
     }
 
     private void PopulateSpecsUI(SimulatorModel model)
@@ -515,7 +610,6 @@ public class HomeScreen : MonoBehaviour
                 case SimulatorModel.SpecType.InvertedBar:
                     row = specRowBarTemplate?.Instantiate();
                     if (row == null) break;
-
                     row.Q<Label>("specLabel").text = spec.label;
 
                     var valueLabelInv = row.Q<Label>("specValue");
@@ -527,7 +621,6 @@ public class HomeScreen : MonoBehaviour
                         invBar.lowValue = 0f;
                         invBar.highValue = Mathf.Max(0.0001f, spec.max);
 
-                        // Invert the displayed fill:
                         float clamped = Mathf.Clamp(spec.current, 0f, invBar.highValue);
                         invBar.value = invBar.highValue - clamped;
                     }
@@ -583,8 +676,13 @@ public class HomeScreen : MonoBehaviour
 
         inspectListContainer.Clear();
         inspectButtons.Clear();
+        activeInspectIndex = -1;
 
-        if (model.inspectPoints == null) return;
+        if (model.inspectPoints == null)
+        {
+            UpdateInspectSelectionUI();
+            return;
+        }
 
         for (int i = 0; i < model.inspectPoints.Length; i++)
         {
@@ -633,15 +731,52 @@ public class HomeScreen : MonoBehaviour
         for (int i = 0; i < inspectButtons.Count; i++)
         {
             int cameraIndex = FIRST_DYNAMIC_CAM + i;
-            var b = inspectButtons[i];
-            if (b == null) continue;
+            var button = inspectButtons[i];
+            if (button == null) continue;
 
-            b.EnableInClassList("active", cameraIndex == activeInspectIndex);
+            bool isActive = (cameraIndex == activeInspectIndex);
+
+            // Keep button highlight if you want
+            button.EnableInClassList("active", isActive);
+
+            // Also highlight the label inside this row
+            var row = button.parent; // button is inside the row
+            var label = row?.Q<Label>("inspectLabel");
+            if (label != null)
+                label.EnableInClassList("active", isActive);
+        }
+
+        // Show Reset View ONLY after an inspect point is selected
+        if (resetViewButton != null)
+        {
+            resetViewButton.style.display =
+                (activeInspectIndex >= FIRST_DYNAMIC_CAM) ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        int count = GetInspectCount();
+
+        int first = FIRST_DYNAMIC_CAM;
+        int last = FIRST_DYNAMIC_CAM + count - 1;
+
+        bool inspecting = count > 0 && activeInspectIndex >= first && activeInspectIndex <= last;
+
+        if (inspectPrevButton != null)
+        {
+            // Show only if we are inspecting and there is a previous inspect point
+            bool showPrev = inspecting && activeInspectIndex > first;
+            inspectPrevButton.style.display = showPrev ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        if (inspectNextButton != null)
+        {
+            // Show only if we are inspecting and there is a next inspect point
+            bool showNext = inspecting && activeInspectIndex < last;
+            inspectNextButton.style.display = showNext ? DisplayStyle.Flex : DisplayStyle.None;
         }
     }
 
     // -------------------------
-    // Helpers
+    // Video helpers
     // -------------------------
     private void PlayVideo()
     {
@@ -679,12 +814,96 @@ public class HomeScreen : MonoBehaviour
         if (unmuteButton != null) unmuteButton.style.display = DisplayStyle.None;
     }
 
+    private void ReplayVideo()
+    {
+        if (videoPlayer == null) return;
+
+        if (!videoPlayer.isPrepared)
+        {
+            videoPlayer.Prepare();
+            return;
+        }
+
+        videoPlayer.time = 0;
+        if (videoPlayer.frameCount > 0)
+            videoPlayer.frame = 0;
+
+        videoPlayer.Play();
+
+        if (playButton != null) playButton.style.display = DisplayStyle.None;
+        if (pauseButton != null) pauseButton.style.display = DisplayStyle.Flex;
+    }
+
     private void OnVideoPrepared(VideoPlayer source)
     {
         if (playButton != null)
             playButton.SetEnabled(true);
     }
 
+    // -------------------------
+    // Reset View
+    // -------------------------
+    private void ResetView()
+    {
+        if (!IsAnyModelScreenVisible()) return;
+
+        activeInspectIndex = -1;
+        cameraPosition.goToPosition(CAM_MODEL_VIEW);
+        UpdateInspectSelectionUI();
+    }
+
+
+    // -------------------------
+    // Inspect View
+    // -------------------------
+
+    private int GetInspectCount()
+    => (currentSimModel != null && currentSimModel.inspectPoints != null)
+        ? currentSimModel.inspectPoints.Length
+        : 0;
+
+    private void GoToInspectIndex(int cameraIndex)
+    {
+        activeInspectIndex = cameraIndex;
+        cameraPosition.goToPosition(cameraIndex);
+        UpdateInspectSelectionUI();
+    }
+
+    private void InspectNext()
+    {
+        int count = GetInspectCount();
+        if (count <= 0) return;
+
+        int first = FIRST_DYNAMIC_CAM;
+        int last = FIRST_DYNAMIC_CAM + count - 1;
+
+        // If not inspecting yet, start at first
+        int next = (activeInspectIndex < first || activeInspectIndex > last)
+            ? first
+            : Mathf.Min(activeInspectIndex + 1, last);
+
+        GoToInspectIndex(next);
+    }
+
+    private void InspectPrev()
+    {
+        int count = GetInspectCount();
+        if (count <= 0) return;
+
+        int first = FIRST_DYNAMIC_CAM;
+        int last = FIRST_DYNAMIC_CAM + count - 1;
+
+        // If not inspecting yet, start at first (or last—your choice). We'll start at first.
+        int prev = (activeInspectIndex < first || activeInspectIndex > last)
+            ? first
+            : Mathf.Max(activeInspectIndex - 1, first);
+
+        GoToInspectIndex(prev);
+    }
+
+    // -------------------------
+    // Misc helpers
+    // -------------------------
     private void ChangeVideoFOV(bool isVideo)
     {
         if (Camera.main == null) return;
@@ -697,13 +916,6 @@ public class HomeScreen : MonoBehaviour
             rotationTarget.gameObject.SetActive(on);
     }
 
-    private bool IsCurrent(VisualTreeAsset[] arr, int i)
-        => arr != null && i >= 0 && i < arr.Length && arr[i] != null
-           && currentTree != null && currentTree == arr[i];
-
-    private bool IsAnyModelPageActive()
-        => IsCurrent(modelUxmlPages, 0) || IsCurrent(modelUxmlPages, 1) || IsCurrent(modelUxmlPages, 2);
-
     private void TakeScreenshot()
     {
         if (ScreenshotHandler.Instance != null)
@@ -712,15 +924,19 @@ public class HomeScreen : MonoBehaviour
 
     private void ToggleUIVisibility()
     {
-        var right = root?.Q<VisualElement>("RightContainer");
+        // If RightContainer exists inside multiple screens, prefer the visible one
+        VisualElement right = null;
+
+        if (IsVisible(homeScreen)) right = homeScreen?.Q<VisualElement>("RightContainer");
+        else if (IsVisible(videoScreen)) right = videoScreen?.Q<VisualElement>("RightContainer");
+        else if (IsVisible(modelSelectionScreen)) right = modelSelectionScreen?.Q<VisualElement>("RightContainer");
+        else if (IsVisible(modelSpecsScreen)) right = modelSpecsScreen?.Q<VisualElement>("RightContainer");
+        else if (IsVisible(inspectModelScreen)) right = inspectModelScreen?.Q<VisualElement>("RightContainer");
+        else right = root?.Q<VisualElement>("RightContainer");
+
         if (right == null) return;
 
         uiHidden = !uiHidden;
-
-        right.style.display = uiHidden
-            ? DisplayStyle.None
-            : DisplayStyle.Flex;
+        right.style.display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
     }
-
 }
-

@@ -225,54 +225,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1437723229}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &185269949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185269947}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63b7a6bd1736b4945b273aec564089c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraController: {fileID: 372612981}
-  cameraPosition: {fileID: 372612970}
-  decalController: {fileID: 0}
-  rotationTarget: {fileID: 0}
-  spawnPoint: {fileID: 0}
-  swoopPosition: {fileID: 0}
-  startPosition: {fileID: 0}
-  modelViewPosition: {fileID: 0}
-  videoPosition: {fileID: 0}
-  uiDocument: {fileID: 185269952}
-  homeUxml: {fileID: 0}
-  videoUxml: {fileID: 0}
-  modelUxmlPages: []
-  resourcesPath: GamyraDrive
-  defaultModelId: B1
-  modelButtonTemplate: {fileID: 0}
-  specRowTextTemplate: {fileID: 0}
-  specRowBarTemplate: {fileID: 0}
-  specRowToggleTemplate: {fileID: 0}
-  specRowChipsTemplate: {fileID: 0}
-  inspectRowTemplate: {fileID: 0}
-  video_FOV: 0
-  normal_FOV: 0
-  selectedSimModel: B1
---- !u!114 &185269952 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8438354557411125354, guid: dd59bae0ef4e040d98690c5c883a1a86,
-    type: 3}
-  m_PrefabInstance: {fileID: 1437723229}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185269947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!328 &185269954
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -975,6 +927,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &535355602
 MeshFilter:
@@ -1087,6 +1040,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &557009685
 MeshFilter:
@@ -1234,14 +1188,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604764260}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1.35
   m_Range: 3
   m_SpotAngle: 140.21524
   m_InnerSpotAngle: 75.11059
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
@@ -1628,6 +1582,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1042529884
 MeshFilter:
@@ -1814,7 +1769,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 9
+  serializedVersion: 10
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -1829,6 +1784,12 @@ LightingSettings:
   m_BakeResolution: 30
   m_Padding: 5
   m_LightmapCompression: 0
+  m_LightmapPackingMode: 1
+  m_LightmapPackingMethod: 0
+  m_XAtlasPackingAttempts: 16384
+  m_XAtlasBruteForce: 0
+  m_XAtlasBlockAlign: 0
+  m_XAtlasRepackUnderutilizedLightmaps: 1
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -2101,13 +2062,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4804910866025048192, guid: dd59bae0ef4e040d98690c5c883a1a86, type: 3}
     - {fileID: 2512325261004055562, guid: dd59bae0ef4e040d98690c5c883a1a86, type: 3}
+    - {fileID: 4945541076512268460, guid: dd59bae0ef4e040d98690c5c883a1a86, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6224919542409845935, guid: dd59bae0ef4e040d98690c5c883a1a86,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 185269949}
     - targetCorrespondingSourceObject: {fileID: 6224919542409845935, guid: dd59bae0ef4e040d98690c5c883a1a86,
         type: 3}
       insertIndex: -1
@@ -2178,6 +2136,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1473834721
 MeshFilter:

@@ -1,6 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="WelcomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/1-StartScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=30f79524e826b40d8aef65921449c98f&amp;type=3#1-StartScreen_Desktop" />
-    <ui:Template name="HomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/2-HomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=5ec45ee19065b4f68956f27d714ec31f&amp;type=3#2-HomeScreen_Desktop" />
-    <ui:Instance template="WelcomeScreen_Desktop" name="WelcomeScreen" style="flex-grow: 1; display: flex;" />
-    <ui:Instance template="HomeScreen_Desktop" name="HomeScreen" style="flex-grow: 1; display: none;" />
+    <ui:Template name="3-ModelSelection_Desktop" src="project://database/Assets/UITK/Designs/Desktop/3-ModelSelection_Desktop.uxml?fileID=9197481963319205126&amp;guid=9206f03dc6bcf498aba6d6c8022abd62&amp;type=3#3-ModelSelection_Desktop"/>
+    <ui:Template name="4-ModelSpecs_Desktop" src="project://database/Assets/UITK/Designs/Desktop/4-ModelSpecs_Desktop.uxml?fileID=9197481963319205126&amp;guid=cfcecaae1120dda49aa254630527a670&amp;type=3#4-ModelSpecs_Desktop"/>
+    <ui:Template name="5-InspectModel_Desktop" src="project://database/Assets/UITK/Designs/Desktop/5-InspectModel_Desktop.uxml?fileID=9197481963319205126&amp;guid=ad505e81e607943489537de2f48090cd&amp;type=3#5-InspectModel_Desktop"/>
+    <ui:Template name="6-VideoScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/6-VideoScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=eb46023afb95fc646b8613cf3a2e1eaa&amp;type=3#6-VideoScreen_Desktop"/>
+    <ui:Template name="7-infoPanel_Desktop" src="project://database/Assets/UITK/Designs/Desktop/7-infoPanel_Desktop.uxml?fileID=9197481963319205126&amp;guid=62932ddeb2e880c42ba54457e9ec19f1&amp;type=3#7-infoPanel_Desktop"/>
+    <ui:Template name="HomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/2-HomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=5ec45ee19065b4f68956f27d714ec31f&amp;type=3#2-HomeScreen_Desktop"/>
+    <ui:Template name="WelcomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/1-StartScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=30f79524e826b40d8aef65921449c98f&amp;type=3#1-StartScreen_Desktop"/>
+    <ui:VisualElement style="flex-grow: 1; width: 100%; height: 100%; position: relative;">
+        <ui:Instance template="WelcomeScreen_Desktop" name="WelcomeScreen" style="flex-grow: 1; display: flex;"/>
+        <ui:Instance template="HomeScreen_Desktop" name="HomeScreen" style="flex-grow: 1; display: none;"/>
+        <ui:Instance template="6-VideoScreen_Desktop" name="VideoScreen" style="display: none; flex-grow: 1;"/>
+        <ui:Instance template="3-ModelSelection_Desktop" name="ModelSelection" style="display: none; flex-grow: 1;"/>
+        <ui:Instance template="4-ModelSpecs_Desktop" name="ModelSpecs" style="display: none; flex-grow: 1;"/>
+        <ui:Instance template="5-InspectModel_Desktop" name="InspectModel" style="display: none; flex-grow: 1;"/>
+        <ui:Instance template="7-infoPanel_Desktop" name="InfoOverlay" style="display: none; flex-grow: 0; position: absolute; top: 0; bottom: 0; right: 0; left: 0;"/>
+    </ui:VisualElement>
 </ui:UXML>
