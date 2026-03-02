@@ -309,7 +309,7 @@ MonoBehaviour:
     type: 3}
   video_FOV: 60
   normal_FOV: 60
-  selectedSimModel: B1
+  currentModelId: 
 --- !u!114 &227967949
 MonoBehaviour:
   m_ObjectHideFlags: 0

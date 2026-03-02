@@ -97,6 +97,8 @@ public class CameraController : MonoBehaviour
 
             lastMousePosition = Input.mousePosition;
         }
+
+        homeScreen.NotifyUserRotated();
     }
 
     private void HandleZoom()

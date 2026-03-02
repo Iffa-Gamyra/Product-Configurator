@@ -309,6 +309,7 @@
     -unity-font: url("project://database/Assets/UITK/Fonts/KumbhSans-Regular.ttf?fileID=12800000&guid=e8df6be3b51b64012990648c623d0238&type=3#KumbhSans-Regular");
     -unity-font-definition: initial;
     font-size: 18px;
+    color: rgb(253, 253, 253);
 }
 
 .KS-regular-text-14px {
@@ -320,20 +321,14 @@
 
 .selected-button:hover {
     background-color: rgb(255, 255, 255);
+    color: rgb(117, 169, 237);
 }
 
 .selected-button.active {
-    background-color: rgb(116, 185, 173);
+    background-color: rgb(253, 191, 72);
 }
 
-.selected-button:checked {
-    background-color: rgb(115, 14, 8);
-    -unity-background-image-tint-color: rgba(255, 255, 255, 0);
-    border-left-color: rgb(221, 16, 16);
-    border-right-color: rgb(221, 16, 16);
-    border-top-color: rgb(221, 16, 16);
-    border-bottom-color: rgb(221, 16, 16);
-}
+
 
 .chip {
     padding-right: 10px;
@@ -361,3 +356,5 @@
     color: rgb(117, 169, 237);
     -unity-text-outline-color: rgb(117, 169, 237);
 }
+
+

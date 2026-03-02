@@ -181,3 +181,9 @@
     -unity-text-align: middle-left;
     flex-grow: 1;
 }
+
+.inspect-button:hover {
+    background-color: rgba(117, 169, 237, 0);
+    -unity-background-image-tint-color: rgb(117, 169, 237);
+    background-image: url("project://database/Assets/UITK/Images/focus2.png?fileID=2800000&guid=01d826e540d9549ff81d4bd4223f4ca4&type=3#focus2");
+}
