@@ -1,79 +1,84 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CursorManager : MonoBehaviour
 {
     [SerializeField] private Texture2D cursorTexture;
 
     private Vector2 cursorHotSpot;
-    private bool isCustomCursorActive = false;
-    private bool isHoldingLeftClick = false;
+    private bool isCustomCursorActive;
 
-    void Start()
+    private Camera cam;
+
+    private void Awake()
     {
-        cursorHotSpot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
-        UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Start with the default cursor
+        cam = Camera.main; // cache (Camera.main is expensive)
     }
 
-    void Update()
+    private void Start()
     {
-        if (UIBlockerRaycast.Instance != null && UIBlockerRaycast.Instance.IsPointerOverBlocker())
+        if (cursorTexture != null)
+            cursorHotSpot = new Vector2(cursorTexture.width * 0.5f, cursorTexture.height * 0.5f);
+
+        // Start with default cursor
+        SetDefaultCursor();
+    }
+
+    private void Update()
+    {
+        // UI blocker logic (unchanged behavior)
+        var ui = UIBlockerRaycast.Instance;
+        if (ui != null && ui.IsPointerOverBlocker())
         {
             if (isCustomCursorActive)
-            {
-                UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-                isCustomCursorActive = false;
-            }
+                SetDefaultCursor();
             return;
         }
 
+        bool isHoldingLeftClick = Input.GetMouseButton(0);
 
-        // Check if the left mouse button is held down
-        if (Input.GetMouseButton(0))
+        // If we have no camera, we can't raycast; behave like "no hit"
+        if (cam == null)
         {
-            isHoldingLeftClick = true;
+            if (!isHoldingLeftClick && isCustomCursorActive)
+                SetDefaultCursor();
+            return;
         }
-        else
-        {
-            isHoldingLeftClick = false;
-        }
 
-        // Perform a raycast from the camera towards the mouse position
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            // Check if the object hit by the ray has the "cursor" tag and a BoxCollider
-            if (hit.collider != null && hit.collider.CompareTag("cursor"))
+            bool hitCursor = hit.collider != null && hit.collider.CompareTag("cursor");
+
+            if (hitCursor)
             {
                 if (!isCustomCursorActive || !isHoldingLeftClick)
-                {
-                    UnityEngine.Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto); // Change to custom cursor
-                    isCustomCursorActive = true;
-                }
+                    SetCustomCursor();
             }
             else if (!isHoldingLeftClick)
             {
                 if (isCustomCursorActive)
-                {
-                    UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
-                    isCustomCursorActive = false;
-                }
+                    SetDefaultCursor();
             }
         }
         else if (!isHoldingLeftClick)
         {
             if (isCustomCursorActive)
-            {
-                UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Revert to default cursor
-                isCustomCursorActive = false;
-            }
+                SetDefaultCursor();
         }
     }
 
+    private void SetCustomCursor()
+    {
+        if (isCustomCursorActive) return;
+        Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
+        isCustomCursorActive = true;
+    }
 
-
+    private void SetDefaultCursor()
+    {
+        if (!isCustomCursorActive) return;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        isCustomCursorActive = false;
+    }
 }

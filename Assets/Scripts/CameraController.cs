@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
 
     [Header("References")]
     public HomeScreen homeScreen;
-    public EnableLocation cameraPosition;
+    public CorneaCameraDirector Cornea;
     private CCD_Lerp cameraLerpScript;
 
     private int oldPosition;
@@ -51,8 +51,8 @@ public class CameraController : MonoBehaviour
     {
         bool uiBlocked = UIBlockerRaycast.Instance != null && UIBlockerRaycast.Instance.IsPointerOverBlocker();
 
-        if (cameraPosition != null)
-            oldPosition = cameraPosition.Cornea.Lerp.GetCurrentIndex;
+        if (Cornea != null)
+            oldPosition = Cornea.Lerp.GetCurrentIndex;
 
         if (canRotate && !cameraLerpScript.IsActive)
         {
@@ -68,7 +68,7 @@ public class CameraController : MonoBehaviour
 
         else if (!canRotate && previousStatus && !cameraLerpScript.IsActive)
         {
-            cameraPosition?.goToPosition(oldPosition);
+            goToPosition(oldPosition);
             previousStatus = false;
         }
     }
@@ -173,7 +173,10 @@ public class CameraController : MonoBehaviour
             }
         }
     }
-
+    public void goToPosition(int pos)
+    {
+        Cornea.Lerp.CameraLerp(pos);
+    }
     public void SetTarget(Transform newTarget, bool rotateCamera)
     {
         if (targets.Count == 0)
