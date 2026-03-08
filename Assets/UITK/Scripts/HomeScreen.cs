@@ -577,7 +577,7 @@ public class HomeScreen : MonoBehaviour
     {
         if (currentSimModel == null) return;
 
-        WebGLDownloadManager.Instance?.DownloadPdfFromStreamingAssets(
+        WebGLDownloadManager.Instance?.DownloadPdfFromServer(
             currentSimModel.brochurePdfFile,
             currentSimModel.brochureDownloadName
         );

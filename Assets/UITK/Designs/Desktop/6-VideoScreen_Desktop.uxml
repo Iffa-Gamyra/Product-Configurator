@@ -1,6 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
-    <Style src="project://database/Assets/UITK/Stylesheet_0.8E.uss?fileID=7433441132597879392&amp;guid=42244b06f07724e8b9aff270568391b8&amp;type=3#Stylesheet_0.8E"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="TopContainer" class="top-container-desktop" style="flex-basis: 54px;"/>
         <ui:VisualElement name="BottomContainer" class="bottom-container-desktop" style="flex-direction: column; top: auto; align-self: auto; width: auto; flex-grow: 1; flex-basis: auto;">
