@@ -11,7 +11,7 @@ public class CursorManager : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main; // cache (Camera.main is expensive)
+        cam = Camera.main; 
     }
 
     private void Start()
@@ -19,15 +19,15 @@ public class CursorManager : MonoBehaviour
         if (cursorTexture != null)
             cursorHotSpot = new Vector2(cursorTexture.width * 0.5f, cursorTexture.height * 0.5f);
 
-        // Start with default cursor
+        
         SetDefaultCursor();
     }
 
     private void Update()
     {
-        // UI blocker logic (unchanged behavior)
+        
         var ui = UIBlockerRaycast.Instance;
-        if (ui != null && ui.IsPointerOverBlocker())
+        if (ui != null && ui.IsPointerOverUI())
         {
             if (isCustomCursorActive)
                 SetDefaultCursor();
@@ -36,7 +36,7 @@ public class CursorManager : MonoBehaviour
 
         bool isHoldingLeftClick = Input.GetMouseButton(0);
 
-        // If we have no camera, we can't raycast; behave like "no hit"
+        
         if (cam == null)
         {
             if (!isHoldingLeftClick && isCustomCursorActive)

@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UITK/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="TopContainer" class="top-container-desktop"/>
         <ui:VisualElement name="BottomContainer" class="bottom-container-desktop" style="margin-right: 0;">

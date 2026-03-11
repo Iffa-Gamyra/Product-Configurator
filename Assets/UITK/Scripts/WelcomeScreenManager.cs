@@ -3,12 +3,22 @@ using UnityEngine.UIElements;
 
 public class WelcomeScreenManager
 {
-    public Action Start { set => start_but.clicked += value; }
-
-    private Button start_but;
+    private readonly Button startButton;
+    private Action onStart;
 
     public WelcomeScreenManager(VisualElement root)
     {
-        start_but = root.Q<Button>("start");
+        startButton = root.Q<Button>("start");
+    }
+
+    public void BindStart(Action action)
+    {
+        if (startButton == null) return;
+
+        if (onStart != null)
+            startButton.clicked -= onStart;
+
+        onStart = action;
+        startButton.clicked += onStart;
     }
 }

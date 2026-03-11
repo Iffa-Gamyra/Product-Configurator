@@ -1,75 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DeviceDetection : MonoBehaviour
 {
-   
-    public GameObject desktopUI;
-    public GameObject mobileUI;
+    public static DeviceDetection Instance { get; private set; }
+    public static bool IsMobileActive { get; private set; }
 
-    public bool isMac;
-  
-
-
-    // Start is called before the first frame update
-    void OnEnable()
+    public enum UIMode
     {
-        if (SystemInfo.operatingSystem.Contains("iPad"))
-        {
-
-            mobileUI.SetActive(false);
-            desktopUI.SetActive(true);
-
-        }
-        else if (SystemInfo.operatingSystem.Contains("Mac"))
-        {
-            mobileUI.SetActive(false);
-            desktopUI.SetActive(true);
-
-        }
-        else if(SystemInfo.operatingSystem.Contains("iPhone"))
-        {
-
-            mobileUI.SetActive(true);
-            desktopUI.SetActive(false);
-
-        }
-        else if(SystemInfo.operatingSystem.Contains("Windows"))
-        {
-
-            mobileUI.SetActive(false);
-            desktopUI.SetActive(true);
-
-        }
-        else if (SystemInfo.operatingSystem.Contains("Android"))
-        {
-
-            mobileUI.SetActive(true);
-            desktopUI.SetActive(false);
-        }
-      
+        Auto,
+        Desktop,
+        Mobile
     }
 
-    // Update is called once per frame
-    void Update()
+    [Header("UI Roots")]
+    [SerializeField] private GameObject desktopUI;
+    [SerializeField] private GameObject mobileUI;
+
+    [Header("Test Mode")]
+    [SerializeField] private UIMode mode = UIMode.Auto;
+
+    private void Awake()
     {
+        Instance = this;
+    }
 
-     /*   if (isMac)
+    private void OnEnable()
+    {
+        ApplyMode();
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (!Application.isPlaying)
+            return;
+
+        ApplyMode();
+    }
+#endif
+
+    private void ApplyMode()
+    {
+        bool useMobile = mode switch
         {
-            if (Input.touchCount > 0)
-            {
-                isMac = false;
-                mobileUI.SetActive(true);
-                desktopUI.SetActive(false);
+            UIMode.Desktop => false,
+            UIMode.Mobile => true,
+            _ => DetectMobile()
+        };
 
-            }
-            else
-            {
-                mobileUI.SetActive(false);
-                desktopUI.SetActive(true);
-            }
-        }*/
+        IsMobileActive = useMobile;
+
+        if (mobileUI != null)
+            mobileUI.SetActive(useMobile);
+
+        if (desktopUI != null)
+            desktopUI.SetActive(!useMobile);
+    }
+
+    private bool DetectMobile()
+    {
+        if (Application.isMobilePlatform)
+            return true;
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            return Screen.width <= 900;
+
+        return false;
     }
 }
