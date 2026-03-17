@@ -779,9 +779,6 @@ MonoBehaviour:
   minDistance: 0.75
   maxDistance: 2.5
   canRotate: 0
-  invertPedestalDirection: 1
-  invertPanDirection: 1
-  minYPosition: 0.1
   homeScreen: {fileID: 227967948}
   Cornea: {fileID: 372612967}
 --- !u!1 &531148337
