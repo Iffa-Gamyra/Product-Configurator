@@ -229,6 +229,12 @@ public class CameraController : MonoBehaviour
 
     public void goToPosition(int pos)
     {
+        if (Cornea == null || Cornea.Lerp == null)
+        {
+            Debug.LogWarning($"Invalid camera move: {pos}");
+            return;
+        }
+
         Cornea.Lerp.CameraLerp(pos);
     }
 

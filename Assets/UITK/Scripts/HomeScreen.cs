@@ -452,11 +452,15 @@ public class HomeScreen : MonoBehaviour
 
     private void OpenInspect()
     {
+        if (!HasInspectPoints(currentProduct))
+            return;
+
         if (isMobileLayout)
         {
             inspectUI?.Rebuild(currentProduct);
             return;
         }
+
         displayFlow.ShowInspect();
         inspectUI?.Rebuild(currentProduct);
         productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
@@ -548,7 +552,6 @@ public class HomeScreen : MonoBehaviour
         else
         {
             ui.InspectListContainer?.Clear();
-            inspectUI?.ResetView();
         }
 
         UpdateBrochureButtonState();

@@ -58,6 +58,7 @@ public sealed class InspectUIController
 
         if (product?.inspectPoints == null || product.inspectPoints.Length == 0)
         {
+            activeInspectCameraIndex = -1;
             UpdateSelectionUI();
             return;
         }
@@ -95,6 +96,9 @@ public sealed class InspectUIController
 
     public void ResetView()
     {
+        if (inspectCameraIndices == null || inspectCameraIndices.Count == 0)
+            return;
+
         activeInspectCameraIndex = -1;
         cameraController?.goToPosition(camModelViewIndex);
         UpdateSelectionUI();

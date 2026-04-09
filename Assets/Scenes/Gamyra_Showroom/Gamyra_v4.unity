@@ -344,8 +344,8 @@ MonoBehaviour:
   videoPosition: {fileID: 702382163687972318}
   uiDocument: {fileID: 227967951}
   resourcesPath: GamyraDrive
-  defaultProductId: B1
-  currentProductId: B1
+  defaultProductId: AB1_noInspect
+  currentProductId: AB1_noInspect
   productButtonTemplate: {fileID: 9197481963319205126, guid: 8ee64d7de25248a47b7a66d66dc1e5ba,
     type: 3}
   specRowTextTemplate: {fileID: 9197481963319205126, guid: f644a1568221b54429a6f6de84ae422a,
@@ -549,7 +549,7 @@ PrefabInstance:
     - target: {fileID: 5090197892030056743, guid: f92630a82b6361740956a36e0298f82d,
         type: 3}
       propertyPath: LerpCameraPositions.Array.size
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5090197892030056743, guid: f92630a82b6361740956a36e0298f82d,
         type: 3}
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   desktopUI: {fileID: 227967942}
   mobileUI: {fileID: 185269947}
-  mode: 2
+  mode: 0
 --- !u!4 &1803510077
 Transform:
   m_ObjectHideFlags: 0

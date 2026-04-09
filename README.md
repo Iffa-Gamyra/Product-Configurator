@@ -22,6 +22,7 @@ Assign in Inspector:
 - `video_FOV`, `normal_FOV` — camera field of view values
 - `resourcesPath` — path inside Resources folder where Product assets are stored (default: `GamyraDrive`)
 - `defaultProductId` — product ID to select on startup
+- `currentProductId` — product ID selected currently (assign same as default)
 
 **DeviceDetection** (MonoBehaviour)
 Controls which UIDocument GameObject is active. Assign `desktopUI` and `mobileUI` GameObject references. Set `mode` to `Auto` for production — detects mobile via `Application.isMobilePlatform` or screen width ≤ 900px on WebGL.
@@ -50,7 +51,7 @@ Configure `fadeInDuration`, `fadeOutDuration`, `scaleUpDuration`, `scaleDownDura
 3. Assign `productPrefab`
 4. Toggle `showSpecs` and `showInspect` to control which panels appear for this product
 5. Add `SpecRow` entries under Specs — choose the type (Text, Bar, InvertedBar, Toggle, Chips) and fill the relevant fields
-6. Add `InspectPoint` entries — each needs a label and a `cameraAnchor` Transform in the scene
+6. Add `InspectPoint` entries — each needs a label and a `cameraAnchor` Transform in the scene (created during development)
 7. Optionally fill `brochurePdfFile` (filename relative to `pdfBaseUrl`) and `brochureDownloadName`
 8. Place the Product asset inside the Resources folder at the path matching `resourcesPath` on HomeScreen
 
