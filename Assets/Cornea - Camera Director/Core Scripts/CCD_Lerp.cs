@@ -64,33 +64,64 @@ public class CCD_Lerp : MonoBehaviour
     }
 
     //lerp camera to stated index position
-	public void CameraLerp(int StateIndex){
-		if ( (StateIndex + 1) <= CameraPositions.Length) {
-			CurrentIndex = StateIndex;
-			StartLerp = true;
-		} else {
-			Debug.LogError ("Camera Lerping can't go to stated index. Out of bounds!");
-		}
-	}
+    public void CameraLerp(int StateIndex)
+    {
+        Defaults();
+
+        if (CameraPositions == null || CameraPositions.Length == 0)
+        {
+            Debug.LogWarning("No camera positions available");
+            return;
+        }
+
+        if (StateIndex < 0 || StateIndex >= CameraPositions.Length)
+        {
+            Debug.LogError($"Camera Lerping can't go to stated index. Out of bounds! Requested: {StateIndex}, Count: {CameraPositions.Length}");
+            return;
+        }
+
+        CurrentIndex = StateIndex;
+        StartLerp = true;
+    }
 
     //lerp camera to the next index
-	public void CameraLerpNext(){
-		if ( (CurrentIndex + 1) < CameraPositions.Length) {
-			CurrentIndex++;
-			StartLerp = true;
-		}
-	}
+    public void CameraLerpNext()
+    {
+        Defaults();
 
-	//lerp camera to the previous index
-	public void CameraLerpPrev(){
-		if (CurrentIndex > 0) {
-			CurrentIndex--;
-			StartLerp = true;
-		}
-	}
+        if (CameraPositions == null || CameraPositions.Length == 0)
+        {
+            Debug.LogWarning("No camera positions available");
+            return;
+        }
 
-	//lerp the positions one after another by incrementing
-	public void CameraLerpPath(){
+        if ((CurrentIndex + 1) < CameraPositions.Length)
+        {
+            CurrentIndex++;
+            StartLerp = true;
+        }
+    }
+
+    //lerp camera to the previous index
+    public void CameraLerpPrev()
+    {
+        Defaults();
+
+        if (CameraPositions == null || CameraPositions.Length == 0)
+        {
+            Debug.LogWarning("No camera positions available");
+            return;
+        }
+
+        if (CurrentIndex > 0)
+        {
+            CurrentIndex--;
+            StartLerp = true;
+        }
+    }
+
+    //lerp the positions one after another by incrementing
+    public void CameraLerpPath(){
 		isPathing = true;
 		lerpingThreshold = 0.01f;
 		CameraLerpNext();

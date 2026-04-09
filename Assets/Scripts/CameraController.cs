@@ -231,10 +231,11 @@ public class CameraController : MonoBehaviour
     {
         if (Cornea == null || Cornea.Lerp == null)
         {
-            Debug.LogWarning($"Invalid camera move: {pos}");
+            Debug.LogWarning($"Invalid camera move: {pos} - Cornea or Lerp is null");
             return;
         }
 
+        Debug.Log($"Trying to move camera to index: {pos}");
         Cornea.Lerp.CameraLerp(pos);
     }
 

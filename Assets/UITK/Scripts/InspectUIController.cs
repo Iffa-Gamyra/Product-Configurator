@@ -63,23 +63,26 @@ public sealed class InspectUIController
             return;
         }
 
+        int validIndex = 0;
+
         for (int i = 0; i < product.inspectPoints.Length; i++)
         {
             var point = product.inspectPoints[i];
-            if (point == null) continue;
+            if (point == null || point.cameraAnchor == null)
+                continue;
 
-            int cameraIndex = firstDynamicCamIndex + i;
+            int cameraIndex = firstDynamicCamIndex + validIndex;
+            validIndex++;
+            Debug.Log(cameraIndex);
             var row = inspectRowTemplate.Instantiate();
             var btn = row.Q<Button>(UINames.InspectRow_Btn);
             var label = row.Q<Label>(UINames.InspectRow_Label);
 
-            if (label != null) label.text = point.label;
+            if (label != null)
+                label.text = point.label;
 
             if (btn != null)
             {
-                if (iconFocus != null)
-                    btn.style.backgroundImage = new StyleBackground(iconFocus);
-
                 inspectButtons.Add(btn);
                 inspectLabels.Add(label);
                 inspectCameraIndices.Add(cameraIndex);
@@ -133,6 +136,8 @@ public sealed class InspectUIController
     {
         activeInspectCameraIndex =
             activeInspectCameraIndex == cameraIndex ? -1 : cameraIndex;
+
+        Debug.Log("activeInspectCameraIndex" +  activeInspectCameraIndex);
 
         if (activeInspectCameraIndex < 0)
             cameraController?.goToPosition(camModelViewIndex);
