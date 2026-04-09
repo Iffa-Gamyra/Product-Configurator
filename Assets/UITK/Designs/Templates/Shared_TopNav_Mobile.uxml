@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Shared_TopNav_Container" class="mobile-top-nav">
+        <ui:Button text="PRODUCTS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HomeTab_Button" class="tab-button-active font-body text-accent text-sm"/>
+        <ui:Label tabindex="-1" text="/" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TopNav_Sep_Label" class="tab-separator-label font-body text-sm text-muted"/>
+        <ui:Button text="VIDEO" parse-escape-sequences="true" display-tooltip-when-elided="true" name="VideoTab_Button" class="tab-button-inactive font-body text-sm text-muted"/>
+    </ui:VisualElement>
+</ui:UXML>

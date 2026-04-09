@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Shared_TopNav_Root" class="desktop-top-nav-bar">
+        <ui:Button text="CHOOSE PRODUCT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductTab_Button" class="tab-button-active font-body text-sm text-accent"/>
+        <ui:Label tabindex="-1" text="/" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Sep1_Label" class="tab-separator-label font-body text-sm text-muted"/>
+        <ui:Button text="SPECS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SpecsTab_Button" class="tab-button-inactive font-body text-sm text-muted"/>
+        <ui:Label tabindex="-1" text="/" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Sep2_Label" class="tab-separator-label font-body text-sm text-muted"/>
+        <ui:Button text="INSPECT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="InspectTab_Button" class="tab-button-inactive font-body text-sm text-muted"/>
+        <ui:Label tabindex="-1" text="CHOOSE PRODUCT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="selectedProduct" class="tab-active-banner-label font-body text-lg text-accent"/>
+    </ui:VisualElement>
+</ui:UXML>

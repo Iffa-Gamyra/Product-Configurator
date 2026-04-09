@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Shared_BrochureSection" src="project://database/Assets/UITK/Designs/Templates/Shared_BrochureSection.uxml?fileID=9197481963319205126&amp;guid=e5472f59e06b5784099bc45982776c72&amp;type=3#Shared_BrochureSection"/>
+    <ui:Template name="Shared_LeftPanel_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_LeftPanel_Desktop.uxml?fileID=9197481963319205126&amp;guid=a2a400808e822c04ca57b258bf00105e&amp;type=3#Shared_LeftPanel_Desktop"/>
+    <ui:Template name="Shared_TopNav_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_TopNav_Desktop.uxml?fileID=9197481963319205126&amp;guid=98777ecab75e5e2418289bbdaebe08b6&amp;type=3#Shared_TopNav_Desktop"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Screen_ProductSpecs_Root" class="screen-root">
+        <ui:VisualElement name="ProductSpecs_Top_Container" class="desktop-top-nav-bar">
+            <ui:Instance template="Shared_TopNav_Desktop" name="ProductSpecs_TopNav" class="desktop-top-nav-bar"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ProductSpecs_Bottom_Container" class="desktop-panel-row">
+            <ui:Instance template="Shared_LeftPanel_Desktop" name="ProductSpecs_LeftPanel" class="desktop-left-panel"/>
+            <ui:VisualElement name="RightContainer" class="desktop-right-container">
+                <ui:VisualElement name="ProductSpecs_Middle_Spacer" class="desktop-middle-spacer"/>
+                <ui:VisualElement name="ProductSpecs_Panel_Outer" class="desktop-panel-outer">
+                    <ui:VisualElement name="UIBlocker" class="desktop-ui-blocker">
+                        <ui:VisualElement name="ProductSpecs_Panel_Card" class="desktop-panel-card-spaced">
+                            <ui:VisualElement name="ProductSpecs_BackNav_Row" class="panel-backnav-row">
+                                <ui:VisualElement name="ProductSpecs_BackNav_Container" class="panel-backnav-button-container">
+                                    <ui:Button text="" parse-escape-sequences="false" display-tooltip-when-elided="true" name="ProductSpecs_BackNav_Button" class="panel-ghost-button font-body text-md text-dark"/>
+                                    <ui:Label text="BACK" name="ProductSpecs_BackNav_Label" class="font-body text-base text-primary panel-backnav-label"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:Label tabindex="-1" text="SPECS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductSpecs_Title_Label" class="panel-section-title text-primary font-body text-title"/>
+                            <ui:VisualElement name="ProductSpecs_SpecsContainer" class="panel-content-list"/>
+                            <ui:Instance template="Shared_BrochureSection" name="Desktop_BrochureSection" style="flex-shrink: 0;"/>
+                            <ui:VisualElement name="ProductSpecs_Divider" class="horizontal-divider-thin"/>
+                            <ui:VisualElement name="ProductSpecs_Actions_Row" class="panel-actions-row">
+                                <ui:Button text="NEXT" parse-escape-sequences="false" display-tooltip-when-elided="true" name="ProductSpecs_Next_Button" class="panel-action-button font-body text-md text-dark"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

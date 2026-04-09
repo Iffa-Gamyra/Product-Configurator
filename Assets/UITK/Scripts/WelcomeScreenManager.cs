@@ -6,9 +6,9 @@ public class WelcomeScreenManager
     private readonly Button startButton;
     private Action onStart;
 
-    public WelcomeScreenManager(VisualElement root)
+    public WelcomeScreenManager(Button startButton)
     {
-        startButton = root.Q<Button>("start");
+        this.startButton = startButton;
     }
 
     public void BindStart(Action action)

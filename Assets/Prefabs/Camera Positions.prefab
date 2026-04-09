@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3520675733469083402}
   m_Layer: 5
-  m_Name: Pos1_Model
+  m_Name: Pos1_Product
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

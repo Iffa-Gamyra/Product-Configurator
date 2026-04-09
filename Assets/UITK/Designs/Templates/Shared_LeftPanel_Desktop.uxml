@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Shared_SideNav_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_SideNav_Desktop.uxml?fileID=9197481963319205126&amp;guid=a437a5a0dc7d74e4383e8457608b41c0&amp;type=3#Shared_SideNav_Desktop"/>
+    <ui:Template name="Shared_Utils" src="project://database/Assets/UITK/Designs/Templates/Shared_Utils.uxml?fileID=9197481963319205126&amp;guid=e9115c32277e1b04cb36e97c547c1698&amp;type=3#Shared_Utils"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Shared_LeftPanel_Root" class="desktop-left-panel">
+        <ui:Instance template="Shared_SideNav_Desktop" name="LeftPanel_SideNav"/>
+        <ui:VisualElement name="Shared_LeftPanel_Utils" class="desktop-util-section">
+            <ui:Instance template="Shared_Utils" name="LeftPanel_Utils"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

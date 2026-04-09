@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="ProductButtonTemplate_Root_Container" class="product-button-root">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="ProductButtonTemplate_Select_Button" text="GamyraDrive B1" selectable="false" enabled="true" focusable="false" class="selected-button active product-select-button font-body text-md text-primary"/>
+    </ui:VisualElement>
+</ui:UXML>

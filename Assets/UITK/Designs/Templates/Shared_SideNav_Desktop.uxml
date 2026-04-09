@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Shared_SideNav_Root">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="HomeNav_Button" class="circle-icon circle-icon-home"/>
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductNav_Button" class="circle-icon circle-icon-product"/>
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="VideoNav_Button" class="circle-icon circle-icon-video"/>
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="InfoOverlay_Button" class="circle-icon circle-icon-info"/>
+    </ui:VisualElement>
+</ui:UXML>

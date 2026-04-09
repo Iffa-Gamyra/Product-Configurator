@@ -1,17 +1,21 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SimulatorModel", menuName = "GamyraDrive/Simulator Model")]
-public class SimulatorModel : ScriptableObject
+[CreateAssetMenu(fileName = "Product", menuName = "Product Configurator/Product")]
+public class Product : ScriptableObject
 {
-    [Header("Model")]
-    public string modelName;              // "GamyraDrive C1"
-    public string id;
-    public GameObject modelPrefab;
+    [Header("Product")]
+    public string productName;             
+    public string productId;
+    public GameObject productPrefab;
+
+    [Header("Visibility")]
+    public bool showSpecs = true;
+    public bool showInspect = true;
 
     [Header("Brochure PDF (StreamingAssets)")]
     public string brochurePdfFile; 
-    public string brochureDownloadName = "Brochure.pdf"; // what the user downloads as
+    public string brochureDownloadName = "Brochure.pdf"; 
 
     [Header("Specs")]
     public SpecRow[] specs;
@@ -20,11 +24,11 @@ public class SimulatorModel : ScriptableObject
     public InspectPoint[] inspectPoints;
     public enum SpecType
     {
-        Text,       // Plain label + value
-        Bar,        // ProgressBar
-        InvertedBar, //Inverted ProgressBar
-        Toggle,     // Yes / No / Optional
-        Chips       // Pills / tags
+        Text,       
+        Bar,        
+        InvertedBar, 
+        Toggle,    
+        Chips     
     }
 
     [Serializable]
@@ -34,11 +38,11 @@ public class SimulatorModel : ScriptableObject
         public SpecType type;
 
         [Header("Display")]
-        public string value;          // always shown (e.g. "208°", "SCANeR 2025.2")
+        public string value;         
 
         [Header("Bar (only if type = Bar / InvertedBar only)")]
-        public float current;         // e.g. 208
-        public float max;             // e.g. 240
+        public float current;    
+        public float max;         
 
         [Header("Toggle (only if type = Toggle)")]
         public ToggleState toggle;

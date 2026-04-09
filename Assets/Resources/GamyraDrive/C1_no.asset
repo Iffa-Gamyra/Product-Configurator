@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: C1_no
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  productName: GamyraDrive C1
+  productId: C1_no
+  productPrefab: {fileID: 2331036031649932956, guid: 77972c55b5a237d4cb65f430aef25785,
+    type: 3}
+  showSpecs: 1
+  showInspect: 1
+  brochurePdfFile: C1.pdf
+  brochureDownloadName: GamyraDrive_C1.pdf
+  specs:
+  - label: Display Mode
+    type: 0
+    value: Wrap Display
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Horizontal FOV
+    type: 1
+    value: "208 \xB0"
+    current: 208
+    max: 240
+    toggle: 0
+  - label: Refresh Rate
+    type: 1
+    value: 240 Hz
+    current: 240
+    max: 240
+    toggle: 0
+  - label: Display Response Time
+    type: 2
+    value: 0.3 ms
+    current: 0.3
+    max: 5
+    toggle: 0
+  - label: Motion DOF
+    type: 1
+    value: 5 DOF
+    current: 5
+    max: 6
+    toggle: 0
+  - label: Control Type
+    type: 0
+    value: Steering Wheel & Pedals
+    current: 0
+    max: 0
+    toggle: 0
+  - label: VR Support
+    type: 3
+    value: 
+    current: 0
+    max: 0
+    toggle: 2
+  - label: Footprint Width
+    type: 1
+    value: 80 cm
+    current: 80
+    max: 200
+    toggle: 0
+  - label: Scenario Features
+    type: 4
+    value: Wrap Display|Modular
+    current: 0
+    max: 0
+    toggle: 0
+  inspectPoints: []

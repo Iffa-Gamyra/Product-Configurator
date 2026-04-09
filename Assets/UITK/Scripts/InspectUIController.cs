@@ -7,19 +7,18 @@ public sealed class InspectUIController
     private readonly CameraController cameraController;
     private readonly int camModelViewIndex;
     private readonly int firstDynamicCamIndex;
-
     private readonly VisualElement inspectListContainer;
     private readonly VisualTreeAsset inspectRowTemplate;
-
+    private readonly Texture2D iconFocus;
     private readonly Button resetViewButton;
     private readonly Button inspectPrevButton;
     private readonly Button inspectNextButton;
 
     private readonly List<Button> inspectButtons = new();
+    private readonly List<Label> inspectLabels = new();
     private readonly List<int> inspectCameraIndices = new();
 
     private int activeInspectCameraIndex = -1;
-
     public int ActiveInspectCameraIndex => activeInspectCameraIndex;
 
     public InspectUIController(
@@ -30,55 +29,58 @@ public sealed class InspectUIController
         VisualTreeAsset inspectRowTemplate,
         Button resetViewButton,
         Button inspectPrevButton,
-        Button inspectNextButton)
+        Button inspectNextButton,
+        Texture2D iconFocus = null)
     {
         this.cameraController = cameraController;
         this.camModelViewIndex = camModelViewIndex;
         this.firstDynamicCamIndex = firstDynamicCamIndex;
-
         this.inspectListContainer = inspectListContainer;
         this.inspectRowTemplate = inspectRowTemplate;
-
         this.resetViewButton = resetViewButton;
         this.inspectPrevButton = inspectPrevButton;
         this.inspectNextButton = inspectNextButton;
+        this.iconFocus = iconFocus;
 
         if (this.resetViewButton != null)
             this.resetViewButton.style.display = DisplayStyle.None;
     }
 
-    public void Rebuild(SimulatorModel model)
+    public void Rebuild(Product product)
     {
-        if (inspectListContainer == null || inspectRowTemplate == null)
-            return;
+        if (inspectListContainer == null || inspectRowTemplate == null) return;
 
         inspectListContainer.Clear();
         inspectButtons.Clear();
+        inspectLabels.Clear();
         inspectCameraIndices.Clear();
         activeInspectCameraIndex = -1;
 
-        if (model == null || model.inspectPoints == null)
+        if (product?.inspectPoints == null || product.inspectPoints.Length == 0)
         {
             UpdateSelectionUI();
             return;
         }
 
-        for (int i = 0; i < model.inspectPoints.Length; i++)
+        for (int i = 0; i < product.inspectPoints.Length; i++)
         {
-            int cameraIndex = firstDynamicCamIndex + i;
-            var point = model.inspectPoints[i];
+            var point = product.inspectPoints[i];
             if (point == null) continue;
 
+            int cameraIndex = firstDynamicCamIndex + i;
             var row = inspectRowTemplate.Instantiate();
-            var btn = row.Q<Button>("inspectButton");
-            var label = row.Q<Label>("inspectLabel");
+            var btn = row.Q<Button>(UINames.InspectRow_Btn);
+            var label = row.Q<Label>(UINames.InspectRow_Label);
 
-            if (label != null)
-                label.text = point.label;
+            if (label != null) label.text = point.label;
 
             if (btn != null)
             {
+                if (iconFocus != null)
+                    btn.style.backgroundImage = new StyleBackground(iconFocus);
+
                 inspectButtons.Add(btn);
+                inspectLabels.Add(label);
                 inspectCameraIndices.Add(cameraIndex);
 
                 int captured = cameraIndex;
@@ -102,25 +104,21 @@ public sealed class InspectUIController
     {
         int count = inspectCameraIndices.Count;
         if (count == 0) return;
-
-        int idx = GetActiveInspectListIndex();
-        int nextIdx = (idx < 0) ? 0 : Mathf.Min(idx + 1, count - 1);
-
-        GoToInspectIndex(inspectCameraIndices[nextIdx]);
+        int idx = GetActiveIndex();
+        int nextIdx = idx < 0 ? 0 : Mathf.Min(idx + 1, count - 1);
+        GoTo(inspectCameraIndices[nextIdx]);
     }
 
     public void InspectPrev()
     {
         int count = inspectCameraIndices.Count;
         if (count == 0) return;
-
-        int idx = GetActiveInspectListIndex();
-        int prevIdx = (idx < 0) ? 0 : Mathf.Max(idx - 1, 0);
-
-        GoToInspectIndex(inspectCameraIndices[prevIdx]);
+        int idx = GetActiveIndex();
+        int prevIdx = idx < 0 ? 0 : Mathf.Max(idx - 1, 0);
+        GoTo(inspectCameraIndices[prevIdx]);
     }
 
-    private void GoToInspectIndex(int cameraIndex)
+    private void GoTo(int cameraIndex)
     {
         activeInspectCameraIndex = cameraIndex;
         cameraController?.goToPosition(cameraIndex);
@@ -129,73 +127,48 @@ public sealed class InspectUIController
 
     private void OnInspectClicked(int cameraIndex)
     {
-        if (activeInspectCameraIndex == cameraIndex)
-        {
-            activeInspectCameraIndex = -1;
+        activeInspectCameraIndex =
+            activeInspectCameraIndex == cameraIndex ? -1 : cameraIndex;
+
+        if (activeInspectCameraIndex < 0)
             cameraController?.goToPosition(camModelViewIndex);
-        }
         else
-        {
-            activeInspectCameraIndex = cameraIndex;
             cameraController?.goToPosition(cameraIndex);
-        }
 
         UpdateSelectionUI();
     }
 
-    private int GetActiveInspectListIndex()
+    private int GetActiveIndex()
     {
         for (int i = 0; i < inspectCameraIndices.Count; i++)
-            if (inspectCameraIndices[i] == activeInspectCameraIndex)
-                return i;
-
+            if (inspectCameraIndices[i] == activeInspectCameraIndex) return i;
         return -1;
     }
 
     private void UpdateSelectionUI()
     {
-        // Highlight selection
+        int idx = GetActiveIndex();
+        bool active = idx >= 0;
+
         for (int i = 0; i < inspectButtons.Count; i++)
         {
-            int cameraIndex = inspectCameraIndices[i];
-            var button = inspectButtons[i];
-            if (button == null) continue;
-
-            bool isActive = (cameraIndex == activeInspectCameraIndex);
-            button.EnableInClassList("active", isActive);
-
-            var row = button.parent;
-            var label = row?.Q<Label>("inspectLabel");
-            if (label != null)
-                label.EnableInClassList("active", isActive);
+            var btn = inspectButtons[i];
+            if (btn == null) continue;
+            bool isActive = inspectCameraIndices[i] == activeInspectCameraIndex;
+            btn.EnableInClassList("active", isActive);
+            if (i < inspectLabels.Count && inspectLabels[i] != null)
+                inspectLabels[i].EnableInClassList("active", isActive);
         }
 
-        // Reset visible only when an inspect point selected
         if (resetViewButton != null)
-        {
-            resetViewButton.style.display =
-                (GetActiveInspectListIndex() >= 0) ? DisplayStyle.Flex : DisplayStyle.None;
-        }
+            resetViewButton.style.display = active ? DisplayStyle.Flex : DisplayStyle.None;
 
-        // Prev/next containers visibility 
-        int idx2 = GetActiveInspectListIndex();
-        bool inspecting = idx2 >= 0;
+        bool canPrev = active && idx > 0;
+        bool canNext = active && idx < inspectCameraIndices.Count - 1;
 
-        bool canPrev = inspecting && idx2 > 0;
-        bool canNext = inspecting && idx2 < inspectCameraIndices.Count - 1;
-
-        if (inspectPrevButton != null)
-        {
-            var container = inspectPrevButton.parent;
-            if (container != null)
-                container.style.display = canPrev ? DisplayStyle.Flex : DisplayStyle.None;
-        }
-
-        if (inspectNextButton != null)
-        {
-            var container = inspectNextButton.parent;
-            if (container != null)
-                container.style.display = canNext ? DisplayStyle.Flex : DisplayStyle.None;
-        }
+        if (inspectPrevButton?.parent != null)
+            inspectPrevButton.parent.style.display = canPrev ? DisplayStyle.Flex : DisplayStyle.None;
+        if (inspectNextButton?.parent != null)
+            inspectNextButton.parent.style.display = canNext ? DisplayStyle.Flex : DisplayStyle.None;
     }
 }

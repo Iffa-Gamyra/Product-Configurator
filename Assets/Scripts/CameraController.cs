@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     }
 
     [Header("Targets")]
-    public List<TransformStatus> targets = new List<TransformStatus>();
+    public TransformStatus target = new TransformStatus();
 
     [Header("Camera Control")]
     public float rotationSpeed = 5f;
@@ -21,7 +21,8 @@ public class CameraController : MonoBehaviour
     public bool canRotate = true;
 
     [Header("References")]
-    public HomeScreen homeScreen;
+    public HomeScreen desktopHomeScreen;
+    public HomeScreen mobileHomeScreen;
     public CorneaCameraDirector Cornea;
     private CCD_Lerp cameraLerpScript;
 
@@ -37,9 +38,6 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        if (homeScreen == null)
-            homeScreen = GameObject.FindWithTag("UIDocument")?.GetComponent<HomeScreen>();
-
         cameraLerpScript = GetComponent<CCD_Lerp>();
     }
 
@@ -93,7 +91,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouseRotation()
     {
-        if (targets.Count == 0 || targets[0].targetTransform == null) return;
+        if (target.targetTransform == null) return;
 
         if (Input.GetMouseButton(0))
         {
@@ -103,17 +101,12 @@ public class CameraController : MonoBehaviour
             {
                 float rotationAmount = delta.x * rotationSpeed * Time.deltaTime;
 
-                foreach (var t in targets)
-                {
-                    if (t.targetTransform == null) continue;
+                if (target.rotateCamera)
+                    transform.RotateAround(target.targetTransform.position, Vector3.up, rotationAmount);
+                else
+                    target.targetTransform.Rotate(Vector3.up, rotationAmount);
 
-                    if (t.rotateCamera)
-                        transform.RotateAround(t.targetTransform.position, Vector3.up, rotationAmount);
-                    else
-                        t.targetTransform.Rotate(Vector3.up, rotationAmount);
-                }
-
-                homeScreen?.NotifyUserRotated();
+                desktopHomeScreen?.NotifyUserRotated();
             }
 
             lastMousePosition = Input.mousePosition;
@@ -122,22 +115,22 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouseZoom()
     {
-        if (targets.Count == 0 || targets[0].targetTransform == null) return;
+        if (target.targetTransform == null) return;
 
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scrollInput) < 0.0001f)
             return;
 
-        currentDistance = Vector3.Distance(transform.position, targets[0].targetTransform.position);
+        currentDistance = Vector3.Distance(transform.position, target.targetTransform.position);
         currentDistance = Mathf.Clamp(currentDistance - scrollInput * zoomSpeed, minDistance, maxDistance);
 
-        Vector3 direction = (transform.position - targets[0].targetTransform.position).normalized;
-        transform.position = targets[0].targetTransform.position + direction * currentDistance;
+        Vector3 direction = (transform.position - target.targetTransform.position).normalized;
+        transform.position = target.targetTransform.position + direction * currentDistance;
     }
 
     private void HandleTouchInput()
     {
-        if (targets.Count == 0 || targets[0].targetTransform == null) return;
+        if (target.targetTransform == null) return;
 
         if (Input.touchCount == 1)
         {
@@ -186,17 +179,12 @@ public class CameraController : MonoBehaviour
             {
                 float rotationAmount = delta.x * rotationSpeed * Time.deltaTime;
 
-                foreach (var t in targets)
-                {
-                    if (t.targetTransform == null) continue;
+                if (target.rotateCamera)
+                    transform.RotateAround(target.targetTransform.position, Vector3.up, rotationAmount);
+                else
+                    target.targetTransform.Rotate(Vector3.up, rotationAmount);
 
-                    if (t.rotateCamera)
-                        transform.RotateAround(t.targetTransform.position, Vector3.up, rotationAmount);
-                    else
-                        t.targetTransform.Rotate(Vector3.up, rotationAmount);
-                }
-
-                homeScreen?.NotifyUserRotated();
+                mobileHomeScreen?.NotifyUserRotated();
             }
 
             lastTouchPosition = touch.position;
@@ -221,11 +209,11 @@ public class CameraController : MonoBehaviour
         if (Mathf.Abs(pinchDelta) < 0.5f)
             return;
 
-        currentDistance = Vector3.Distance(transform.position, targets[0].targetTransform.position);
+        currentDistance = Vector3.Distance(transform.position, target.targetTransform.position);
         currentDistance = Mathf.Clamp(currentDistance - pinchDelta * zoomSpeed * 0.01f, minDistance, maxDistance);
 
-        Vector3 direction = (transform.position - targets[0].targetTransform.position).normalized;
-        transform.position = targets[0].targetTransform.position + direction * currentDistance;
+        Vector3 direction = (transform.position - target.targetTransform.position).normalized;
+        transform.position = target.targetTransform.position + direction * currentDistance;
     }
     private bool IsAnyTouchOverUI()
     {
@@ -246,9 +234,10 @@ public class CameraController : MonoBehaviour
 
     public void SetTarget(Transform newTarget, bool rotateCamera)
     {
-        if (targets.Count == 0)
-            targets.Add(new TransformStatus { targetTransform = newTarget, rotateCamera = rotateCamera });
-        else
-            targets[0] = new TransformStatus { targetTransform = newTarget, rotateCamera = rotateCamera };
+        target = new TransformStatus
+        {
+            targetTransform = newTarget,
+            rotateCamera = rotateCamera
+        };
     }
 }

@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Shared_LeftPanel_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_LeftPanel_Desktop.uxml?fileID=9197481963319205126&amp;guid=a2a400808e822c04ca57b258bf00105e&amp;type=3#Shared_LeftPanel_Desktop"/>
+    <ui:Template name="Shared_TopNav_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_TopNav_Desktop.uxml?fileID=9197481963319205126&amp;guid=98777ecab75e5e2418289bbdaebe08b6&amp;type=3#Shared_TopNav_Desktop"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Screen_ProductSelection_Root" class="screen-root">
+        <ui:VisualElement name="ProductSelection_Top_Container" class="desktop-top-nav-bar">
+            <ui:Instance template="Shared_TopNav_Desktop" name="ProductSelection_TopNav" class="desktop-top-nav-bar"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ProductSelection_Bottom_Container" class="desktop-panel-row">
+            <ui:Instance template="Shared_LeftPanel_Desktop" name="ProductSelection_LeftPanel" class="desktop-left-panel"/>
+            <ui:VisualElement name="RightContainer" class="desktop-right-container">
+                <ui:VisualElement name="ProductSelection_Middle_Spacer" class="desktop-middle-spacer"/>
+                <ui:VisualElement name="ProductSelection_Panel_Outer" class="desktop-panel-outer">
+                    <ui:VisualElement name="UIBlocker" focusable="false" class="desktop-ui-blocker">
+                        <ui:VisualElement name="ProductSelection_Panel_Card" class="desktop-panel-card">
+                            <ui:VisualElement name="Products" class="desktop-products-list"/>
+                            <ui:VisualElement name="ProductSelection_Divider" class="horizontal-divider-thin"/>
+                            <ui:VisualElement name="ProductSelection_Actions_Row" class="panel-actions-row">
+                                <ui:Button text="NEXT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductSelection_Next_Button" class="panel-action-button font-body text-dark text-md"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

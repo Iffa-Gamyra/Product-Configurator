@@ -1,0 +1,40 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Shared_InspectFooter" src="project://database/Assets/UITK/Designs/Templates/Shared_InspectFooter.uxml?fileID=9197481963319205126&amp;guid=df63d0cf755ce9f4b8269b6c16c9116a&amp;type=3#Shared_InspectFooter"/>
+    <ui:Template name="Shared_LeftPanel_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_LeftPanel_Desktop.uxml?fileID=9197481963319205126&amp;guid=a2a400808e822c04ca57b258bf00105e&amp;type=3#Shared_LeftPanel_Desktop"/>
+    <ui:Template name="Shared_ResetView" src="project://database/Assets/UITK/Designs/Templates/Shared_ResetView.uxml?fileID=9197481963319205126&amp;guid=5ac0db0e50b277a44922775cde10151b&amp;type=3#Shared_ResetView"/>
+    <ui:Template name="Shared_TopNav_Desktop" src="project://database/Assets/UITK/Designs/Templates/Shared_TopNav_Desktop.uxml?fileID=9197481963319205126&amp;guid=98777ecab75e5e2418289bbdaebe08b6&amp;type=3#Shared_TopNav_Desktop"/>
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Screen_InspectProduct_Root" class="screen-root">
+        <ui:VisualElement name="InspectProduct_Top_Container" class="desktop-top-nav-bar">
+            <ui:Instance template="Shared_TopNav_Desktop" name="InspectProduct_TopNav" class="desktop-top-nav-bar"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="InspectProduct_Bottom_Container" class="desktop-panel-row">
+            <ui:Instance template="Shared_LeftPanel_Desktop" name="InspectProduct_LeftPanel" class="desktop-left-panel"/>
+            <ui:VisualElement name="RightContainer" class="desktop-right-container">
+                <ui:VisualElement name="InspectProduct_Middle_Spacer" class="desktop-middle-spacer"/>
+                <ui:VisualElement name="InspectProduct_Panel_Outer" class="desktop-panel-outer">
+                    <ui:VisualElement name="UIBlocker" class="desktop-ui-blocker">
+                        <ui:VisualElement name="InspectProduct_Panel_Card" class="desktop-panel-card">
+                            <ui:VisualElement name="InspectProduct_BackNav_Row" class="panel-backnav-row">
+                                <ui:VisualElement name="InspectProduct_BackNav_Container" class="panel-backnav-button-container">
+                                    <ui:Button text="" parse-escape-sequences="false" display-tooltip-when-elided="true" name="InspectProduct_BackNav_Button" class="panel-ghost-button font-body text-md text-dark"/>
+                                    <ui:Label text="BACK" name="InspectProduct_BackNav_Label" class="panel-backnav-label font-body text-base text-primary"/>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="InspectProduct_Title_Row" class="inspect-title-row">
+                                <ui:Label tabindex="-1" text="INSPECT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="InspectProduct_Title_Label" class="panel-section-title text-primary font-body text-title"/>
+                                <ui:Instance template="Shared_ResetView" name="Desktop_ResetView"/>
+                            </ui:VisualElement>
+                            <ui:VisualElement name="InspectProduct_InspectContainer" class="inspect-list-container"/>
+                            <ui:Instance template="Shared_InspectFooter" name="Desktop_InspectFooter" style="flex-shrink: 0;"/>
+                            <ui:VisualElement name="InspectProduct_Footer_Divider" class="horizontal-divider-thin"/>
+                            <ui:VisualElement name="InspectProduct_Actions_Row" class="panel-actions-row">
+                                <ui:Button text="DONE" parse-escape-sequences="false" display-tooltip-when-elided="true" name="InspectProduct_Done_Button" class="panel-action-button font-body text-md text-dark"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

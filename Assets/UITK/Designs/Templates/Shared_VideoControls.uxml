@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Shared_VideoControls_Root" class="shared-video-controls-root">
+        <ui:ProgressBar value="0" name="Video_ProgressBar" class="video-progress-bar"/>
+        <ui:VisualElement name="Video_Buttons_Row" class="video-buttons-row">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Video_Pause_Button" class="video-control-button video-btn-pause" style="display: none;"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Video_Play_Button" class="video-control-button video-btn-play"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Video_Mute_Button" class="video-control-button video-btn-mute"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Video_Unmute_Button" class="video-control-button video-btn-unmute" style="display: none;"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Video_Replay_Button" class="video-control-button video-btn-replay"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

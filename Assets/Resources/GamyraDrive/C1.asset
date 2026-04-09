@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
   m_Name: C1
   m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
-  modelName: GamyraDrive C1
-  id: C1
-  modelPrefab: {fileID: 2331036031649932956, guid: 77972c55b5a237d4cb65f430aef25785,
+  productName: GamyraDrive C1
+  productId: C1
+  productPrefab: {fileID: 2331036031649932956, guid: 77972c55b5a237d4cb65f430aef25785,
     type: 3}
   brochurePdfFile: C1.pdf
   brochureDownloadName: GamyraDrive_C1.pdf

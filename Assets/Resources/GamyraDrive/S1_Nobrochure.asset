@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: S1_Nobrochure
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  productName: GamyraDrive S1
+  productId: S1_no
+  productPrefab: {fileID: 7794897000571024287, guid: 408e96d2d87a9e4439240546a8c829fd,
+    type: 3}
+  showSpecs: 1
+  showInspect: 1
+  brochurePdfFile: 
+  brochureDownloadName: 
+  specs:
+  - label: Display Mode
+    type: 0
+    value: Triple Screen
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Horizontal FOV
+    type: 1
+    value: "175 \xB0"
+    current: 175
+    max: 240
+    toggle: 0
+  - label: Refresh Rate
+    type: 1
+    value: 144 Hz
+    current: 144
+    max: 240
+    toggle: 0
+  - label: Force Feedback Torque
+    type: 1
+    value: 12 Nm
+    current: 12
+    max: 30
+    toggle: 0
+  - label: VR Support
+    type: 3
+    value: 0
+    current: 0
+    max: 0
+    toggle: 2
+  - label: Wind Simulation
+    type: 3
+    value: 0
+    current: 0
+    max: 0
+    toggle: 1
+  - label: Simulation Software
+    type: 0
+    value: SCANeR 2025.2
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Scenario Features
+    type: 4
+    value: Triple Screen|VR|Wind|Hand Sensors
+    current: 0
+    max: 0
+    toggle: 0
+  inspectPoints:
+  - label: Triple Screen Display
+    cameraAnchor: {fileID: 8603741031050831689, guid: b8480f1ef07803742949cc022313539d,
+      type: 3}
+  - label: Wind Simulator
+    cameraAnchor: {fileID: 2583209862260263004, guid: dc9e3548e3af5334b81f8614c14d694f,
+      type: 3}
+  - label: Hand Sensor
+    cameraAnchor: {fileID: 4864418051473818111, guid: fd51c32917a4f1f45993a710db48325a,
+      type: 3}
+  - label: E-scooter
+    cameraAnchor: {fileID: 4745153916421708624, guid: 5f7501f4b70141b4480635c35b0cea7a,
+      type: 3}

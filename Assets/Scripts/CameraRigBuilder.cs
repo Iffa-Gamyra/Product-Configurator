@@ -7,7 +7,7 @@ public sealed class CameraRigBuilder
 
     private readonly Transform swoopPosition;
     private readonly Transform startPosition;
-    private readonly Transform modelViewPosition;
+    private readonly Transform productViewPosition;
     private readonly Transform videoPosition;
 
     private readonly Dictionary<string, Transform[]> rigCache = new();
@@ -16,13 +16,13 @@ public sealed class CameraRigBuilder
         CameraController cameraController,
         Transform swoopPosition,
         Transform startPosition,
-        Transform modelViewPosition,
+        Transform productViewPosition,
         Transform videoPosition)
     {
         this.cameraController = cameraController;
         this.swoopPosition = swoopPosition;
         this.startPosition = startPosition;
-        this.modelViewPosition = modelViewPosition;
+        this.productViewPosition = productViewPosition;
         this.videoPosition = videoPosition;
     }
 
@@ -33,30 +33,30 @@ public sealed class CameraRigBuilder
         var rig = new Transform[firstDynamicCamIndex];
         rig[0] = swoopPosition;
         rig[1] = startPosition;
-        rig[2] = modelViewPosition;
+        rig[2] = productViewPosition;
         rig[3] = videoPosition;
 
         cameraController.Cornea.LerpCameraPositions = rig;
     }
 
-    public void ApplyModelRig(SimulatorModel model, int firstDynamicCamIndex)
+    public void ApplyProductRig(Product product, int firstDynamicCamIndex)
     {
-        if (cameraController == null || cameraController.Cornea == null || model == null) return;
+        if (cameraController == null || cameraController.Cornea == null || product == null) return;
 
-        if (!rigCache.TryGetValue(model.id, out var rig) || rig == null)
+        if (!rigCache.TryGetValue(product.productId, out var rig) || rig == null)
         {
-            int inspectCount = model.inspectPoints != null ? model.inspectPoints.Length : 0;
+            int inspectCount = product.inspectPoints != null ? product.inspectPoints.Length : 0;
             rig = new Transform[firstDynamicCamIndex + inspectCount];
 
             rig[0] = swoopPosition;
             rig[1] = startPosition;
-            rig[2] = modelViewPosition;
+            rig[2] = productViewPosition;
             rig[3] = videoPosition;
 
             for (int i = 0; i < inspectCount; i++)
-                rig[firstDynamicCamIndex + i] = model.inspectPoints[i]?.cameraAnchor;
+                rig[firstDynamicCamIndex + i] = product.inspectPoints[i]?.cameraAnchor;
 
-            rigCache[model.id] = rig;
+            rigCache[product.productId] = rig;
         }
 
         cameraController.Cornea.LerpCameraPositions = rig;

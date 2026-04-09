@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
   m_Name: L6
   m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
-  modelName: GamyraDrive L6
-  id: L6
-  modelPrefab: {fileID: 7671551109584592601, guid: 88e684eea0072a4479e58ebc0de1f4fa,
+  productName: GamyraDrive L6
+  productId: L6
+  productPrefab: {fileID: 7671551109584592601, guid: 88e684eea0072a4479e58ebc0de1f4fa,
     type: 3}
   brochurePdfFile: L6.pdf
   brochureDownloadName: GamyraDrive_L6.pdf

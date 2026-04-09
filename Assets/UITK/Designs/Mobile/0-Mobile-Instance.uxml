@@ -2,12 +2,12 @@
     <ui:Template name="1-StartScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/1-StartScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=8b1d4ef2344a9451a8e8dabe85fe2192&amp;type=3#1-StartScreen_Mobile"/>
     <ui:Template name="2-HomeScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/2-HomeScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=e430740d7bdaef149b19749fa6b3d0f0&amp;type=3#2-HomeScreen_Mobile"/>
     <ui:Template name="3-VideoScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/3-VideoScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=42cf63b1e6354cd4e916313128458c51&amp;type=3#3-VideoScreen_Mobile"/>
-    <ui:Template name="4-InfoPanel_Mobile" src="project://database/Assets/UITK/Designs/Mobile/4-InfoPanel_Mobile.uxml?fileID=9197481963319205126&amp;guid=4cae2f47ac32b644581022708e0b6e46&amp;type=3#4-InfoPanel_Mobile"/>
+    <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/Shared_InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#Shared_InfoPanel"/>
     <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
-    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; flex-wrap: wrap;">
-        <ui:Instance template="1-StartScreen_Mobile" name="WelcomeScreen" style="flex-grow: 1;"/>
-        <ui:Instance template="2-HomeScreen_Mobile" name="HomeScreen" style="display: none; flex-grow: 1;"/>
-        <ui:Instance template="3-VideoScreen_Mobile" name="VideoScreen" style="display: none; flex-grow: 1;"/>
-        <ui:Instance template="4-InfoPanel_Mobile" name="InfoOverlay" style="display: none; position: absolute; right: 0; top: 0; left: 0; bottom: 0;"/>
+    <ui:VisualElement name="Mobile_Root" class="mobile-root">
+        <ui:Instance template="1-StartScreen_Mobile" name="Screen_Welcome_Root" class="instance-screen instance-screen--visible"/>
+        <ui:Instance template="2-HomeScreen_Mobile" name="Screen_Home_Root" class="instance-screen"/>
+        <ui:Instance template="3-VideoScreen_Mobile" name="Screen_Video_Root" class="instance-screen"/>
+        <ui:Instance template="Shared_InfoPanel" name="Overlay_Info_Root" class="instance-overlay"/>
     </ui:VisualElement>
 </ui:UXML>

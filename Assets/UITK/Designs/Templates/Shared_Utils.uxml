@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Utils_Root" class="desktop-util-section">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Utils_Hide_Button" class="square-icon square-icon-hide"/>
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Utils_Screenshot_Button" class="square-icon square-icon-screenshot"/>
+        <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Utils_Logo_Label" class="desktop-logo-label font-bold text-2xl text-brand"/>
+    </ui:VisualElement>
+</ui:UXML>

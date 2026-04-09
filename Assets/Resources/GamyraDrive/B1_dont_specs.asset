@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: B1_dont_specs
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  productName: GamyraDrive B1
+  productId: B1_dont
+  productPrefab: {fileID: 4785256513099683240, guid: ca85c6f43cddc924f9b99892b6cdfa27,
+    type: 3}
+  showSpecs: 1
+  showInspect: 1
+  brochurePdfFile: B1.pdf
+  brochureDownloadName: GamyraDrive_B1.pdf
+  specs: []
+  inspectPoints:
+  - label: Wrap Display
+    cameraAnchor: {fileID: 420929629125847323, guid: f0d3bb5ae9cf73944adb4b5ac6d8ce7e,
+      type: 3}
+  - label: Subwoofer
+    cameraAnchor: {fileID: 838646679717795607, guid: f177b9adc5bd51743a7d0f175ac78d1e,
+      type: 3}
+  - label: Wind Simulator
+    cameraAnchor: {fileID: 6715341460342463588, guid: fe9a1a98c36d98d4c92c63a609738e30,
+      type: 3}
+  - label: Motion Platform
+    cameraAnchor: {fileID: 1919812365087902237, guid: 2a376318ce4a7114694242f0ac6d175f,
+      type: 3}

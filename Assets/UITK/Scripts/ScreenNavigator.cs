@@ -17,25 +17,24 @@ public sealed class ScreenNavigator
     public void ShowOnly(VisualElement screen)
     {
         if (screen == null) return;
-
         CloseOverlay();
-
         for (int i = 0; i < allScreens.Count; i++)
             SetVisible(allScreens[i], false);
-
         SetVisible(screen, true);
+        CurrentScreen = screen;
+    }
+
+    public void SetCurrent(VisualElement screen)
+    {
         CurrentScreen = screen;
     }
 
     public void ToggleOverlay()
     {
         if (infoOverlay == null) return;
-
         bool isOpen = infoOverlay.style.display == DisplayStyle.Flex;
         infoOverlay.style.display = isOpen ? DisplayStyle.None : DisplayStyle.Flex;
-
-        if (!isOpen)
-            infoOverlay.BringToFront();
+        if (!isOpen) infoOverlay.BringToFront();
     }
 
     public void CloseOverlay()

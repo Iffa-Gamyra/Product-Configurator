@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fa740b873030a4f888b8b8e4d6d44a, type: 3}
+  m_Name: C1_dont
+  m_EditorClassIdentifier: Assembly-CSharp::SimulatorModel
+  productName: GamyraDrive C1
+  productId: C1_dont
+  productPrefab: {fileID: 2331036031649932956, guid: 77972c55b5a237d4cb65f430aef25785,
+    type: 3}
+  showSpecs: 1
+  showInspect: 0
+  brochurePdfFile: C1.pdf
+  brochureDownloadName: GamyraDrive_C1.pdf
+  specs:
+  - label: Display Mode
+    type: 0
+    value: Wrap Display
+    current: 0
+    max: 0
+    toggle: 0
+  - label: Horizontal FOV
+    type: 1
+    value: "208 \xB0"
+    current: 208
+    max: 240
+    toggle: 0
+  - label: Refresh Rate
+    type: 1
+    value: 240 Hz
+    current: 240
+    max: 240
+    toggle: 0
+  - label: Display Response Time
+    type: 2
+    value: 0.3 ms
+    current: 0.3
+    max: 5
+    toggle: 0
+  - label: Motion DOF
+    type: 1
+    value: 5 DOF
+    current: 5
+    max: 6
+    toggle: 0
+  - label: Control Type
+    type: 0
+    value: Steering Wheel & Pedals
+    current: 0
+    max: 0
+    toggle: 0
+  - label: VR Support
+    type: 3
+    value: 
+    current: 0
+    max: 0
+    toggle: 2
+  - label: Footprint Width
+    type: 1
+    value: 80 cm
+    current: 80
+    max: 200
+    toggle: 0
+  - label: Scenario Features
+    type: 4
+    value: Wrap Display|Modular
+    current: 0
+    max: 0
+    toggle: 0
+  inspectPoints:
+  - label: Wrap Display
+    cameraAnchor: {fileID: 7034228575547111673, guid: 9885629c3073200478f759dff3c86b13,
+      type: 3}
+  - label: Hazard Button
+    cameraAnchor: {fileID: 1751225504324469774, guid: 343bc8334e28a7b40aa1ddc7e8047bd9,
+      type: 3}
+  - label: Driver Control
+    cameraAnchor: {fileID: 5062272523429367002, guid: 4fc5dc548a4f24f4fad91cf2c7241096,
+      type: 3}
+  - label: Driver Seat
+    cameraAnchor: {fileID: 463990287049647655, guid: f92a1595f750cd448b5fccfa8604e3a7,
+      type: 3}
+  - label: Motion Platform
+    cameraAnchor: {fileID: 5973052932124439835, guid: 4d67acf78ef02c243ad2bcf59abbc41d,
+      type: 3}

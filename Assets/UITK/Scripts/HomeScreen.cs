@@ -17,24 +17,28 @@ public class HomeScreen : MonoBehaviour
     [Header("Fixed Camera Anchors")]
     public Transform swoopPosition;
     public Transform startPosition;
-    public Transform modelViewPosition;
+    public Transform productViewPosition;
     public Transform videoPosition;
 
     [Header("UI Document")]
     public UIDocument uiDocument;
 
-    [Header("GamyraDrive Models")]
+    [Header("Products")]
     [SerializeField] private string resourcesPath = "GamyraDrive";
-    [SerializeField] private string defaultModelId = "B1";
-    [SerializeField] private string currentModelId = "B1";
+    [SerializeField] private string defaultProductId = "B1";
+    [SerializeField] private string currentProductId = "B1";
 
-    [Header("UI Templates")]
-    public VisualTreeAsset modelButtonTemplate;
+    [Header("UI Row Templates")]
+    public VisualTreeAsset productButtonTemplate;
     public VisualTreeAsset specRowTextTemplate;
     public VisualTreeAsset specRowBarTemplate;
     public VisualTreeAsset specRowToggleTemplate;
     public VisualTreeAsset specRowChipsTemplate;
     public VisualTreeAsset inspectRowTemplate;
+
+    [Header("UI Themes")]
+    [SerializeField] private ConfiguratorUITheme desktopTheme;
+    [SerializeField] private ConfiguratorUITheme mobileTheme;
 
     [Header("Video")]
     public float video_FOV;
@@ -43,50 +47,55 @@ public class HomeScreen : MonoBehaviour
     // Camera indices
     private const int CAM_SWOOP = 0;
     private const int CAM_START = 1;
-    private const int CAM_MODEL_VIEW = 2;
+    private const int CAM_PRODUCT_VIEW = 2;
     private const int CAM_VIDEO = 3;
     private const int FIRST_DYNAMIC_CAM = 4;
 
+    // State
     private bool userRotated = false;
+    private bool uiHidden = false;
+    private bool uiInitialized = false;
+    private bool isMobileLayout = false;
 
     // UI
     private VisualElement root;
     private HomeScreenUI ui;
 
-    // State
-    private bool uiHidden = false;
-    private bool uiInitialized = false;
-    private bool isMobileLayout = false;
-
-    // Models
-    private ModelManager modelManager;
-    private SimulatorModel currentSimModel;
+    // Products
+    private ProductManager productManager;
+    private Product currentProduct;
 
     // Modules
     private ScreenNavigator nav;
     private VideoUIController videoUI;
     private SpecsUIController specsUI;
     private InspectUIController inspectUI;
-    private ModelSelectionUIController modelSelectionUI;
+    private ProductSelectionUIController productSelectionUI;
     private CameraRigBuilder rigBuilder;
-
-    // Homescreen helpers
     private HomeScreenDisplayFlow displayFlow;
     private HomeSceneModeController sceneMode;
+    private UIThemeApplicator themeApplicator;
 
-    // Video + camera
+    // Theme
+    private ConfiguratorUITheme currentTheme;
+
+    // Video
     private VideoPlayer videoPlayer;
     private Camera mainCam;
 
     private Dictionary<string, Action> actions;
+
+    private enum NavMode { Home, Product, Video }
 
     private void Awake()
     {
         mainCam = Camera.main;
         videoPlayer = GetComponent<VideoPlayer>();
 
-        modelManager = new ModelManager(resourcesPath, spawnPoint);
-        rigBuilder = new CameraRigBuilder(cameraController, swoopPosition, startPosition, modelViewPosition, videoPosition);
+        productManager = new ProductManager(resourcesPath, spawnPoint);
+        rigBuilder = new CameraRigBuilder(
+            cameraController, swoopPosition, startPosition,
+            productViewPosition, videoPosition);
 
         BuildActions();
         rigBuilder.ApplyBaseRig(FIRST_DYNAMIC_CAM);
@@ -94,90 +103,71 @@ public class HomeScreen : MonoBehaviour
 
     private void Start()
     {
-        if (string.IsNullOrEmpty(currentModelId))
-            currentModelId = defaultModelId;
+        if (string.IsNullOrEmpty(currentProductId))
+            currentProductId = defaultProductId;
 
-        if (!ModelExists(currentModelId))
-            currentModelId = GetFirstModelIdOrDefault(currentModelId);
+        if (!ProductExists(currentProductId))
+            currentProductId = GetFirstProductIdOrDefault(currentProductId);
 
-        SelectSimModel(currentModelId);
+        SelectProduct(currentProductId);
     }
 
     private void OnEnable()
     {
         if (uiDocument == null) return;
-
         root = uiDocument.rootVisualElement;
         if (root == null) return;
 
         isMobileLayout = DeviceDetection.IsMobileActive;
         ui = new HomeScreenUI(root, isMobileLayout);
+        currentTheme = isMobileLayout ? mobileTheme : desktopTheme;
+
+        themeApplicator = new UIThemeApplicator(ui, isMobileLayout);
+        themeApplicator.Apply(currentTheme);
 
         nav = new ScreenNavigator(ui.AllScreens, ui.InfoOverlay);
-
         displayFlow = new HomeScreenDisplayFlow(ui, isMobileLayout, nav);
 
         sceneMode = new HomeSceneModeController(
-            mainCam,
-            cameraController,
-            decalController,
-            rotationTarget,
-            nav,
-            IsAnyModelScreenVisible,
-            video_FOV,
-            normal_FOV
-        );
+            mainCam, cameraController, decalController, rotationTarget,
+            nav, IsAnyProductScreenVisible, video_FOV, normal_FOV);
 
         if (videoUI == null)
         {
             videoUI = new VideoUIController(
-                this,
-                videoPlayer,
-                ui.PlayButton,
-                ui.PauseButton,
-                ui.MuteButton,
-                ui.UnmuteButton,
-                ui.ReplayButton,
-                ui.ProgressBar,
-                () => ScreenNavigator.IsVisible(ui.VideoScreen)
-            );
+                this, videoPlayer,
+                ui.PlayButton, ui.PauseButton, ui.MuteButton,
+                ui.UnmuteButton, ui.ReplayButton, ui.ProgressBar,
+                () => ScreenNavigator.IsVisible(ui.VideoScreen));
         }
 
         if (specsUI == null)
         {
             specsUI = new SpecsUIController(
-                specRowTextTemplate,
-                specRowBarTemplate,
-                specRowToggleTemplate,
-                specRowChipsTemplate
-            );
+                specRowTextTemplate, specRowBarTemplate,
+                specRowToggleTemplate, specRowChipsTemplate);
         }
 
-        modelSelectionUI = new ModelSelectionUIController(
-            ui.ModelsContainer,
-            modelButtonTemplate,
-            ui.SelectedModelInSpecScreen,
-            ui.SelectedModelInInspectScreen
+        productSelectionUI = new ProductSelectionUIController(
+            ui.ProductsContainer,
+            productButtonTemplate,
+            ui.SelectedProductInSpecScreen,
+            ui.SelectedProductInInspectScreen
         );
 
         inspectUI = new InspectUIController(
-            cameraController,
-            CAM_MODEL_VIEW,
-            FIRST_DYNAMIC_CAM,
-            ui.InspectListContainer,
-            inspectRowTemplate,
-            ui.ResetViewButton,
-            ui.InspectPrevButton,
-            ui.InspectNextButton
-        );
+            cameraController, CAM_PRODUCT_VIEW, FIRST_DYNAMIC_CAM,
+            ui.InspectListContainer, inspectRowTemplate,
+            ui.ResetViewButton, ui.InspectPrevButton, ui.InspectNextButton,
+            currentTheme?.images?.iconFocus);
 
         if (!uiInitialized)
         {
             ui.BindButtons(actions);
             ui.BindInfoOverlayButtons(ToggleInfoOverlay);
 
-            modelSelectionUI.BuildIfNeeded(modelManager.LoadedModels, SelectSimModel);
-            modelSelectionUI.UpdateSelected(currentModelId, currentSimModel);
+            productSelectionUI.BuildIfNeeded(productManager.LoadedProducts, SelectProduct);
+            productSelectionUI.UpdateSelected(currentProductId, currentProduct);
 
             if (ui.WelcomeScreen != null)
                 BindWelcomeScreen();
@@ -186,11 +176,12 @@ public class HomeScreen : MonoBehaviour
         }
         else
         {
-            modelSelectionUI.BuildIfNeeded(modelManager.LoadedModels, SelectSimModel);
-            modelSelectionUI.UpdateSelected(currentModelId, currentSimModel);
+            productSelectionUI.BuildIfNeeded(productManager.LoadedProducts, SelectProduct);
+            productSelectionUI.UpdateSelected(currentProductId, currentProduct);
         }
 
         videoUI.Hook();
+        SyncNavToVisibleScreen();
     }
 
     private void OnDisable()
@@ -198,31 +189,24 @@ public class HomeScreen : MonoBehaviour
         videoUI?.Unhook();
     }
 
-    // -------------------------
-    // Actions / binding
-    // -------------------------
     private void BindWelcomeScreen()
     {
-        var wsManager = new WelcomeScreenManager(ui.WelcomeScreen);
-
+        var wsManager = new WelcomeScreenManager(ui.WelcomeStartBtn);
         wsManager.BindStart(() =>
         {
             if (isMobileLayout)
             {
-                if (cameraController != null)
-                {
-                    cameraController.SetTarget(rotationTarget, true);
-                    cameraController.goToPosition(CAM_MODEL_VIEW);
-                }
+                cameraController?.SetTarget(rotationTarget, true);
+                cameraController?.goToPosition(CAM_PRODUCT_VIEW);
             }
             else
             {
-                if (cameraController != null)
-                    cameraController.goToPosition(CAM_START);
+                cameraController?.goToPosition(CAM_START);
             }
 
             displayFlow.ShowHome();
             sceneMode.SetVideoFov(false);
+            SyncNavToVisibleScreen();
             sceneMode.RefreshRotationState();
 
             if (videoPlayer != null && !videoPlayer.isPrepared)
@@ -230,69 +214,187 @@ public class HomeScreen : MonoBehaviour
         });
     }
 
+
     private void BuildActions()
     {
         actions = new Dictionary<string, Action>
         {
-            ["homeModeButton"] = GoHome,
+            // Desktop SideNav
+            [UINames.SideNav_Home] = GoHome,
+            [UINames.SideNav_Product] = OpenProductRoot,
+            [UINames.SideNav_Video] = OpenVideo,
 
-            ["videoModeButton"] = OpenVideo,
-            ["videoTabButton"] = OpenVideo,
+            // Desktop TopNav
+            [UINames.TopNav_Product] = () => OpenProductPage(0),
+            [UINames.TopNav_Specs] = () => OpenProductPage(1),
+            [UINames.TopNav_Inspect] = () => OpenProductPage(2),
 
-            ["modelModeButton"] = OpenModelRoot,
-            ["modelTabButton"] = OpenModelRoot,
+            // Desktop Home buttons
+            [UINames.Home_ProductTabBtn] = OpenProductRoot,
+            [UINames.Home_VideoTabBtn] = OpenVideo,
 
-            ["play-button"] = () => videoUI?.Play(),
-            ["pause-button"] = () => videoUI?.Pause(),
-            ["mute-button"] = () => videoUI?.Mute(),
-            ["unmute-button"] = () => videoUI?.Unmute(),
-            ["replay-button"] = () => videoUI?.Replay(),
+            // Desktop panel buttons
+            [UINames.Products_NextBtn] = OpenNextFromProduct,
+            [UINames.Specs_NextBtn] = OpenNextFromSpecs,
+            [UINames.Specs_BackNavBtn] = () => OpenProductPage(0),
+            [UINames.Inspect_BackNavBtn] = OpenPrevFromInspect,
+            [UINames.Inspect_DoneBtn] = GoHome,
 
-            ["modelTCButton"] = () => OpenModelPage(0),
-            ["specsTCButton"] = () => OpenModelPage(1),
-            ["inspectTCButton"] = () => OpenModelPage(2),
+            // Inspect controls
+            [UINames.Inspect_ResetBtn] = () => inspectUI?.ResetView(),
+            [UINames.Inspect_PrevBtn] = () => inspectUI?.InspectPrev(),
+            [UINames.Inspect_NextBtn] = () => inspectUI?.InspectNext(),
 
-            ["specsButton"] = () => OpenModelPage(1),
-            ["inspectButton"] = () => OpenModelPage(2),
-            ["viewModelsButton"] = () => OpenModelPage(0),
-            ["viewSpecsButton"] = () => OpenModelPage(1),
+            // Utils
+            [UINames.Utils_Hide] = ToggleUIVisibility,
+            [UINames.Utils_Screenshot] = TakeScreenshot,
 
-            ["downloadButton"] = DownloadPdf,
+            // Brochure
+            [UINames.Specs_DownloadBtn] = DownloadPdf,
 
-            ["resetViewButton"] = () => inspectUI?.ResetView(),
-            ["inspectPrevButton"] = () => inspectUI?.InspectPrev(),
-            ["inspectNextButton"] = () => inspectUI?.InspectNext(),
+            // Mobile TopNav
+            [UINames.MobileTopNav_Home] = GoHome,
+            [UINames.MobileTopNav_Video] = OpenVideo,
 
-            ["doneButton"] = GoHome,
-
-            ["hide"] = ToggleUIVisibility,
-            ["screenshot"] = TakeScreenshot,
+            // Video controls
+            [UINames.Video_PlayBtn] = () => videoUI?.Play(),
+            [UINames.Video_PauseBtn] = () => videoUI?.Pause(),
+            [UINames.Video_MuteBtn] = () => videoUI?.Mute(),
+            [UINames.Video_UnmuteBtn] = () => videoUI?.Unmute(),
+            [UINames.Video_ReplayBtn] = () => videoUI?.Replay(),
         };
     }
 
-    // -------------------------
-    // Navigation
-    // -------------------------
+
+    private void SetActiveNav(NavMode mode)
+    {
+        if (ui == null) return;
+
+        if (isMobileLayout)
+        {
+            bool videoActive = mode == NavMode.Video;
+            foreach (var b in ui.MobileHomeTabBtns) SetTabState(b, !videoActive);
+            foreach (var b in ui.MobileVideoTabBtns) SetTabState(b, videoActive);
+            return;
+        }
+
+        foreach (var b in ui.SideNavHomeBtns) SetNavIcon(b, mode == NavMode.Home);
+        foreach (var b in ui.SideNavProductBtns) SetNavIcon(b, mode == NavMode.Product);
+        foreach (var b in ui.SideNavVideoBtns) SetNavIcon(b, mode == NavMode.Video);
+
+
+        if (mode != NavMode.Product)
+        {
+
+            foreach (var b in ui.SpecsTabButtons)
+            {
+                b.EnableInClassList(UINames.Class_TabActive, false);
+                b.EnableInClassList(UINames.Class_TabInactive, true);
+                b.style.color = currentTheme?.colors.secondaryText ?? Color.gray;
+            }
+            foreach (var b in ui.InspectTabButtons)
+            {
+                b.EnableInClassList(UINames.Class_TabActive, false);
+                b.EnableInClassList(UINames.Class_TabInactive, true);
+                b.style.color = currentTheme?.colors.secondaryText ?? Color.gray;
+            }
+            return;
+        }
+
+        bool onProducts = ScreenNavigator.IsVisible(ui.ProductSelectionScreen);
+        bool onSpecs = ScreenNavigator.IsVisible(ui.ProductSpecsScreen);
+        bool onInspect = ScreenNavigator.IsVisible(ui.InspectProductScreen);
+
+
+        root.Query<Button>(UINames.TopNav_Product).ForEach(b =>
+        {
+            bool active = onProducts;
+            b.EnableInClassList(UINames.Class_TabActive, active);
+            b.EnableInClassList(UINames.Class_TabInactive, !active);
+            b.style.color = active
+                ? (currentTheme?.colors.accentPrimary ?? Color.white)
+                : (currentTheme?.colors.secondaryText ?? Color.gray);
+        });
+
+        foreach (var b in ui.SpecsTabButtons)
+        {
+            bool active = onSpecs;
+            b.EnableInClassList(UINames.Class_TabActive, active);
+            b.EnableInClassList(UINames.Class_TabInactive, !active);
+            b.style.color = active
+                ? (currentTheme?.colors.accentPrimary ?? Color.white)
+                : (currentTheme?.colors.secondaryText ?? Color.gray);
+        }
+
+        foreach (var b in ui.InspectTabButtons)
+        {
+            bool active = onInspect;
+            b.EnableInClassList(UINames.Class_TabActive, active);
+            b.EnableInClassList(UINames.Class_TabInactive, !active);
+            b.style.color = active
+                ? (currentTheme?.colors.accentPrimary ?? Color.white)
+                : (currentTheme?.colors.secondaryText ?? Color.gray);
+        }
+    }
+
+    private void SetNavIcon(Button btn, bool active)
+    {
+        if (btn == null) return;
+        btn.EnableInClassList(UINames.Class_NavIconActive, active);
+        btn.style.backgroundColor = active
+            ? (currentTheme?.colors.navIconActiveBg ?? Color.white)
+            : (currentTheme?.colors.navIconInactiveBg ?? Color.grey);
+    }
+
+    private void SetTabState(Button btn, bool active)
+    {
+        if (btn == null) return;
+        btn.EnableInClassList(UINames.Class_TabActive, active);
+        btn.EnableInClassList(UINames.Class_TabInactive, !active);
+        btn.style.color = active
+            ? (currentTheme?.colors.accentPrimary ?? Color.white)
+            : (currentTheme?.colors.secondaryText ?? Color.gray);
+    }
+
+    private void SyncNavToVisibleScreen()
+    {
+        if (ui == null) return;
+
+        if (isMobileLayout)
+        {
+            SetActiveNav(ScreenNavigator.IsVisible(ui.VideoScreen)
+                ? NavMode.Video : NavMode.Home);
+            return;
+        }
+
+        if (ScreenNavigator.IsVisible(ui.VideoScreen))
+        { SetActiveNav(NavMode.Video); return; }
+
+        if (ScreenNavigator.IsVisible(ui.ProductSelectionScreen) ||
+            ScreenNavigator.IsVisible(ui.ProductSpecsScreen) ||
+            ScreenNavigator.IsVisible(ui.InspectProductScreen))
+        { SetActiveNav(NavMode.Product); return; }
+
+        SetActiveNav(NavMode.Home);
+    }
+
     private void GoHome()
     {
         rigBuilder.ApplyBaseRig(FIRST_DYNAMIC_CAM);
-
-        if (cameraController != null)
-            cameraController.goToPosition(CAM_START);
-
+        cameraController?.goToPosition(CAM_START);
         videoUI?.Pause();
         videoUI?.Leave();
-
         sceneMode.SetVideoFov(false);
-        sceneMode.SetModelDecalVisible(false);
+        sceneMode.SetProductDecalVisible(false);
 
-        if (isMobileLayout && cameraController != null)
+        if (isMobileLayout)
         {
-            cameraController.SetTarget(rotationTarget, true);
-            cameraController.goToPosition(CAM_MODEL_VIEW);
+            cameraController?.SetTarget(rotationTarget, true);
+            cameraController?.goToPosition(CAM_PRODUCT_VIEW);
         }
 
         displayFlow.ShowHome();
+        SyncNavToVisibleScreen();
         sceneMode.RefreshRotationState();
     }
 
@@ -300,45 +402,35 @@ public class HomeScreen : MonoBehaviour
     {
         rigBuilder.ApplyBaseRig(FIRST_DYNAMIC_CAM);
         sceneMode.SetVideoFov(true);
-
-        if (cameraController != null)
-            cameraController.goToPosition(CAM_VIDEO);
-
-        sceneMode.SetModelDecalVisible(false);
+        cameraController?.goToPosition(CAM_VIDEO);
+        sceneMode.SetProductDecalVisible(false);
         displayFlow.ShowVideo();
-
         videoUI?.Enter();
+        SyncNavToVisibleScreen();
         sceneMode.RefreshRotationState();
     }
 
-    private void OpenModelRoot()
+    private void OpenProductRoot()
     {
         videoUI?.Pause();
         videoUI?.Leave();
         sceneMode.SetVideoFov(false);
-
-        rigBuilder.ApplyModelRig(currentSimModel, FIRST_DYNAMIC_CAM);
-
-        if (cameraController != null)
-        {
-            cameraController.goToPosition(CAM_MODEL_VIEW);
-            cameraController.SetTarget(rotationTarget, true);
-        }
-
-        sceneMode.SetModelDecalVisible(true);
-        OpenModelSelection();
+        rigBuilder.ApplyProductRig(currentProduct, FIRST_DYNAMIC_CAM);
+        cameraController?.goToPosition(CAM_PRODUCT_VIEW);
+        cameraController?.SetTarget(rotationTarget, true);
+        sceneMode.SetProductDecalVisible(true);
+        OpenProductSelection();
     }
 
-    private void OpenModelSelection()
+    private void OpenProductSelection()
     {
-        displayFlow.ShowModelSelection();
-
+        displayFlow.ShowProductSelection();
         if (!isMobileLayout)
         {
-            modelSelectionUI?.BuildIfNeeded(modelManager.LoadedModels, SelectSimModel);
-            modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
+            productSelectionUI?.BuildIfNeeded(productManager.LoadedProducts, SelectProduct);
+            productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
         }
-
+        SyncNavToVisibleScreen();
         sceneMode.RefreshRotationState();
     }
 
@@ -346,20 +438,15 @@ public class HomeScreen : MonoBehaviour
     {
         if (isMobileLayout)
         {
-            if (currentSimModel != null)
-                specsUI.PopulateSpecs(ui.SpecsListContainer, currentSimModel);
-
+            specsUI?.PopulateSpecs(ui.SpecsListContainer, currentProduct);
             UpdateBrochureButtonState();
             return;
         }
-
         displayFlow.ShowSpecs();
+        specsUI?.PopulateSpecs(ui.SpecsListContainer, currentProduct);
         UpdateBrochureButtonState();
-
-        if (currentSimModel != null)
-            specsUI.PopulateSpecs(ui.SpecsListContainer, currentSimModel);
-
-        modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
+        productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
+        SyncNavToVisibleScreen();
         sceneMode.RefreshRotationState();
     }
 
@@ -367,28 +454,49 @@ public class HomeScreen : MonoBehaviour
     {
         if (isMobileLayout)
         {
-            inspectUI?.Rebuild(currentSimModel);
+            inspectUI?.Rebuild(currentProduct);
             return;
         }
-
         displayFlow.ShowInspect();
-        inspectUI?.Rebuild(currentSimModel);
-        modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
-
+        inspectUI?.Rebuild(currentProduct);
+        productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
+        SyncNavToVisibleScreen();
         sceneMode.RefreshRotationState();
     }
 
-    private void OpenModelPage(int pageIndex)
+    private void OpenProductPage(int pageIndex)
     {
         nav?.CloseOverlay();
-        sceneMode.SetModelDecalVisible(true);
-
+        sceneMode.SetProductDecalVisible(true);
         switch (pageIndex)
         {
-            case 0: OpenModelSelection(); break;
+            case 0: OpenProductSelection(); break;
             case 1: OpenSpecs(); break;
             case 2: OpenInspect(); break;
         }
+    }
+
+    private void OpenNextFromProduct()
+    {
+        nav?.CloseOverlay();
+        sceneMode.SetProductDecalVisible(true);
+        if (HasSpecs(currentProduct)) OpenSpecs();
+        else if (HasInspectPoints(currentProduct)) OpenInspect();
+    }
+
+    private void OpenNextFromSpecs()
+    {
+        nav?.CloseOverlay();
+        if (HasInspectPoints(currentProduct)) OpenInspect();
+        else GoHome();
+    }
+
+    private void OpenPrevFromInspect()
+    {
+        nav?.CloseOverlay();
+        sceneMode.SetProductDecalVisible(true);
+        if (HasSpecs(currentProduct)) OpenSpecs();
+        else OpenProductSelection();
     }
 
     private void ToggleInfoOverlay()
@@ -397,128 +505,179 @@ public class HomeScreen : MonoBehaviour
         sceneMode.RefreshRotationState();
     }
 
-    // -------------------------
-    // Model selection
-    // -------------------------
-    private void SelectSimModel(string id)
+
+    private void RefreshProductDependentUI()
     {
-        if (currentModelId == id && currentSimModel != null)
+        bool hasSpecs = HasSpecs(currentProduct);
+        bool hasInspect = HasInspectPoints(currentProduct);
+        bool hasBrochure = HasBrochure(currentProduct);
+
+        SetDisplay(ui.SpecsButton, hasSpecs || hasInspect);
+
+        if (ui.InspectButton != null)
+            ui.InspectButton.text = hasInspect
+                ? (currentTheme?.text.inspectButton ?? "NEXT")
+                : (currentTheme?.text.doneButton ?? "DONE");
+
+        foreach (var b in ui.SpecsTabButtons)
         {
-            modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
+            b.SetEnabled(hasSpecs);
+            b.EnableInClassList(UINames.Class_TabDisabled, !hasSpecs);
+        }
+        foreach (var b in ui.InspectTabButtons)
+        {
+            b.SetEnabled(hasInspect);
+            b.EnableInClassList(UINames.Class_TabDisabled, !hasInspect);
+        }
+
+
+        SetDisplay(ui.SpecsSectionRoot, hasSpecs);
+        SetDisplay(ui.InspectSectionRoot, hasInspect);
+        SetDisplay(ui.BrochureSectionRoot, hasBrochure);
+        SetDisplay(ui.DownloadPdfButton, hasBrochure);
+
+        if (ui.InspectBackNavLabel != null)
+            ui.InspectBackNavLabel.text = hasSpecs
+                ? (currentTheme?.text.specsSectionTitle ?? "SPECS")
+                : (currentTheme?.text.topTabProduct ?? "CHOOSE PRODUCT");
+
+        if (hasSpecs) specsUI?.PopulateSpecs(ui.SpecsListContainer, currentProduct);
+        else ui.SpecsListContainer?.Clear();
+
+        if (hasInspect) inspectUI?.Rebuild(currentProduct);
+        else
+        {
+            ui.InspectListContainer?.Clear();
+            inspectUI?.ResetView();
+        }
+
+        UpdateBrochureButtonState();
+    }
+
+    private static void SetDisplay(VisualElement el, bool visible)
+    {
+        if (el != null)
+            el.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+
+    private void SelectProduct(string id)
+    {
+        if (currentProductId == id && currentProduct != null)
+        {
+            productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
             return;
         }
 
-        currentModelId = id;
+        currentProductId = id;
 
-        if (!modelManager.Select(id))
+        if (!productManager.Select(id))
         {
-            currentSimModel = null;
-            modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
+            currentProduct = null;
+            productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
             UpdateBrochureButtonState();
             return;
         }
 
-        currentSimModel = modelManager.CurrentModel;
+        currentProduct = productManager.CurrentProduct;
+        rigBuilder.ApplyProductRig(currentProduct, FIRST_DYNAMIC_CAM);
 
-        rigBuilder.ApplyModelRig(currentSimModel, FIRST_DYNAMIC_CAM);
-
-        if (IsAnyModelScreenVisible() && userRotated)
+        if (IsAnyProductScreenVisible() && userRotated)
         {
-            if (cameraController != null)
-                cameraController.goToPosition(CAM_MODEL_VIEW);
-
+            cameraController?.goToPosition(CAM_PRODUCT_VIEW);
             inspectUI?.ResetView();
             userRotated = false;
         }
 
-        modelSelectionUI?.UpdateSelected(currentModelId, currentSimModel);
-
-        if (ScreenNavigator.IsVisible(ui.ModelSpecsScreen))
-            specsUI.PopulateSpecs(ui.SpecsListContainer, currentSimModel);
-
-        if (ScreenNavigator.IsVisible(ui.InspectModelScreen))
-            inspectUI?.Rebuild(currentSimModel);
-
-        UpdateBrochureButtonState();
-
-        if (isMobileLayout && currentSimModel != null)
-        {
-            specsUI.PopulateSpecs(ui.SpecsListContainer, currentSimModel);
-            inspectUI?.Rebuild(currentSimModel);
-        }
+        productSelectionUI?.UpdateSelected(currentProductId, currentProduct);
+        RefreshProductDependentUI();
+        SyncNavToVisibleScreen();
     }
 
-    // -------------------------
-    // Misc helpers
-    // -------------------------
-    private bool IsAnyModelScreenVisible()
+    private bool IsAnyProductScreenVisible()
     {
-        if (isMobileLayout)
-            return ScreenNavigator.IsVisible(ui.HomeScreen);
-
-        return ScreenNavigator.IsVisible(ui.ModelSelectionScreen) ||
-               ScreenNavigator.IsVisible(ui.ModelSpecsScreen) ||
-               ScreenNavigator.IsVisible(ui.InspectModelScreen);
+        if (isMobileLayout) return ScreenNavigator.IsVisible(ui.HomeScreen);
+        return ScreenNavigator.IsVisible(ui.ProductSelectionScreen) ||
+               ScreenNavigator.IsVisible(ui.ProductSpecsScreen) ||
+               ScreenNavigator.IsVisible(ui.InspectProductScreen);
     }
 
     private void ToggleUIVisibility()
     {
-        var scope = nav != null ? nav.CurrentScreen : null;
-        if (scope == null) scope = root;
-
-        var right = scope?.Q<VisualElement>("RightContainer");
-        if (right == null) return;
-
         uiHidden = !uiHidden;
-        right.style.display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
-
-        if (isMobileLayout && ui.BottomPanel != null)
-            ui.BottomPanel.style.display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
+        if (!isMobileLayout)
+        {
+            var display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
+            foreach (var e in ui.RightContainers)
+                e.style.display = display;
+        }
+        else
+        {
+            if (ui.BottomPanel != null)
+                ui.BottomPanel.style.display = uiHidden ? DisplayStyle.None : DisplayStyle.Flex;
+        }
     }
 
-    private void TakeScreenshot()
-    {
-        if (ScreenshotHandler.Instance != null)
-            ScreenshotHandler.Instance.CaptureScreenshot();
-    }
+    private void TakeScreenshot() =>
+        ScreenshotHandler.Instance?.CaptureScreenshot();
 
     private void UpdateBrochureButtonState()
     {
-        if (ui.DownloadPdfButton == null) return;
-
-        bool hasPdf = currentSimModel != null &&
-                      !string.IsNullOrWhiteSpace(currentSimModel.brochurePdfFile);
-
-        ui.DownloadPdfButton.SetEnabled(hasPdf);
+        bool hasPdf = HasBrochure(currentProduct);
+        if (ui.DownloadPdfButton != null)
+        {
+            ui.DownloadPdfButton.style.display = hasPdf ? DisplayStyle.Flex : DisplayStyle.None;
+            ui.DownloadPdfButton.SetEnabled(hasPdf);
+        }
+        if (ui.BrochureSectionRoot != null)
+            ui.BrochureSectionRoot.style.display = hasPdf ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
     private void DownloadPdf()
     {
-        if (currentSimModel == null) return;
-
+        if (currentProduct == null) return;
         WebGLDownloadManager.Instance?.DownloadPdfFromServer(
-            currentSimModel.brochurePdfFile,
-            currentSimModel.brochureDownloadName
-        );
+            currentProduct.brochurePdfFile,
+            currentProduct.brochureDownloadName);
     }
 
     public void NotifyUserRotated() => userRotated = true;
 
-    private bool ModelExists(string id)
+    private bool HasSpecs(Product p)
     {
-        if (string.IsNullOrEmpty(id) || modelManager == null) return false;
-        var list = modelManager.LoadedModels;
-        for (int i = 0; i < list.Count; i++)
-            if (list[i] != null && list[i].id == id)
+        if (p == null || !p.showSpecs || p.specs == null || p.specs.Length == 0) return false;
+        foreach (var s in p.specs)
+            if (s != null && (!string.IsNullOrWhiteSpace(s.label) || !string.IsNullOrWhiteSpace(s.value)))
                 return true;
         return false;
     }
 
-    private string GetFirstModelIdOrDefault(string fallback)
+    private bool HasInspectPoints(Product p)
     {
-        var list = modelManager?.LoadedModels;
-        if (list != null && list.Count > 0 && list[0] != null && !string.IsNullOrEmpty(list[0].id))
-            return list[0].id;
+        if (p == null || !p.showInspect || p.inspectPoints == null || p.inspectPoints.Length == 0) return false;
+        foreach (var pt in p.inspectPoints)
+            if (pt != null && (!string.IsNullOrWhiteSpace(pt.label) || pt.cameraAnchor != null))
+                return true;
+        return false;
+    }
+
+    private bool HasBrochure(Product p) =>
+        p != null && !string.IsNullOrWhiteSpace(p.brochurePdfFile);
+
+    private bool ProductExists(string id)
+    {
+        if (string.IsNullOrEmpty(id) || productManager == null) return false;
+        foreach (var p in productManager.LoadedProducts)
+            if (p != null && p.productId == id) return true;
+        return false;
+    }
+
+    private string GetFirstProductIdOrDefault(string fallback)
+    {
+        var list = productManager?.LoadedProducts;
+        if (list != null && list.Count > 0 && list[0] != null &&
+            !string.IsNullOrEmpty(list[0].productId))
+            return list[0].productId;
         return fallback;
     }
 }

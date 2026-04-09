@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="ProductSpecs_Brochure_Section" class="brochure-section-container">
+        <ui:Label text="DOWNLOAD BROCHURE" name="ProductSpecs_Download_Label" class="font-body text-base text-primary"/>
+        <ui:Button text="" name="ProductSpecs_Download_Button" class="brochure-download-button"/>
+    </ui:VisualElement>
+</ui:UXML>

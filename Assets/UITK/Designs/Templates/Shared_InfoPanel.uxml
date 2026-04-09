@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Overlay_Info_Root" class="info-overlay-root">
+        <ui:VisualElement name="Overlay_Info_Card" class="info-overlay-card">
+            <ui:VisualElement name="Overlay_Info_Header" class="info-overlay-header">
+                <ui:Label text="INFO" name="Overlay_Info_Title_Label" class="info-overlay-title font-body text-base text-primary"/>
+                <ui:Button text="" name="Overlay_Info_Close_Button" class="info-overlay-close-button"/>
+            </ui:VisualElement>
+            <ui:Label text="One-finger drag: Rotate model&#10;&#10;Scroll: Zoom in or out&#10;&#10;Inspect: Zoom into parts&#10;&#10;Specs: View details&#10;&#10;Replay: Restart video" name="Overlay_Info_Body_Label" class="info-overlay-body font-body text-base text-primary"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

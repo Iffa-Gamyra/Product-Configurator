@@ -8,7 +8,7 @@ public class HomeSceneModeController
     private readonly DecalController decalController;
     private readonly Transform rotationTarget;
     private readonly ScreenNavigator nav;
-    private readonly Func<bool> isAnyModelScreenVisible;
+    private readonly Func<bool> isAnyProductScreenVisible;
     private readonly float videoFov;
     private readonly float normalFov;
 
@@ -18,7 +18,7 @@ public class HomeSceneModeController
         DecalController decalController,
         Transform rotationTarget,
         ScreenNavigator nav,
-        Func<bool> isAnyModelScreenVisible,
+        Func<bool> isAnyProductScreenVisible,
         float videoFov,
         float normalFov)
     {
@@ -27,7 +27,7 @@ public class HomeSceneModeController
         this.decalController = decalController;
         this.rotationTarget = rotationTarget;
         this.nav = nav;
-        this.isAnyModelScreenVisible = isAnyModelScreenVisible;
+        this.isAnyProductScreenVisible = isAnyProductScreenVisible;
         this.videoFov = videoFov;
         this.normalFov = normalFov;
     }
@@ -38,19 +38,19 @@ public class HomeSceneModeController
         mainCam.fieldOfView = isVideo ? videoFov : normalFov;
     }
 
-    public void SetModelDecalVisible(bool showModelDecal)
+    public void SetProductDecalVisible(bool showProductDecal)
     {
         if (decalController == null) return;
 
-        if (showModelDecal && !decalController.IsOpaque)
+        if (showProductDecal && !decalController.IsOpaque)
             decalController.StartFadeInAndScaleUp();
-        else if (!showModelDecal && decalController.IsOpaque)
+        else if (!showProductDecal && decalController.IsOpaque)
             decalController.StartFadeOutAndScaleDown();
     }
 
     public void RefreshRotationState()
     {
-        bool allowRotation = isAnyModelScreenVisible() && (nav != null && !nav.IsOverlayOpen());
+        bool allowRotation = isAnyProductScreenVisible() && (nav != null && !nav.IsOverlayOpen());
 
         if (cameraController != null)
             cameraController.canRotate = allowRotation;

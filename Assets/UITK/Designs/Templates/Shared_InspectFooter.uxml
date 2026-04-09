@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="InspectProduct_Footer_Row" class="inspect-footer-row">
+        <ui:VisualElement name="InspectProduct_Prev_Container" class="inspect-prev-container">
+            <ui:Button text="" parse-escape-sequences="false" display-tooltip-when-elided="true" name="InspectProduct_PrevNav_Button" class="panel-ghost-button font-body text-md text-dark"/>
+            <ui:Label text="VIEW PREV" name="InspectProduct_PrevNav_Label" class="inspect-nav-label font-body text-base text-primary"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="InspectProduct_Next_Container" class="inspect-next-container">
+            <ui:Label text="VIEW NEXT" name="InspectProduct_NextNav_Label" class="inspect-nav-label font-body text-base text-primary"/>
+            <ui:Button text="" parse-escape-sequences="false" display-tooltip-when-elided="true" name="InspectProduct_NextNav_Button" class="panel-ghost-button-flipped font-body text-md text-dark"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

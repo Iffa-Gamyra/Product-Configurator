@@ -6,7 +6,6 @@ public class UIBlockerRaycast : MonoBehaviour
     public static UIBlockerRaycast Instance { get; private set; }
 
     [SerializeField] private UIDocument uiDocument;
-    [SerializeField] private string blockerName = "UIBlocker";
 
     private VisualElement blocker;
 
@@ -40,10 +39,10 @@ public class UIBlockerRaycast : MonoBehaviour
 
         for (var ve = picked; ve != null; ve = ve.parent)
         {
-            if (ve.name == blockerName)
+            if (ve.name == UINames.Blocker)
                 return true;
 
-            if (ve.ClassListContains("ui-blocker"))
+            if (ve.ClassListContains(UINames.Class_DesktopUIBlocker) || ve.ClassListContains(UINames.Class_MobileUIBlocker))
                 return true;
 
             if (ve is Button || ve is ScrollView || ve is Scroller || ve is Slider)

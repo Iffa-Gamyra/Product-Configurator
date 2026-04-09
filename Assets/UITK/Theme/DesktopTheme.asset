@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4e68e201396ea499c37888d5bf3d61, type: 3}
+  m_Name: DesktopTheme
+  m_EditorClassIdentifier: Assembly-CSharp::ConfiguratorUITheme
+  fonts:
+    bodyFont: {fileID: 12800000, guid: e8df6be3b51b64012990648c623d0238, type: 3}
+    boldFont: {fileID: 12800000, guid: 143afdd0463e74cb79ba8b2de1a7e49c, type: 3}
+    lightFont: {fileID: 12800000, guid: ff028d5994a9b4a3798038850e22e71a, type: 3}
+    bodyFontSize: 18
+    boldFontSize: 30
+    tabFontSize: 15
+    titleFontSize: 18
+    buttonFontSize: 16
+    smallFontSize: 10
+  text:
+    brandLogoText: GAMYRA
+    welcomeDescription: "This is an early version of our virtual showroom, where
+      you can explore and interact with our products. \nFor the full experience,
+      please use a desktop computer."
+    startButtonText: CLICK HERE TO START
+    homeTabProduct: CHOOSE PRODUCT
+    homeTabVideo: VIDEOS
+    mobileTabProducts: PRODUCTS
+    mobileTabVideo: VIDEO
+    topTabProduct: CHOOSE PRODUCT
+    topTabSpecs: SPECS
+    topTabInspect: INSPECT
+    specsSectionTitle: SPECS
+    inspectSectionTitle: INSPECT
+    viewSpecsButton: NEXT
+    inspectButton: NEXT
+    doneButton: DONE
+    backNavLabel: BACK
+    resetViewLabel: RESET VIEW
+    prevNavLabel: VIEW PREV
+    nextNavLabel: VIEW NEXT
+    downloadBrochureLabel: DOWNLOAD BROCHURE
+    infoOverlayTitle: INFO
+    infoOverlayBodyDesktop: 'One-finger drag: Rotate model
+
+
+      Scroll: Zoom in
+      or out
+
+
+      Inspect: Zoom into parts
+
+
+      Specs: View details
+
+
+      Replay:
+      Restart video'
+    infoOverlayBodyMobile: 'Finger drag: Rotate model
+
+
+      Pinch: Zoom in/out
+
+
+      Inspect:
+      Zoom into parts
+
+
+      Specs: View details
+
+
+      Replay: Restart video'
+  colors:
+    accentPrimary: {r: 0.99215686, g: 0.7490196, b: 0.2823529, a: 1}
+    brandLogoColor: {r: 0.859, g: 0.859, b: 0.859, a: 1}
+    accentSecondary: {r: 0.459, g: 0.663, b: 0.929, a: 1}
+    primaryText: {r: 1, g: 1, b: 1, a: 1}
+    secondaryText: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    actionButtonText: {r: 0.012, g: 0.137, b: 0.114, a: 1}
+    welcomeBg: {r: 0, g: 0, b: 0, a: 0.99}
+    topNavBg: {r: 0.114, g: 0.114, b: 0.114, a: 1}
+    mobileNavBg: {r: 0, g: 0, b: 0, a: 0.92}
+    panelCardBg: {r: 0.102, g: 0.102, b: 0.102, a: 0.9}
+    overlayBackdropBg: {r: 0, g: 0, b: 0, a: 0.47}
+    infoCardBg: {r: 0.118, g: 0.118, b: 0.118, a: 0.53}
+    actionButtonBg: {r: 0.906, g: 0.906, b: 0.906, a: 1}
+    navIconActiveBg: {r: 0.92156863, g: 0.49803922, b: 0, a: 0.63}
+    navIconInactiveBg: {r: 0.153, g: 0.149, b: 0.149, a: 0.51}
+    dividerColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    progressBarFill: {r: 0.384, g: 0.69, b: 0.973, a: 1}
+    progressBarBg: {r: 0.392, g: 0.392, b: 0.392, a: 0.78}
+  images:
+    startButtonBackground: {fileID: 2800000, guid: a61ca62576a3844139bd6030f35ed7c3,
+      type: 3}
+    homeTabButtonBackground: {fileID: 2800000, guid: 206b2a95a65734937b14f2327ff726cd,
+      type: 3}
+    topTabActiveBanner: {fileID: 2800000, guid: 0093aadffc3ef40fe926ec8e5f60e2e6,
+      type: 3}
+    iconHome: {fileID: 2800000, guid: 263d650118b6d48bd8f9658a4ac49d09, type: 3}
+    iconProduct: {fileID: 2800000, guid: eb4cb56a08f0fee46a9f73cdc84caeab, type: 3}
+    iconVideo: {fileID: 2800000, guid: a9878384dacd347338696c34cdef1e38, type: 3}
+    iconInfo: {fileID: 2800000, guid: 148323cbc8481f646a2a6bcfd5b2a72e, type: 3}
+    iconViewSpecsButton: {fileID: 5923138177525885446, guid: dd7d7e0bc642a87409308441424d2d7b,
+      type: 3}
+    iconInspectButton: {fileID: 5923138177525885446, guid: dd7d7e0bc642a87409308441424d2d7b,
+      type: 3}
+    iconHide: {fileID: 2800000, guid: bd817e651350e4f9baef29feec5ccca8, type: 3}
+    iconScreenshot: {fileID: 2800000, guid: b97f35647030c49e48610e1a8675a35b, type: 3}
+    iconFocus: {fileID: 2800000, guid: 01d826e540d9549ff81d4bd4223f4ca4, type: 3}
+    iconResetView: {fileID: 2800000, guid: 9803eb9f60e2c7b46879f031a5225495, type: 3}
+    iconPrevNav: {fileID: 5923138177525885446, guid: dd7d7e0bc642a87409308441424d2d7b,
+      type: 3}
+    iconNextNav: {fileID: -4521532143779581420, guid: 2378ee1d31a1aa14ab44b8064f1215b6,
+      type: 3}
+    iconPlay: {fileID: 2800000, guid: b5735e301d48baf46bbb1ea8c3af21b8, type: 3}
+    iconPause: {fileID: 2800000, guid: 385b0653f353aa54daa513ce9b237e93, type: 3}
+    iconMute: {fileID: 2800000, guid: 68c6eb55b9b74df408cf729991cdeda4, type: 3}
+    iconUnmute: {fileID: 2800000, guid: bcfb47e814fd1404baf5844285370463, type: 3}
+    iconReplay: {fileID: 2800000, guid: 5c385b6e1dd17c447980e1d07446379a, type: 3}
+    iconDownload: {fileID: 2800000, guid: 6f8798108c756934296d0059a99df039, type: 3}
+    iconClose: {fileID: 2800000, guid: e3840ad721690d740831e0982c1f81c6, type: 3}
