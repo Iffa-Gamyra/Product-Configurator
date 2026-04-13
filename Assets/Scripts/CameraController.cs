@@ -235,7 +235,6 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Trying to move camera to index: {pos}");
         Cornea.Lerp.CameraLerp(pos);
     }
 

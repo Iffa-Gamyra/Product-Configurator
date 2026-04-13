@@ -46,25 +46,10 @@ MonoBehaviour:
     nextNavLabel: VIEW NEXT
     downloadBrochureLabel: DOWNLOAD BROCHURE
     infoOverlayTitle: INFO
-    infoOverlayBodyDesktop: 'One-finger drag: Rotate model
+    infoOverlayBody: 'Mouse drag: Rotate model
 
 
-      Scroll: Zoom in
-      or out
-
-
-      Inspect: Zoom into parts
-
-
-      Specs: View details
-
-
-      Replay:
-      Restart video'
-    infoOverlayBodyMobile: 'Finger drag: Rotate model
-
-
-      Pinch: Zoom in/out
+      Scroll: Zoom in or out
 
 
       Inspect:
@@ -84,8 +69,7 @@ MonoBehaviour:
     actionButtonText: {r: 0.012, g: 0.137, b: 0.114, a: 1}
     welcomeBg: {r: 0, g: 0, b: 0, a: 0.99}
     topNavBg: {r: 0.114, g: 0.114, b: 0.114, a: 1}
-    mobileNavBg: {r: 0, g: 0, b: 0, a: 0.92}
-    panelCardBg: {r: 0.102, g: 0.102, b: 0.102, a: 0.9}
+    panelCardBg: {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 0.9}
     overlayBackdropBg: {r: 0, g: 0, b: 0, a: 0.47}
     infoCardBg: {r: 0.118, g: 0.118, b: 0.118, a: 0.53}
     actionButtonBg: {r: 0.906, g: 0.906, b: 0.906, a: 1}

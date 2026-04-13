@@ -73,7 +73,7 @@ public sealed class InspectUIController
 
             int cameraIndex = firstDynamicCamIndex + validIndex;
             validIndex++;
-            Debug.Log(cameraIndex);
+        
             var row = inspectRowTemplate.Instantiate();
             var btn = row.Q<Button>(UINames.InspectRow_Btn);
             var label = row.Q<Label>(UINames.InspectRow_Label);
@@ -136,8 +136,6 @@ public sealed class InspectUIController
     {
         activeInspectCameraIndex =
             activeInspectCameraIndex == cameraIndex ? -1 : cameraIndex;
-
-        Debug.Log("activeInspectCameraIndex" +  activeInspectCameraIndex);
 
         if (activeInspectCameraIndex < 0)
             cameraController?.goToPosition(camModelViewIndex);

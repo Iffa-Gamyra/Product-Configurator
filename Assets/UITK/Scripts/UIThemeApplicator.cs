@@ -70,8 +70,7 @@ public class UIThemeApplicator
         SetText(ui.SpecsDownloadLabel, t.downloadBrochureLabel);
 
         SetText(ui.InfoTitleLabel, t.infoOverlayTitle);
-        SetText(ui.InfoBodyLabel,
-            isMobileLayout ? t.infoOverlayBodyMobile : t.infoOverlayBodyDesktop);
+        SetText(ui.InfoBodyLabel, t.infoOverlayBody);
     }
 
     private void ApplyFonts(FontGroup f)
@@ -109,13 +108,12 @@ public class UIThemeApplicator
         SetBg(ui.InfoOverlay, c.overlayBackdropBg);
 
         foreach (var e in ui.TopNavContainers) e.style.backgroundColor = c.topNavBg;
-        foreach (var e in ui.MobileNavContainers) e.style.backgroundColor = c.mobileNavBg;
+        foreach (var e in ui.MobileNavContainers) e.style.backgroundColor = c.topNavBg;
 
-        if (!isMobileLayout)
-        {
-            SetBg(ui.SpecsSectionRoot, c.panelCardBg);
-            SetBg(ui.InspectSectionRoot, c.panelCardBg);
-        }
+        SetBg(ui.ProductSectionRoot, c.panelCardBg);
+        SetBg(ui.SpecsSectionRoot, c.panelCardBg);
+        SetBg(ui.InspectSectionRoot, c.panelCardBg);
+        
 
         SetActionBg(ui.SpecsButton, c.actionButtonBg);
         SetActionBg(ui.InspectButton, c.actionButtonBg);

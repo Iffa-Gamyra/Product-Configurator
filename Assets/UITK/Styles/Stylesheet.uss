@@ -16,20 +16,57 @@
     -unity-font-style: normal;
 }
 
-.text-xs   { font-size: 10px; }
-.text-sm   { font-size: 15px; }
-.text-md   { font-size: 16px; }
-.text-base { font-size: 18px; }
-.text-lg   { font-size: 20px; }
-.text-xl   { font-size: 22px; }
-.text-2xl  { font-size: 30px; }
-.text-title { font-size: 18px; }
+.text-xs {
+    font-size: 10px;
+}
 
-.text-primary { color: rgb(255, 255, 255); }
-.text-brand   { color: rgb(219, 219, 219); }
-.text-accent  { color: rgb(253, 191, 72);  }
-.text-muted   { color: rgb(120, 120, 120); }
-.text-dark    { color: rgb(3, 35, 29);     }
+.text-sm {
+    font-size: 15px;
+}
+
+.text-md {
+    font-size: 16px;
+}
+
+.text-base {
+    font-size: 18px;
+}
+
+.text-lg {
+    font-size: 20px;
+}
+
+.text-xl {
+    font-size: 22px;
+}
+
+.text-2xl {
+    font-size: 30px;
+}
+
+.text-title {
+    font-size: 18px;
+}
+
+.text-primary {
+    color: rgb(255, 255, 255);
+}
+
+.text-brand {
+    color: rgb(219, 219, 219);
+}
+
+.text-accent {
+    color: rgb(253, 191, 72);
+}
+
+.text-muted {
+    color: rgb(120, 120, 120);
+}
+
+.text-dark {
+    color: rgb(3, 35, 29);
+}
 
 .font-body.active {
     -unity-font-definition: initial;
@@ -76,7 +113,6 @@
     height: 100%;
 }
 
-
 .welcome-screen-root {
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.99);
@@ -105,8 +141,13 @@
     margin-top: 35px;
     margin-bottom: 35px;
     margin-left: 35px;
-    margin-right: 35px;
+    margin-right: 0;
     padding-left: 275px;
+    align-self: auto;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-content: auto;
+    flex-direction: column;
 }
 
 .welcome-actions-container {
@@ -385,12 +426,13 @@
 }
 
 .desktop-middle-spacer {
-    flex-basis: 37%;
+    flex-basis: 40%;
 }
 
 .desktop-panel-outer {
     flex-basis: 63%;
     overflow: visible;
+    flex-grow: 1;
 }
 
 .desktop-ui-blocker {
@@ -406,27 +448,12 @@
     height: auto;
     margin-left: 0;
     margin-bottom: 0;
-    padding-bottom: 120px;
+    padding-bottom: 80px;
     justify-content: center;
+    padding-top: 20px;
 }
 
-.desktop-panel-card-spaced {
-    background-color: rgba(26, 26, 26, 0.9);
-    flex-grow: 1;
-    height: auto;
-    margin-left: 0;
-    margin-bottom: 0;
-    padding-bottom: 120px;
-    justify-content: space-between;
-    align-content: auto;
-    align-self: stretch;
-}
 
-.desktop-panel-card-inspect {
-    background-color: rgba(26, 26, 26, 0.9);
-    height: auto;
-    flex-grow: 1;
-}
 
 .desktop-products-list {
     flex-grow: 0;
@@ -470,6 +497,12 @@
     flex-shrink: 1;
     flex-grow: 1;
     justify-content: space-between;
+    padding-right: 12px;
+    padding-left: 12px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
 }
 
 .product-button-label {
@@ -508,7 +541,7 @@
     background-color: rgb(209, 209, 209);
     height: 1px;
     display: flex;
-    margin-top: 30px;
+    margin-top: 20px;
     justify-content: flex-start;
 }
 
@@ -580,7 +613,7 @@
     height: auto;
     overflow: visible;
     position: relative;
-    background-image: url("project://database/Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=5923138177525885446&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-left");
+    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=5923138177525885446&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-left");
 }
 
 .panel-ghost-button-flipped {
@@ -600,10 +633,11 @@
     height: auto;
     overflow: visible;
     position: relative;
-    background-image: url("project://database/Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-4521532143779581420&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-right");
+    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-4521532143779581420&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-right");
 }
 
-.panel-backnav-label { }
+.panel-backnav-label {
+}
 
 .panel-section-title {
     margin-top: 2px;
@@ -617,7 +651,7 @@
     flex-basis: auto;
     margin-right: 40px;
     margin-left: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     flex-shrink: 1;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -635,6 +669,7 @@
     margin-right: 20px;
     margin-top: 10px;
     margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .brochure-label {
@@ -731,7 +766,8 @@
     align-items: stretch;
 }
 
-.inspect-nav-label { }
+.inspect-nav-label {
+}
 
 .inspect-row {
     width: 100%;
@@ -790,7 +826,6 @@
     flex-grow: 1;
 }
 
-
 .spec-row {
     width: 100%;
     flex-direction: row;
@@ -798,7 +833,7 @@
     margin-right: 5px;
     margin-left: 5px;
     margin-top: 0;
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
 .spec-row-bar {
@@ -807,7 +842,8 @@
     flex-grow: 1;
     margin-right: 5px;
     margin-left: 5px;
-    margin-top: 0;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
 .spec-row-bar-header {
@@ -815,7 +851,7 @@
     justify-content: space-between;
     margin-right: 5px;
     margin-left: 5px;
-    margin-top: 0;
+    margin-top: 1px;
     margin-bottom: 3px;
 }
 
@@ -905,13 +941,17 @@
     align-items: center;
     display: flex;
     flex-grow: 1;
-    padding-bottom: 11%;
+    padding-bottom: 0;
+    padding-right: 2%;
+    padding-left: 2%;
 }
 
 .video-controls-wrapper {
     flex-grow: 1;
     width: 75%;
     align-self: center;
+    padding-right: 2%;
+    padding-left: 2%;
 }
 
 .video-buttons-row {
@@ -927,6 +967,8 @@
     margin-left: 0;
     padding-bottom: 6px;
     align-content: center;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .video-control-button {
@@ -954,11 +996,25 @@
     border-bottom-color: rgba(0, 0, 0, 0);
 }
 
-.video-btn-pause   { background-image: url("project://database/Assets/UITK/Images/pause%201.png?fileID=2800000&guid=385b0653f353aa54daa513ce9b237e93&type=3#pause 1"); }
-.video-btn-play    { background-image: url("project://database/Assets/UITK/Images/play%201.png?fileID=2800000&guid=b5735e301d48baf46bbb1ea8c3af21b8&type=3#play 1"); }
-.video-btn-mute    { background-image: url("project://database/Assets/UITK/Images/mute.png?fileID=2800000&guid=68c6eb55b9b74df408cf729991cdeda4&type=3#mute"); }
-.video-btn-unmute  { background-image: url("project://database/Assets/UITK/Images/volume.png?fileID=2800000&guid=bcfb47e814fd1404baf5844285370463&type=3#volume"); }
-.video-btn-replay  { background-image: url("project://database/Assets/UITK/Images/replay.png?fileID=2800000&guid=5c385b6e1dd17c447980e1d07446379a&type=3#replay"); }
+.video-btn-pause {
+    background-image: url("project://database/Assets/UITK/Images/pause%201.png?fileID=2800000&guid=385b0653f353aa54daa513ce9b237e93&type=3#pause 1");
+}
+
+.video-btn-play {
+    background-image: url("project://database/Assets/UITK/Images/play%201.png?fileID=2800000&guid=b5735e301d48baf46bbb1ea8c3af21b8&type=3#play 1");
+}
+
+.video-btn-mute {
+    background-image: url("project://database/Assets/UITK/Images/mute.png?fileID=2800000&guid=68c6eb55b9b74df408cf729991cdeda4&type=3#mute");
+}
+
+.video-btn-unmute {
+    background-image: url("project://database/Assets/UITK/Images/volume.png?fileID=2800000&guid=bcfb47e814fd1404baf5844285370463&type=3#volume");
+}
+
+.video-btn-replay {
+    background-image: url("project://database/Assets/UITK/Images/replay.png?fileID=2800000&guid=5c385b6e1dd17c447980e1d07446379a&type=3#replay");
+}
 
 .video-progress-bar {
     height: 4px;
@@ -994,7 +1050,6 @@
     justify-content: space-between;
     width: auto;
 }
-
 
 .info-overlay-root {
     justify-content: center;
@@ -1044,7 +1099,8 @@
     align-items: center;
 }
 
-.info-overlay-title { }
+.info-overlay-title {
+}
 
 .info-overlay-close-button {
     background-image: url("project://database/Assets/UITK/Images/btn_close.png?fileID=2800000&guid=e3840ad721690d740831e0982c1f81c6&type=3#btn_close");
@@ -1060,12 +1116,21 @@
     white-space: normal;
 }
 
+.bike-progress-bar .unity-progress-bar__progress {
+    border-radius: 4px;
+}
 
-.bike-progress-bar .unity-progress-bar__progress  { border-radius: 4px; }
-.bike-progress-bar .unity-progress-bar__background { border-radius: 4px; }
-.unity-progress-bar__background { background-color: rgb(209, 218, 227); }
-.unity-progress-bar__progress   { background-color: rgb(98, 176, 248);  }
+.bike-progress-bar .unity-progress-bar__background {
+    border-radius: 4px;
+}
 
+.unity-progress-bar__background {
+    background-color: rgb(209, 218, 227);
+}
+
+.unity-progress-bar__progress {
+    background-color: rgb(98, 176, 248);
+}
 
 .ui-blocker {
     position: relative;
@@ -1140,7 +1205,6 @@
     padding-left: 10px;
     align-items: center;
 }
-
 
 .mobile-home-root {
     flex-grow: 1;

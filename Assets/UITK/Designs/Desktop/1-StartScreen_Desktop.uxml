@@ -2,10 +2,10 @@
     <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement name="Screen_Welcome_Root" class="welcome-screen-root">
         <ui:VisualElement name="Welcome_Content_Container" class="welcome-content-container">
-            <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Welcome_Title_Label" class="font-bold text-2xl text-brand welcome-title-label"/>
             <ui:Label tabindex="-1" text="This is an early version of our virtual showroom, where you can explore and interact with our products. &#10;For the full experience, please use a desktop computer." parse-escape-sequences="true" display-tooltip-when-elided="true" name="Welcome_Description_Label" class="welcome-description-label font-light text-xl text-primary"/>
         </ui:VisualElement>
         <ui:VisualElement name="Welcome_Actions_Container" class="welcome-actions-container">
+            <ui:Label tabindex="-1" text="GAMYRA" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Welcome_Title_Label" class="font-bold text-2xl text-brand welcome-title-label"/>
             <ui:Button text="CLICK HERE TO START" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Welcome_Start_Button" class="welcome-start-button font-body text-lg text-brand"/>
         </ui:VisualElement>
     </ui:VisualElement>

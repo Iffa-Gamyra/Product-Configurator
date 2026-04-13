@@ -13,7 +13,7 @@
                 <ui:VisualElement name="ProductSelection_Panel_Outer" class="desktop-panel-outer">
                     <ui:VisualElement name="UIBlocker" focusable="false" class="desktop-ui-blocker">
                         <ui:VisualElement name="ProductSelection_Panel_Card" class="desktop-panel-card">
-                            <ui:VisualElement name="Products" class="desktop-products-list"/>
+                            <ui:VisualElement name="ProductsList" class="desktop-products-list"/>
                             <ui:VisualElement name="ProductSelection_Divider" class="horizontal-divider-thin"/>
                             <ui:VisualElement name="ProductSelection_Actions_Row" class="panel-actions-row">
                                 <ui:Button text="NEXT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductSelection_Next_Button" class="panel-action-button font-body text-dark text-md"/>

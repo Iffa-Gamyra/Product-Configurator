@@ -38,7 +38,8 @@ public static class UINames
     public const string Utils_Screenshot = "Utils_Screenshot_Button";
     public const string Utils_Logo = "Utils_Logo_Label";
 
-    public const string Products_List = "Products";
+    public const string Products_PanelCard = "ProductSelection_Panel_Card";
+    public const string Products_List = "ProductsList";
     public const string Products_NextBtn = "ProductSelection_Next_Button";
 
     public const string Specs_Title = "ProductSpecs_Title_Label";
@@ -67,6 +68,7 @@ public static class UINames
     public const string Inspect_NextLabel = "InspectProduct_NextNav_Label";
 
     public const string Mobile_ProductsList = "ProductsList";
+    public const string Mobile_ProductsSection = "Home_Products_Section";
     public const string Mobile_SpecsSection = "Home_Specs_Section";
     public const string Mobile_InspectSection = "Home_Inspect_Section";
     public const string Mobile_BrochureSection = "ProductSpecs_Brochure_Section";

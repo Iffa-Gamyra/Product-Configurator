@@ -106,7 +106,7 @@ Font assets must be assigned in the Inspector. Sizes only override USS when chan
 
 ### TextGroup
 
-Every visible string in the UI. Welcome screen text, tab labels, button labels, section titles, navigation labels, info overlay body text. Desktop and mobile info overlay bodies are separate fields.
+Every visible string in the UI. Welcome screen text, tab labels, button labels, section titles, navigation labels, info overlay body text. 
 
 ### ColorGroup
 
@@ -118,9 +118,8 @@ Every visible string in the UI. Welcome screen text, tab labels, button labels, 
 | `secondaryText` | Inactive tabs, separators |
 | `actionButtonText` | Text on NEXT / DONE buttons |
 | `welcomeBg` | Welcome screen background |
-| `topNavBg` | Desktop top nav bar background |
-| `mobileNavBg` | Mobile top nav bar background |
-| `panelCardBg` | Desktop panel card background |
+| `topNavBg` | Desktop and mboile top nav bar background |
+| `panelCardBg` | Desktop and mobile panel card/section background |
 | `overlayBackdropBg` | Info overlay backdrop |
 | `infoCardBg` | Info overlay card background |
 | `actionButtonBg` | NEXT / DONE button background |
@@ -173,8 +172,6 @@ Stylesheet.uss uses a three-layer class system. Every text element in UXML carri
 - `.text-primary` white · `.text-brand` off-white · `.text-accent` orange · `.text-muted` gray · `.text-dark` dark green
 
 Structural classes (`.panel-section-title`, `.tab-button-active`, etc.) contain only layout properties — no font or color — so they never conflict with the typography layers.
-
-**Legacy stubs** — `.KS-regular-text`, `.KS-extrabold-text`, `.KS-regular-text-14px` remain as empty classes in USS to prevent errors from any UXML elements that still reference them. They can be removed from USS and UXML once fully migrated.
 
 ---
 

@@ -39,6 +39,7 @@ public class HomeScreenUI
     public Button UtilsScreenshotBtn { get; private set; }
     public Label UtilsLogoLabel { get; private set; }
 
+    public VisualElement ProductSectionRoot { get; private set; }
     public VisualElement ProductsContainer { get; private set; }
 
     public VisualElement SpecsListContainer { get; private set; }
@@ -166,6 +167,7 @@ public class HomeScreenUI
         BannerLabels = new List<Label>(0);
         RightContainers = new List<VisualElement>(0);
 
+        ProductSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_ProductsSection);
         SpecsSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_SpecsSection);
         InspectSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_InspectSection);
         BrochureSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_BrochureSection);
@@ -201,6 +203,7 @@ public class HomeScreenUI
 
     private void BindDesktop()
     {
+        
         ProductsContainer = ProductSelectionScreen?.Q<VisualElement>(UINames.Products_List);
 
         SpecsListContainer = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_Container);
@@ -244,6 +247,7 @@ public class HomeScreenUI
         MobileHomeTabBtns = new List<Button>(0);
         MobileVideoTabBtns = new List<Button>(0);
 
+        ProductSectionRoot = ProductSelectionScreen?.Q<VisualElement>(UINames.Products_PanelCard);
         SpecsSectionRoot = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_PanelCard);
         InspectSectionRoot = InspectProductScreen?.Q<VisualElement>(UINames.Inspect_PanelCard);
         BrochureSectionRoot = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_BrochureRoot);

@@ -13,7 +13,7 @@
                 <ui:VisualElement name="ProductSpecs_Middle_Spacer" class="desktop-middle-spacer"/>
                 <ui:VisualElement name="ProductSpecs_Panel_Outer" class="desktop-panel-outer">
                     <ui:VisualElement name="UIBlocker" class="desktop-ui-blocker">
-                        <ui:VisualElement name="ProductSpecs_Panel_Card" class="desktop-panel-card-spaced">
+                        <ui:VisualElement name="ProductSpecs_Panel_Card" class="desktop-panel-card">
                             <ui:VisualElement name="ProductSpecs_BackNav_Row" class="panel-backnav-row">
                                 <ui:VisualElement name="ProductSpecs_BackNav_Container" class="panel-backnav-button-container">
                                     <ui:Button text="" parse-escape-sequences="false" display-tooltip-when-elided="true" name="ProductSpecs_BackNav_Button" class="panel-ghost-button font-body text-md text-dark"/>

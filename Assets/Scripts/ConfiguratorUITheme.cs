@@ -76,17 +76,9 @@ public class TextGroup
     public string infoOverlayTitle = "INFO";
 
     [TextArea]
-    public string infoOverlayBodyDesktop =
-        "One-finger drag: Rotate model\n\n" +
+    public string infoOverlayBody =
+        "Mouse drag: Rotate model\n\n" +
         "Scroll: Zoom in or out\n\n" +
-        "Inspect: Zoom into parts\n\n" +
-        "Specs: View details\n\n" +
-        "Replay: Restart video";
-
-    [TextArea]
-    public string infoOverlayBodyMobile =
-        "Finger drag: Rotate model\n\n" +
-        "Pinch: Zoom in/out\n\n" +
         "Inspect: Zoom into parts\n\n" +
         "Specs: View details\n\n" +
         "Replay: Restart video";
@@ -110,7 +102,6 @@ public class ColorGroup
     [Header("Backgrounds")]
     public Color welcomeBg = new Color(0f, 0f, 0f, 0.99f);
     public Color topNavBg = new Color(0.114f, 0.114f, 0.114f, 1f);
-    public Color mobileNavBg = new Color(0f, 0f, 0f, 0.92f);
     public Color panelCardBg = new Color(0.102f, 0.102f, 0.102f, 0.9f);
     public Color overlayBackdropBg = new Color(0f, 0f, 0f, 0.47f);
     public Color infoCardBg = new Color(0.118f, 0.118f, 0.118f, 0.53f);

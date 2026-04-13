@@ -51,12 +51,6 @@ MonoBehaviour:
     current: 8
     max: 10
     toggle: 0
-  - label: Max Actuator Speed
-    type: 1
-    value: 300 mm/s
-    current: 300
-    max: 400
-    toggle: 0
   - label: Max Acceleration
     type: 1
     value: 0.4 G

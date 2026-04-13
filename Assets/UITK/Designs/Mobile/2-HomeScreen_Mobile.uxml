@@ -18,7 +18,7 @@
                     <ui:VisualElement name="RightContainer" class="mobile-scroll-content">
                         <ui:VisualElement name="Home_Products_Section" class="mobile-panel-section">
                             <ui:VisualElement name="UIBlocker" focusable="false" class="mobile-ui-blocker">
-                                <ui:VisualElement name="Products_Panel_Card" class="mobile-panel-card">
+                                <ui:VisualElement name="ProductSelection_Panel_Card" class="mobile-panel-card">
                                     <ui:VisualElement name="ProductsList" class="mobile-products-list"/>
                                 </ui:VisualElement>
                             </ui:VisualElement>
@@ -26,7 +26,7 @@
                         <ui:VisualElement name="Home_Specs_Section" class="mobile-panel-section">
                             <ui:VisualElement name="UIBlocker" class="mobile-ui-blocker">
                                 <ui:VisualElement name="ProductSpecs_Panel_Card" class="mobile-panel-card">
-                                    <ui:Label tabindex="-1" text="MODEL" parse-escape-sequences="true" display-tooltip-when-elided="true" name="selectedProduct" class="mobile-selected-product-label text-base text-primary font-body"/>
+                                    <ui:Label tabindex="-1" text="MODEL" parse-escape-sequences="true" display-tooltip-when-elided="true" name="selectedProduct" class="mobile-selected-product-label text-primary font-body text-xl"/>
                                     <ui:Label tabindex="-1" text="SPECS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ProductSpecs_Title_Label" class="mobile-section-title text-primary text-title"/>
                                     <ui:VisualElement name="ProductSpecs_Specs_Container" class="mobile-specs-container"/>
                                     <ui:Instance template="Shared_BrochureSection" name="Mobile_BrochureSection" style="flex-shrink: 0;"/>
