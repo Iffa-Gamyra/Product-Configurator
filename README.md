@@ -2,7 +2,29 @@
 
 ## Overview
 
-Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are controlled through ScriptableObject theme assets with no code changes required.
+Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content.
+
+---
+
+## Architecture Overview
+
+```
+CMS Server (Node.js)
+  themes/desktop-theme.json
+  themes/mobile-theme.json
+  icons/
+  images/
+        ↓  HTTP (UnityWebRequest)
+ThemeLoader         — fetches JSON + downloads all image assets
+        ↓
+RuntimeThemeData    — resolved Unity types (Color, Font, Texture2D)
+        ↓
+UIThemeApplicator   — writes to cached element refs
+        ↓
+HomeScreenUI        — caches all element refs at startup
+        ↓
+HomeScreen          — MonoBehaviour orchestrator
+```
 
 ---
 
@@ -18,11 +40,25 @@ Assign in Inspector:
 - `cameraController`, `decalController`, `rotationTarget`, `spawnPoint`
 - `swoopPosition`, `startPosition`, `productViewPosition`, `videoPosition` — camera anchor Transforms
 - `productButtonTemplate`, `specRowTextTemplate`, `specRowBarTemplate`, `specRowToggleTemplate`, `specRowChipsTemplate`, `inspectRowTemplate` — VisualTreeAsset references
-- `desktopTheme`, `mobileTheme` — ConfiguratorUITheme ScriptableObject assets
 - `video_FOV`, `normal_FOV` — camera field of view values
 - `resourcesPath` — path inside Resources folder where Product assets are stored (default: `GamyraDrive`)
 - `defaultProductId` — product ID to select on startup
 - `currentProductId` — product ID selected currently (assign same as default)
+
+**HomeScreenThemeBootstrap** (MonoBehaviour)
+Orchestrates theme loading. Assign in Inspector:
+- `themeLoader` — reference to the ThemeLoader component
+- `themeFontLibrary` — reference to the ThemeFontLibrary component
+- `desktopThemeFile` — server-relative path to desktop theme (default: `themes/desktop-theme.json`)
+- `mobileThemeFile` — server-relative path to mobile theme (default: `themes/mobile-theme.json`)
+
+**ThemeLoader** (MonoBehaviour)
+Fetches theme JSON and downloads image assets. Assign in Inspector:
+- `cmsBaseUrl` — base URL of the CMS server (default: `http://localhost:3000`)
+
+**ThemeFontLibrary** (MonoBehaviour)
+Holds font assets keyed by string. Assign in Inspector:
+- Add entries to the `fonts` list — each entry has a `key` (matches the font key in theme JSON) and a `font` (Unity Font asset)
 
 **DeviceDetection** (MonoBehaviour)
 Controls which UIDocument GameObject is active. Assign `desktopUI` and `mobileUI` GameObject references. Set `mode` to `Auto` for production — detects mobile via `Application.isMobilePlatform` or screen width ≤ 900px on WebGL.
@@ -41,6 +77,99 @@ Singleton. No configuration required. Requires the WebGL JS plugin to define `VS
 
 **DecalController** (MonoBehaviour on the decal projector GameObject)
 Configure `fadeInDuration`, `fadeOutDuration`, `scaleUpDuration`, `scaleDownDuration`, `maxSize` in Inspector.
+
+---
+
+## CMS Server
+
+A lightweight Node.js/Express server that serves theme JSON and static assets. Unity fetches all theme data from this server at runtime.
+
+### Setup
+
+```bash
+cd server
+npm install
+npm run dev     # development with auto-restart
+npm start       # production
+```
+
+Server runs at `http://localhost:3000` by default.
+
+### Folder Structure
+
+```
+server/
+  server.js
+  package.json
+  themes/
+    desktop-theme.json
+    mobile-theme.json
+  icons/
+    home.png
+    product.png
+    ...
+  images/
+    start-button.png
+    home-tab-bg.png
+    ...
+```
+
+### Endpoints
+
+| Method | Route | Purpose |
+|---|---|---|
+| `GET` | `/themes/desktop-theme.json` | Unity fetches desktop theme on startup |
+| `GET` | `/themes/mobile-theme.json` | Unity fetches mobile theme on startup |
+| `GET` | `/icons/:filename` | Serves icon images |
+| `GET` | `/images/:filename` | Serves background images |
+| `POST` | `/themes/:filename` | CMS saves edited theme JSON to disk |
+| `POST` | `/upload/icons` | Uploads an image to `icons/` |
+| `POST` | `/upload/images` | Uploads an image to `images/` |
+
+### Changing the server URL in Unity
+
+Update the `Cms Base Url` field on the `ThemeLoader` component in the Inspector. For production, point this to your live server URL.
+
+---
+
+## Theme JSON Structure
+
+Each theme file (`desktop-theme.json`, `mobile-theme.json`) follows this structure:
+
+```json
+{
+  "fonts": {
+    "bodyFontKey":  "archivo-regular",
+    "boldFontKey":  "archivo-bold",
+    "lightFontKey": "archivo-light",
+    "bodyFontSize": 18,
+    "boldFontSize": 30,
+    "tabFontSize":  15,
+    "titleFontSize": 18,
+    "buttonFontSize": 16,
+    "smallFontSize": 10
+  },
+  "text": {
+    "brandLogoText": "GAMYRA",
+    "startButtonText": "CLICK HERE TO START",
+    ...
+  },
+  "colors": {
+    "accentPrimary": "#FDC048FF",
+    "primaryText":   "#FFFFFFFF",
+    ...
+  },
+  "images": {
+    "iconHome":    "/icons/home.png",
+    "startButtonBackground": "/images/start-button.png",
+    ...
+  }
+}
+```
+
+Colors use `#RRGGBBAA` hex format. Image paths are server-relative (prefixed with the base URL at runtime). Font keys must match entries in the `ThemeFontLibrary` Inspector list.
+
+Leave any image field as an empty string `""` to skip loading that asset.
 
 ---
 
@@ -64,13 +193,15 @@ Products are loaded automatically at startup via `Resources.LoadAll` and sorted 
 Four layers with strict one-way dependencies:
 
 ```
-ConfiguratorUITheme  (ScriptableObject — all customisable data)
+ThemeLoader / HomeScreenThemeBootstrap  (fetches + resolves all theme data)
         ↓
-UIThemeApplicator    (reads theme, writes to cached element refs)
+RuntimeThemeData    (resolved Color, Font, Texture2D — ready for direct use)
         ↓
-HomeScreenUI         (caches all element refs + StyleTargets at startup)
+UIThemeApplicator   (reads RuntimeThemeData, writes to cached element refs)
         ↓
-HomeScreen           (MonoBehaviour — orchestrates everything)
+HomeScreenUI        (caches all element refs + StyleTargets at startup)
+        ↓
+HomeScreen          (MonoBehaviour — orchestrates everything)
 ```
 
 **`UINames.cs`** sits outside this chain as a shared registry. Every UXML element name and USS class name used in code is defined here as a constant. No script contains a hardcoded UI string.
@@ -78,23 +209,24 @@ HomeScreen           (MonoBehaviour — orchestrates everything)
 ### Startup sequence
 
 1. `HomeScreen.OnEnable` creates `HomeScreenUI` — walks the visual tree once, caches all element references and builds `StyleTargets` lists
-2. Creates `UIThemeApplicator` and calls `Apply(theme)` — writes all theme values to the cached refs with no further queries
-3. Remaining modules (`ScreenNavigator`, `VideoUIController`, etc.) are initialised with pre-cached refs
-4. Buttons are bound via the actions dictionary — all keys are `UINames` constants
+2. `HomeScreenThemeBootstrap.LoadThemeForCurrentDevice` starts — fetches theme JSON, downloads all images, resolves fonts from `ThemeFontLibrary`
+3. On load complete, `UIThemeApplicator.Apply(RuntimeThemeData)` writes all theme values to cached refs with no further queries
+4. Remaining modules (`ScreenNavigator`, `VideoUIController`, etc.) are initialised with pre-cached refs
+5. Buttons are bound via the actions dictionary — all keys are `UINames` constants
 
 ---
 
-## Customising the UI
+## Customising the Theme
 
-Open `Assets/UITK/Themes/DesktopTheme.asset` or `MobileTheme.asset` in the Inspector.
+Edit `themes/desktop-theme.json` or `themes/mobile-theme.json` in the CMS server folder. No Unity rebuild required — restart the server and hit Play (or reload the WebGL build).
 
-### FontGroup
+### FontData
 
 | Field | Controls | Default |
 |---|---|---|
-| `bodyFont` | KumbhSans-Regular — body text, buttons, labels | KumbhSans-Regular |
-| `boldFont` | KumbhSans-ExtraBold — logos | KumbhSans-ExtraBold |
-| `lightFont` | KumbhSans-Light — welcome description | KumbhSans-Light |
+| `bodyFontKey` | Key for body font in ThemeFontLibrary | — |
+| `boldFontKey` | Key for bold/logo font | — |
+| `lightFontKey` | Key for light font | — |
 | `bodyFontSize` | Body text size | 18px |
 | `boldFontSize` | Logo text size | 30px |
 | `tabFontSize` | Tab button text size | 15px |
@@ -102,13 +234,13 @@ Open `Assets/UITK/Themes/DesktopTheme.asset` or `MobileTheme.asset` in the Inspe
 | `buttonFontSize` | Action button text size | 16px |
 | `smallFontSize` | Reset view label size | 10px |
 
-Font assets must be assigned in the Inspector. Sizes only override USS when changed from their defaults.
+Font assets must be assigned in the `ThemeFontLibrary` Inspector list. The JSON keys link to those assets by name.
 
-### TextGroup
+### TextData
 
-Every visible string in the UI. Welcome screen text, tab labels, button labels, section titles, navigation labels, info overlay body text. 
+Every visible string in the UI — welcome screen text, tab labels, button labels, section titles, navigation labels, info overlay body text.
 
-### ColorGroup
+### ColorData
 
 | Field | Controls |
 |---|---|
@@ -118,7 +250,7 @@ Every visible string in the UI. Welcome screen text, tab labels, button labels, 
 | `secondaryText` | Inactive tabs, separators |
 | `actionButtonText` | Text on NEXT / DONE buttons |
 | `welcomeBg` | Welcome screen background |
-| `topNavBg` | Desktop and mboile top nav bar background |
+| `topNavBg` | Desktop and mobile top nav bar background |
 | `panelCardBg` | Desktop and mobile panel card/section background |
 | `overlayBackdropBg` | Info overlay backdrop |
 | `infoCardBg` | Info overlay card background |
@@ -131,7 +263,7 @@ Every visible string in the UI. Welcome screen text, tab labels, button labels, 
 
 `accentSecondary` is defined but has no runtime effect — it is used only in USS hover/active pseudo-class states which cannot be overridden at runtime.
 
-### ImageGroup
+### ImageData
 
 | Field | Element |
 |---|---|
@@ -139,8 +271,8 @@ Every visible string in the UI. Welcome screen text, tab labels, button labels, 
 | `homeTabButtonBackground` | Home screen large tab buttons |
 | `topTabActiveBanner` | Active banner diagonal label |
 | `iconHome/Product/Video/Info` | Side nav circle icons |
-| `iconViewSpecsButton` | Back nav ghost button on Specs screen |
-| `iconInspectButton` | Back nav ghost button on Inspect screen |
+| `iconSpecsBackNavButton` | Back nav ghost button on Specs screen |
+| `iconInspectBackNavButton` | Back nav ghost button on Inspect screen |
 | `iconHide` | Hide UI utility button |
 | `iconScreenshot` | Screenshot utility button |
 | `iconFocus` | Inspect row focus buttons |
@@ -150,7 +282,7 @@ Every visible string in the UI. Welcome screen text, tab labels, button labels, 
 | `iconDownload` | Brochure download button |
 | `iconClose` | Info overlay close button |
 
-Leave any field null to use the USS default.
+Leave any field as `""` to use the USS default.
 
 ---
 
@@ -158,7 +290,7 @@ Leave any field null to use the USS default.
 
 Stylesheet.uss uses a three-layer class system. Every text element in UXML carries one class from each layer.
 
-**Layer 1 — Font family** (applied by C# when a font asset is assigned in the theme)
+**Layer 1 — Font family** (applied by C# when a font asset is resolved from ThemeFontLibrary)
 - `.font-body` — KumbhSans-Regular
 - `.font-bold` — KumbhSans-ExtraBold, italic
 - `.font-light` — KumbhSans-Light
@@ -166,9 +298,9 @@ Stylesheet.uss uses a three-layer class system. Every text element in UXML carri
 **Layer 2 — Size tokens**
 - `.text-xs` 10px · `.text-sm` 15px · `.text-md` 16px · `.text-base` 18px · `.text-title` 18px · `.text-lg` 20px · `.text-xl` 22px · `.text-2xl` 30px
 
-`text-title` and `text-base` share the same default size (18px) but are separate classes so section title sizes and body sizes can be changed independently via `FontGroup.titleFontSize` and `FontGroup.bodyFontSize`.
+`text-title` and `text-base` share the same default size (18px) but are separate classes so section title sizes and body sizes can be changed independently via `FontData.titleFontSize` and `FontData.bodyFontSize`.
 
-**Layer 3 — Color tokens** (applied by C# from `ColorGroup`)
+**Layer 3 — Color tokens** (applied by C# from `ColorData`)
 - `.text-primary` white · `.text-brand` off-white · `.text-accent` orange · `.text-muted` gray · `.text-dark` dark green
 
 Structural classes (`.panel-section-title`, `.tab-button-active`, etc.) contain only layout properties — no font or color — so they never conflict with the typography layers.
@@ -206,17 +338,6 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 
 ---
 
-## Adding a New Theme
-
-1. Right-click in Project → Create → Product Configurator → UI Theme
-2. Name it and configure all four groups in the Inspector
-3. Assign font assets in FontGroup — drag `.ttf` files from `Assets/UITK/Fonts/`
-4. Assign the new theme to `HomeScreen.desktopTheme` or `HomeScreen.mobileTheme`
-
-Both DesktopTheme and MobileTheme must always be assigned. If `mobileTheme` is null, the mobile layout will have no theme applied.
-
----
-
 ## File Reference
 
 ### C# Scripts
@@ -224,9 +345,14 @@ Both DesktopTheme and MobileTheme must always be assigned. If `mobileTheme` is n
 | File | Purpose |
 |---|---|
 | `UINames.cs` | Central registry of all UXML element names and USS class names as constants |
-| `ConfiguratorUITheme.cs` | ScriptableObject — FontGroup, TextGroup, ColorGroup, ImageGroup |
+| `ThemeData.cs` | Raw JSON-deserialisable data classes — `FontData`, `TextData`, `ColorData`, `ImageData` (hex strings and path strings) |
+| `RuntimeThemeData.cs` | Resolved theme data — `RuntimeFontGroup`, `RuntimeColorGroup`, `RuntimeImageGroup` holding Unity Color, Font, Texture2D |
+| `ThemeColorUtils.cs` | Static helper — parses `#RRGGBBAA` hex strings into Unity Color with fallback |
+| `ThemeLoader.cs` | MonoBehaviour — fetches theme JSON and downloads all image assets from the CMS server |
+| `ThemeFontLibrary.cs` | MonoBehaviour — holds font assets keyed by string; looked up by key at runtime |
+| `HomeScreenThemeBootstrap.cs` | MonoBehaviour — selects desktop or mobile theme file, orchestrates the load, falls back to defaults |
 | `HomeScreenUI.cs` | Caches all element references at startup; builds StyleTargets in one tree walk |
-| `UIThemeApplicator.cs` | Applies theme to cached refs — zero runtime queries |
+| `UIThemeApplicator.cs` | Applies `RuntimeThemeData` to cached refs — zero runtime queries |
 | `HomeScreen.cs` | MonoBehaviour orchestrator — navigation, product selection, theme init |
 | `HomeScreenDisplayFlow.cs` | Screen show/hide logic for desktop and mobile |
 | `HomeSceneModeController.cs` | Camera FOV, model rotation permission, decal visibility |
@@ -245,6 +371,15 @@ Both DesktopTheme and MobileTheme must always be assigned. If `mobileTheme` is n
 | `UIBlockerRaycast.cs` | Detects whether input is over UI to gate camera rotation |
 | `ScreenshotHandler.cs` | Captures screen and sends to browser via JS interop |
 | `WebGLDownloadManager.cs` | Constructs PDF URL and triggers browser download via JS interop |
+
+### CMS Server Files
+
+| File | Purpose |
+|---|---|
+| `server.js` | Express server — static file serving, theme save endpoint, image upload |
+| `package.json` | Node.js dependencies — express, cors, multer |
+| `themes/desktop-theme.json` | Desktop theme — all colors, text, font keys, image paths |
+| `themes/mobile-theme.json` | Mobile theme — same structure, mobile-specific text variants |
 
 ### UXML Files
 
@@ -282,8 +417,6 @@ Both DesktopTheme and MobileTheme must always be assigned. If `mobileTheme` is n
 | File | Purpose |
 |---|---|
 | `Stylesheet.uss` | All USS styles — typography system, layout, structural classes |
-| `DesktopTheme.asset` | Default desktop theme — all fonts, colors, icons assigned |
-| `MobileTheme.asset` | Default mobile theme — same as desktop with transparent panel card background |
 
 ---
 
@@ -291,11 +424,13 @@ Both DesktopTheme and MobileTheme must always be assigned. If `mobileTheme` is n
 
 **Hover and active pseudo-class states** cannot be driven by the theme. `.circle-icon:hover`, `.inspect-button:hover`, `.inspect-button.active`, `.selected-button.active` are defined only in USS and are not overridable at runtime via C#.
 
-**`accentSecondary`** in ColorGroup has no runtime effect. It documents the blue used for selected inspect states in USS hover/active rules only.
+**`accentSecondary`** in ColorData has no runtime effect. It documents the blue used for selected inspect states in USS hover/active rules only.
 
-**`panelCardBg` on MobileTheme** has alpha 0 by design — mobile panels have no visible background card since they scroll over the 3D view.
+**`panelCardBg` on mobile theme** has alpha 0 by design — mobile panels have no visible background card since they scroll over the 3D view.
 
 **`UIBlockerRaycast.uiDocument`** must be assigned in the Inspector and must reference the active UIDocument (desktop or mobile depending on current mode).
+
+**Theme loading is asynchronous.** There is a brief window on startup where the UI is visible but the theme has not yet been applied. In practice this is covered by the welcome screen. If the CMS server is unreachable, `RuntimeThemeData.CreateDefault()` is used as a fallback so the app never breaks.
 
 ---
 
@@ -314,3 +449,4 @@ PDF brochure files must be accessible at `WebGLDownloadManager.pdfBaseUrl + "/" 
 
 Mobile detection on WebGL uses a screen width threshold of 900px. Adjust `DeviceDetection.DetectMobile` if a different breakpoint is needed.
 
+For production, update `ThemeLoader.cmsBaseUrl` in the Inspector to point to your live server. The server runs identically in production — swap `localhost:3000` for your domain.
