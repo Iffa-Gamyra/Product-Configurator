@@ -21,6 +21,7 @@ public class HomeScreenThemeBootstrap : MonoBehaviour
         RuntimeThemeData loadedTheme = null;
         string loadError = null;
 
+        // Coroutine yield must stay outside try/catch
         if (themeLoader != null)
         {
             yield return StartCoroutine(themeLoader.LoadTheme(
@@ -30,17 +31,33 @@ public class HomeScreenThemeBootstrap : MonoBehaviour
                 error => loadError = error));
         }
 
-        if (loadedTheme == null)
-        {
-            if (!string.IsNullOrWhiteSpace(loadError))
-            {
-                Debug.LogError(loadError);
-                onError?.Invoke(loadError);
-            }
+        RuntimeThemeData finalTheme = null;
 
-            loadedTheme = RuntimeThemeData.CreateDefault(themeFontLibrary);
+        try
+        {
+            if (loadedTheme != null)
+            {
+                finalTheme = loadedTheme;
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(loadError))
+                {
+                    Debug.LogWarning(loadError);
+                    onError?.Invoke(loadError);
+                }
+
+                finalTheme = RuntimeThemeData.CreateDefault(themeFontLibrary);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"Theme fallback failed. Using emergency defaults.\n{ex}");
+            onError?.Invoke(ex.Message);
+
+            finalTheme = new RuntimeThemeData();
         }
 
-        onSuccess?.Invoke(loadedTheme);
+        onSuccess?.Invoke(finalTheme);
     }
 }

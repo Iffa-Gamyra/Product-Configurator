@@ -144,8 +144,9 @@ public class HomeScreen : MonoBehaviour
                 theme => loadedTheme = theme));
         }
 
-        currentTheme = loadedTheme ?? RuntimeThemeData.CreateDefault(
-            themeBootstrap != null ? themeBootstrap.FontLibrary : null);
+        currentTheme = loadedTheme ??
+                       RuntimeThemeData.CreateDefault(
+                           themeBootstrap != null ? themeBootstrap.FontLibrary : null);
 
         ApplyThemeAndBuildControllers();
     }
