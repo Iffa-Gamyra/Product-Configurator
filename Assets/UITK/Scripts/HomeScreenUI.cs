@@ -50,6 +50,8 @@ public class HomeScreenUI
     public Button InspectDoneBtn { get; private set; }
     public Label SpecsTitleLabel { get; private set; }
     public Label SpecsBackNavLabel { get; private set; }
+
+    public Button SpecsBackNavButton { get; private set; }
     public Label SpecsDownloadLabel { get; private set; }
     public Button DownloadPdfButton { get; private set; }
     public Label SelectedProductInSpecScreen { get; private set; }
@@ -61,6 +63,7 @@ public class HomeScreenUI
     public VisualElement InspectSectionRoot { get; private set; }
     public Label InspectTitleLabel { get; private set; }
     public Label InspectBackNavLabel { get; private set; }
+    public Button InspectBackNavButton { get; private set; }
     public Button ResetViewButton { get; private set; }
     public Label InspectResetIcon { get; private set; }
     public Label InspectResetLabel { get; private set; }
@@ -265,7 +268,9 @@ public class HomeScreenUI
         SpecsTitleLabel = ProductSpecsScreen?.Q<Label>(UINames.Specs_Title);
         InspectTitleLabel = InspectProductScreen?.Q<Label>(UINames.Inspect_Title);
         InspectBackNavLabel = InspectProductScreen?.Q<Label>(UINames.Inspect_BackNavLabel);
+        InspectBackNavButton = InspectProductScreen?.Q<Button>(UINames.Inspect_BackNavBtn);
         SpecsBackNavLabel = ProductSpecsScreen?.Q<Label>(UINames.Specs_BackNavLabel);
+        SpecsBackNavButton = ProductSpecsScreen?.Q<Button>(UINames.Specs_BackNavBtn);
 
         UtilsLogoLabel = Root.Q<Label>(UINames.Utils_Logo);
         UtilsHideBtn = Root.Q<Button>(UINames.Utils_Hide);

@@ -312,8 +312,7 @@ MonoBehaviour:
     type: 3}
   inspectRowTemplate: {fileID: 9197481963319205126, guid: 809e373f69bd4474d82b289c0bcab9cb,
     type: 3}
-  desktopTheme: {fileID: 11400000, guid: 418727914df88af43bdc28350ef42be9, type: 2}
-  mobileTheme: {fileID: 11400000, guid: 39960119b69b6754fba6442d95a10b95, type: 2}
+  themeBootstrap: {fileID: 744128338}
   video_FOV: 122
   normal_FOV: 120
 --- !u!1 &227967942 stripped
@@ -358,8 +357,7 @@ MonoBehaviour:
     type: 3}
   inspectRowTemplate: {fileID: 9197481963319205126, guid: 809e373f69bd4474d82b289c0bcab9cb,
     type: 3}
-  desktopTheme: {fileID: 11400000, guid: 418727914df88af43bdc28350ef42be9, type: 2}
-  mobileTheme: {fileID: 11400000, guid: 39960119b69b6754fba6442d95a10b95, type: 2}
+  themeBootstrap: {fileID: 744128338}
   video_FOV: 60
   normal_FOV: 60
 --- !u!114 &227967949
@@ -944,6 +942,88 @@ MonoBehaviour:
   scaleUpDuration: 1
   scaleDownDuration: 1.25
   maxSize: 3
+--- !u!1 &744128337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744128341}
+  - component: {fileID: 744128340}
+  - component: {fileID: 744128339}
+  - component: {fileID: 744128338}
+  m_Layer: 0
+  m_Name: UITheme
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &744128338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744128337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6665aeac9715f40a50eae1a3edbabc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HomeScreenThemeBootstrap
+  themeLoader: {fileID: 744128340}
+  themeFontLibrary: {fileID: 744128339}
+  desktopThemeFile: themes/desktop-theme.json
+  mobileThemeFile: themes/mobile-theme.json
+--- !u!114 &744128339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744128337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcce9e5c72db4464c8387d4eb18c03d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThemeFontLibrary
+  fonts:
+  - key: Body
+    font: {fileID: 12800000, guid: e8df6be3b51b64012990648c623d0238, type: 3}
+  - key: Bold
+    font: {fileID: 12800000, guid: 143afdd0463e74cb79ba8b2de1a7e49c, type: 3}
+  - key: Light
+    font: {fileID: 12800000, guid: ff028d5994a9b4a3798038850e22e71a, type: 3}
+--- !u!114 &744128340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744128337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbab8903e6f1911428abd761a08c3da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThemeLoader
+  cmsBaseUrl: http://localhost:3000
+--- !u!4 &744128341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744128337}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &948394923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2279,3 +2359,4 @@ SceneRoots:
   - {fileID: 1963680790}
   - {fileID: 1353272165}
   - {fileID: 585679256}
+  - {fileID: 744128341}

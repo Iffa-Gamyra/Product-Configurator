@@ -12,9 +12,10 @@ public class UIThemeApplicator
         this.isMobileLayout = isMobileLayout;
     }
 
-    public void Apply(ConfiguratorUITheme theme)
+    public void Apply(RuntimeThemeData theme)
     {
         if (theme == null || ui == null) return;
+
         ApplyText(theme.text);
         ApplyFonts(theme.fonts);
         ApplyColors(theme.colors);
@@ -22,8 +23,10 @@ public class UIThemeApplicator
         ApplyLayoutVariants();
     }
 
-    private void ApplyText(TextGroup t)
+    private void ApplyText(TextData t)
     {
+        if (t == null) return;
+
         SetText(ui.WelcomeTitleLabel, t.brandLogoText);
         SetText(ui.WelcomeDescLabel, t.welcomeDescription);
         SetText(ui.WelcomeStartBtn, t.startButtonText);
@@ -73,26 +76,28 @@ public class UIThemeApplicator
         SetText(ui.InfoBodyLabel, t.infoOverlayBody);
     }
 
-    private void ApplyFonts(FontGroup f)
+    private void ApplyFonts(RuntimeFontGroup f)
     {
         if (f == null) return;
+
         var t = ui.Targets;
 
         if (f.bodyFont != null) foreach (var e in t.FontBody) e.style.unityFont = f.bodyFont;
         if (f.boldFont != null) foreach (var e in t.FontBold) e.style.unityFont = f.boldFont;
         if (f.lightFont != null) foreach (var e in t.FontLight) e.style.unityFont = f.lightFont;
 
-        if (f.bodyFontSize != 18) foreach (var e in t.TextBase) e.style.fontSize = f.bodyFontSize;
-        if (f.boldFontSize != 30) foreach (var e in t.Text2XL) e.style.fontSize = f.boldFontSize;
-        if (f.tabFontSize != 15) foreach (var e in t.TextSM) e.style.fontSize = f.tabFontSize;
-        if (f.titleFontSize != 18) foreach (var e in t.TextTitle) e.style.fontSize = f.titleFontSize;
-        if (f.buttonFontSize != 16) foreach (var e in t.TextMD) e.style.fontSize = f.buttonFontSize;
-        if (f.smallFontSize != 10) foreach (var e in t.TextXS) e.style.fontSize = f.smallFontSize;
+        foreach (var e in t.TextBase) e.style.fontSize = f.bodyFontSize;
+        foreach (var e in t.Text2XL) e.style.fontSize = f.boldFontSize;
+        foreach (var e in t.TextSM) e.style.fontSize = f.tabFontSize;
+        foreach (var e in t.TextTitle) e.style.fontSize = f.titleFontSize;
+        foreach (var e in t.TextMD) e.style.fontSize = f.buttonFontSize;
+        foreach (var e in t.TextXS) e.style.fontSize = f.smallFontSize;
     }
 
-    private void ApplyColors(ColorGroup c)
+    private void ApplyColors(RuntimeColorGroup c)
     {
         if (c == null) return;
+
         var t = ui.Targets;
 
         foreach (var e in t.ColorPrimary) e.style.color = c.primaryText;
@@ -113,7 +118,6 @@ public class UIThemeApplicator
         SetBg(ui.ProductSectionRoot, c.panelCardBg);
         SetBg(ui.SpecsSectionRoot, c.panelCardBg);
         SetBg(ui.InspectSectionRoot, c.panelCardBg);
-        
 
         SetActionBg(ui.SpecsButton, c.actionButtonBg);
         SetActionBg(ui.InspectButton, c.actionButtonBg);
@@ -128,7 +132,7 @@ public class UIThemeApplicator
         if (ui.ProgressBarTrack != null) ui.ProgressBarTrack.style.backgroundColor = c.progressBarBg;
     }
 
-    private void ApplyImages(ImageGroup img)
+    private void ApplyImages(RuntimeImageGroup img)
     {
         if (img == null) return;
 
@@ -163,8 +167,8 @@ public class UIThemeApplicator
         SetImg(ui.DownloadPdfButton, img.iconDownload);
         SetImg(ui.InfoCloseBtn, img.iconClose);
 
-        SetImg(ui.SpecsButton, img.iconViewSpecsButton);
-        SetImg(ui.InspectDoneBtn, img.iconInspectButton);
+        SetImg(ui.SpecsBackNavButton, img.iconSpecsBackNavButton);
+        SetImg(ui.InspectBackNavButton, img.iconInspectBackNavButton);
     }
 
     private void ApplyLayoutVariants()
@@ -178,6 +182,7 @@ public class UIThemeApplicator
     private static void SetText(Button b, string v) { if (b != null) b.text = v; }
     private static void SetBg(VisualElement e, Color c) { if (e != null) e.style.backgroundColor = c; }
     private static void SetActionBg(Button b, Color c) { if (b != null) b.style.backgroundColor = c; }
+
     private static void SetImg(VisualElement e, Texture2D tex)
     {
         if (e != null && tex != null)

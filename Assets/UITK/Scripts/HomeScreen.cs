@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -36,36 +37,30 @@ public class HomeScreen : MonoBehaviour
     public VisualTreeAsset specRowChipsTemplate;
     public VisualTreeAsset inspectRowTemplate;
 
-    [Header("UI Themes")]
-    [SerializeField] private ConfiguratorUITheme desktopTheme;
-    [SerializeField] private ConfiguratorUITheme mobileTheme;
+    [Header("Theme Bootstrap")]
+    [SerializeField] private HomeScreenThemeBootstrap themeBootstrap;
 
     [Header("Video")]
     public float video_FOV;
     public float normal_FOV;
 
-    // Camera indices
     private const int CAM_SWOOP = 0;
     private const int CAM_START = 1;
     private const int CAM_PRODUCT_VIEW = 2;
     private const int CAM_VIDEO = 3;
     private const int FIRST_DYNAMIC_CAM = 4;
 
-    // State
     private bool userRotated = false;
     private bool uiHidden = false;
     private bool uiInitialized = false;
     private bool isMobileLayout = false;
 
-    // UI
     private VisualElement root;
     private HomeScreenUI ui;
 
-    // Products
     private ProductManager productManager;
     private Product currentProduct;
 
-    // Modules
     private ScreenNavigator nav;
     private VideoUIController videoUI;
     private SpecsUIController specsUI;
@@ -76,14 +71,13 @@ public class HomeScreen : MonoBehaviour
     private HomeSceneModeController sceneMode;
     private UIThemeApplicator themeApplicator;
 
-    // Theme
-    private ConfiguratorUITheme currentTheme;
+    private RuntimeThemeData currentTheme;
 
-    // Video
     private VideoPlayer videoPlayer;
     private Camera mainCam;
 
     private Dictionary<string, Action> actions;
+    private Coroutine uiInitRoutine;
 
     private enum NavMode { Home, Product, Video }
 
@@ -114,14 +108,50 @@ public class HomeScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        if (uiDocument == null) return;
+        if (uiInitRoutine != null)
+            StopCoroutine(uiInitRoutine);
+
+        uiInitRoutine = StartCoroutine(BootstrapUI());
+    }
+
+    private void OnDisable()
+    {
+        if (uiInitRoutine != null)
+        {
+            StopCoroutine(uiInitRoutine);
+            uiInitRoutine = null;
+        }
+
+        videoUI?.Unhook();
+    }
+
+    private IEnumerator BootstrapUI()
+    {
+        if (uiDocument == null) yield break;
+
         root = uiDocument.rootVisualElement;
-        if (root == null) return;
+        if (root == null) yield break;
 
         isMobileLayout = DeviceDetection.IsMobileActive;
         ui = new HomeScreenUI(root, isMobileLayout);
-        currentTheme = isMobileLayout ? mobileTheme : desktopTheme;
 
+        RuntimeThemeData loadedTheme = null;
+
+        if (themeBootstrap != null)
+        {
+            yield return StartCoroutine(themeBootstrap.LoadThemeForCurrentDevice(
+                isMobileLayout,
+                theme => loadedTheme = theme));
+        }
+
+        currentTheme = loadedTheme ?? RuntimeThemeData.CreateDefault(
+            themeBootstrap != null ? themeBootstrap.FontLibrary : null);
+
+        ApplyThemeAndBuildControllers();
+    }
+
+    private void ApplyThemeAndBuildControllers()
+    {
         themeApplicator = new UIThemeApplicator(ui, isMobileLayout);
         themeApplicator.Apply(currentTheme);
 
@@ -161,6 +191,11 @@ public class HomeScreen : MonoBehaviour
             ui.ResetViewButton, ui.InspectPrevButton, ui.InspectNextButton,
             currentTheme?.images?.iconFocus);
 
+        BindAndRefreshUI();
+    }
+
+    private void BindAndRefreshUI()
+    {
         if (!uiInitialized)
         {
             ui.BindButtons(actions);
@@ -182,11 +217,6 @@ public class HomeScreen : MonoBehaviour
 
         videoUI.Hook();
         SyncNavToVisibleScreen();
-    }
-
-    private void OnDisable()
-    {
-        videoUI?.Unhook();
     }
 
     private void BindWelcomeScreen()
@@ -214,49 +244,39 @@ public class HomeScreen : MonoBehaviour
         });
     }
 
-
     private void BuildActions()
     {
         actions = new Dictionary<string, Action>
         {
-            // Desktop SideNav
             [UINames.SideNav_Home] = GoHome,
             [UINames.SideNav_Product] = OpenProductRoot,
             [UINames.SideNav_Video] = OpenVideo,
 
-            // Desktop TopNav
             [UINames.TopNav_Product] = () => OpenProductPage(0),
             [UINames.TopNav_Specs] = () => OpenProductPage(1),
             [UINames.TopNav_Inspect] = () => OpenProductPage(2),
 
-            // Desktop Home buttons
             [UINames.Home_ProductTabBtn] = OpenProductRoot,
             [UINames.Home_VideoTabBtn] = OpenVideo,
 
-            // Desktop panel buttons
             [UINames.Products_NextBtn] = OpenNextFromProduct,
             [UINames.Specs_NextBtn] = OpenNextFromSpecs,
             [UINames.Specs_BackNavBtn] = () => OpenProductPage(0),
             [UINames.Inspect_BackNavBtn] = OpenPrevFromInspect,
             [UINames.Inspect_DoneBtn] = GoHome,
 
-            // Inspect controls
             [UINames.Inspect_ResetBtn] = () => inspectUI?.ResetView(),
             [UINames.Inspect_PrevBtn] = () => inspectUI?.InspectPrev(),
             [UINames.Inspect_NextBtn] = () => inspectUI?.InspectNext(),
 
-            // Utils
             [UINames.Utils_Hide] = ToggleUIVisibility,
             [UINames.Utils_Screenshot] = TakeScreenshot,
 
-            // Brochure
             [UINames.Specs_DownloadBtn] = DownloadPdf,
 
-            // Mobile TopNav
             [UINames.MobileTopNav_Home] = GoHome,
             [UINames.MobileTopNav_Video] = OpenVideo,
 
-            // Video controls
             [UINames.Video_PlayBtn] = () => videoUI?.Play(),
             [UINames.Video_PauseBtn] = () => videoUI?.Pause(),
             [UINames.Video_MuteBtn] = () => videoUI?.Mute(),
@@ -264,7 +284,6 @@ public class HomeScreen : MonoBehaviour
             [UINames.Video_ReplayBtn] = () => videoUI?.Replay(),
         };
     }
-
 
     private void SetActiveNav(NavMode mode)
     {
@@ -282,10 +301,8 @@ public class HomeScreen : MonoBehaviour
         foreach (var b in ui.SideNavProductBtns) SetNavIcon(b, mode == NavMode.Product);
         foreach (var b in ui.SideNavVideoBtns) SetNavIcon(b, mode == NavMode.Video);
 
-
         if (mode != NavMode.Product)
         {
-
             foreach (var b in ui.SpecsTabButtons)
             {
                 b.EnableInClassList(UINames.Class_TabActive, false);
@@ -304,7 +321,6 @@ public class HomeScreen : MonoBehaviour
         bool onProducts = ScreenNavigator.IsVisible(ui.ProductSelectionScreen);
         bool onSpecs = ScreenNavigator.IsVisible(ui.ProductSpecsScreen);
         bool onInspect = ScreenNavigator.IsVisible(ui.InspectProductScreen);
-
 
         root.Query<Button>(UINames.TopNav_Product).ForEach(b =>
         {
@@ -509,7 +525,6 @@ public class HomeScreen : MonoBehaviour
         sceneMode.RefreshRotationState();
     }
 
-
     private void RefreshProductDependentUI()
     {
         bool hasSpecs = HasSpecs(currentProduct);
@@ -534,7 +549,6 @@ public class HomeScreen : MonoBehaviour
             b.EnableInClassList(UINames.Class_TabDisabled, !hasInspect);
         }
 
-
         SetDisplay(ui.SpecsSectionRoot, hasSpecs);
         SetDisplay(ui.InspectSectionRoot, hasInspect);
         SetDisplay(ui.BrochureSectionRoot, hasBrochure);
@@ -549,10 +563,7 @@ public class HomeScreen : MonoBehaviour
         else ui.SpecsListContainer?.Clear();
 
         if (hasInspect) inspectUI?.Rebuild(currentProduct);
-        else
-        {
-            ui.InspectListContainer?.Clear();
-        }
+        else ui.InspectListContainer?.Clear();
 
         UpdateBrochureButtonState();
     }
@@ -562,7 +573,6 @@ public class HomeScreen : MonoBehaviour
         if (el != null)
             el.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
-
 
     private void SelectProduct(string id)
     {
