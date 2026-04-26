@@ -2,7 +2,7 @@
 
 ## Overview
 
-Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content.
+Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content. A loading screen with progress bar shows during boot, and an error panel with retry appears if the server is unreachable.
 
 ---
 
@@ -15,15 +15,15 @@ CMS Server (Node.js)
   icons/
   images/
         ↓  HTTP (UnityWebRequest)
-ThemeLoader         — fetches JSON + downloads all image assets
+ThemeLoader              — fetches JSON + downloads all image assets
         ↓
-RuntimeThemeData    — resolved Unity types (Color, Font, Texture2D)
+RuntimeThemeData         — resolved Unity types (Color, Font, Texture2D)
         ↓
-UIThemeApplicator   — writes to cached element refs
+UIThemeApplicator        — writes to cached element refs
         ↓
-HomeScreenUI        — caches all element refs at startup
+HomeScreenUI             — caches all element refs at startup
         ↓
-HomeScreen          — MonoBehaviour orchestrator
+HomeScreen               — MonoBehaviour orchestrator
 ```
 
 ---
@@ -167,9 +167,7 @@ Each theme file (`desktop-theme.json`, `mobile-theme.json`) follows this structu
 }
 ```
 
-Colors use `#RRGGBBAA` hex format. Image paths are server-relative (prefixed with the base URL at runtime). Font keys must match entries in the `ThemeFontLibrary` Inspector list.
-
-Leave any image field as an empty string `""` to skip loading that asset.
+Colors use `#RRGGBBAA` hex format. Image paths are server-relative (prefixed with the base URL at runtime). Font keys must match entries in the `ThemeFontLibrary` Inspector list. Leave any image field as `""` to skip loading that asset.
 
 ---
 
@@ -208,11 +206,16 @@ HomeScreen          (MonoBehaviour — orchestrates everything)
 
 ### Startup sequence
 
-1. `HomeScreen.OnEnable` creates `HomeScreenUI` — walks the visual tree once, caches all element references and builds `StyleTargets` lists
-2. `HomeScreenThemeBootstrap.LoadThemeForCurrentDevice` starts — fetches theme JSON, downloads all images, resolves fonts from `ThemeFontLibrary`
-3. On load complete, `UIThemeApplicator.Apply(RuntimeThemeData)` writes all theme values to cached refs with no further queries
-4. Remaining modules (`ScreenNavigator`, `VideoUIController`, etc.) are initialised with pre-cached refs
-5. Buttons are bound via the actions dictionary — all keys are `UINames` constants
+1. `HomeScreen.OnEnable` — creates `HomeScreenThemeController` and starts boot
+2. `HomeScreenThemeController.Bootstrap()` — shows loading screen with progress bar, fetches theme JSON and all images from the CMS server
+3. Boot always completes (success or failure) and calls `OnThemeReady` — this ensures the UITK input system is fully initialized on every path
+4. `OnThemeReady` runs `ApplyThemeAndBuildControllers()` — applies theme, builds all controllers, binds all buttons including the error panel retry button
+5. If theme loaded successfully → welcome screen is shown
+6. If theme failed → error panel is shown with a Retry button. Clicking Retry restarts from step 2.
+
+### Boot failure handling
+
+If the CMS server is unreachable or the theme JSON is invalid, the app shows an error panel with a Retry button. The full UI initialization always runs regardless of theme load result — this is intentional, as UITK's input system requires a complete initialization pass before buttons become clickable. The error panel button is bound through the same `BindButtons` path as all other UI buttons.
 
 ---
 
@@ -348,12 +351,14 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 | `ThemeData.cs` | Raw JSON-deserialisable data classes — `FontData`, `TextData`, `ColorData`, `ImageData` (hex strings and path strings) |
 | `RuntimeThemeData.cs` | Resolved theme data — `RuntimeFontGroup`, `RuntimeColorGroup`, `RuntimeImageGroup` holding Unity Color, Font, Texture2D |
 | `ThemeColorUtils.cs` | Static helper — parses `#RRGGBBAA` hex strings into Unity Color with fallback |
-| `ThemeLoader.cs` | MonoBehaviour — fetches theme JSON and downloads all image assets from the CMS server |
+| `ThemeLoader.cs` | MonoBehaviour — fetches theme JSON and downloads all image assets from the CMS server. Reports progress via callback for the loading bar |
+| `ThemeValidator.cs` | Validates parsed theme data before use |
 | `ThemeFontLibrary.cs` | MonoBehaviour — holds font assets keyed by string; looked up by key at runtime |
-| `HomeScreenThemeBootstrap.cs` | MonoBehaviour — selects desktop or mobile theme file, orchestrates the load, falls back to defaults |
-| `HomeScreenUI.cs` | Caches all element references at startup; builds StyleTargets in one tree walk |
-| `UIThemeApplicator.cs` | Applies `RuntimeThemeData` to cached refs — zero runtime queries |
-| `HomeScreen.cs` | MonoBehaviour orchestrator — navigation, product selection, theme init |
+| `HomeScreenThemeBootstrap.cs` | MonoBehaviour — selects desktop or mobile theme file and orchestrates the load |
+| `HomeScreenThemeController.cs` | Plain C# class — manages boot coroutine, loading screen, error panel, progress bar. Always calls onComplete regardless of success or failure so the UITK input system fully initializes on every path |
+| `HomeScreenUI.cs` | Caches all element references at startup including loading screen, error panel, and retry button; builds StyleTargets in one tree walk |
+| `UIThemeApplicator.cs` | Applies `RuntimeThemeData` to cached refs — zero runtime queries. Guards against null theme internally |
+| `HomeScreen.cs` | MonoBehaviour orchestrator — navigation, product selection, theme init. Always runs full ApplyThemeAndBuildControllers on both success and failure paths |
 | `HomeScreenDisplayFlow.cs` | Screen show/hide logic for desktop and mobile |
 | `HomeSceneModeController.cs` | Camera FOV, model rotation permission, decal visibility |
 | `ScreenNavigator.cs` | Shows/hides screens, tracks current screen |
@@ -385,7 +390,7 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 
 | File | Purpose |
 |---|---|
-| `0-Desktop-Instance.uxml` | Root desktop instance — assembles all desktop screens |
+| `0-Desktop-Instance.uxml` | Root desktop instance — assembles all desktop screens including loading screen and error panel |
 | `0-Mobile-Instance.uxml` | Root mobile instance — assembles all mobile screens |
 | `1-StartScreen_Desktop.uxml` | Desktop welcome screen |
 | `1-StartScreen_Mobile.uxml` | Mobile welcome screen |
@@ -405,6 +410,8 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 | `Shared_InspectFooter.uxml` | Prev/Next navigation row used by desktop and mobile inspect |
 | `Shared_ResetView.uxml` | Reset view button with icon and label |
 | `Shared_BrochureSection.uxml` | Download brochure row |
+| `LoadingPanel.uxml` | Loading screen template — progress bar shown during theme boot |
+| `ErrorPanel.uxml` | Error panel template — shown when theme fails to load, contains Retry button |
 | `inspectRow.uxml` | Dynamically instantiated inspect point row template |
 | `productButtonTemplate.uxml` | Dynamically instantiated product selection button |
 | `specRow_Text.uxml` | Spec row — text value |
@@ -416,7 +423,7 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 
 | File | Purpose |
 |---|---|
-| `Stylesheet.uss` | All USS styles — typography system, layout, structural classes |
+| `Stylesheet.uss` | All USS styles — typography system, layout, structural classes, loading and error panel styles |
 
 ---
 
@@ -430,7 +437,11 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 
 **`UIBlockerRaycast.uiDocument`** must be assigned in the Inspector and must reference the active UIDocument (desktop or mobile depending on current mode).
 
-**Theme loading is asynchronous.** There is a brief window on startup where the UI is visible but the theme has not yet been applied. In practice this is covered by the welcome screen. If the CMS server is unreachable, `RuntimeThemeData.CreateDefault()` is used as a fallback so the app never breaks.
+**UITK input system requires full initialization.** Buttons inside template instances only become clickable after the UITK panel has completed a full style and layout pass triggered by `UIThemeApplicator.Apply()` and `BindAndRefreshUI()`. For this reason `HomeScreenThemeController` always calls `OnThemeReady` regardless of whether the theme loaded or not, and `HomeScreen.OnThemeReady` always runs `ApplyThemeAndBuildControllers()` on both success and failure paths. The error panel retry button is bound through the same `BindButtons(actions)` path as all other UI buttons.
+
+**`ErrorPanel.uxml` must reference `Stylesheet.uss`** via a `<Style>` tag at the top of the file. Without this, USS classes do not apply and the panel may not render or receive input correctly.
+
+**Loading screen element names** — `LoadingScreen` is the instance wrapper in `0-Desktop-Instance.uxml`. `Loading_Bar_Fill` is the inner progress fill element queried from root. Both are cached in `HomeScreenUI` and driven by `HomeScreenThemeController`.
 
 ---
 
