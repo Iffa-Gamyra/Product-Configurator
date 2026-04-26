@@ -70,14 +70,13 @@ public class HomeScreen : MonoBehaviour
     private HomeScreenDisplayFlow displayFlow;
     private HomeSceneModeController sceneMode;
     private UIThemeApplicator themeApplicator;
-
+    private HomeScreenThemeController themeController;
     private RuntimeThemeData currentTheme;
 
     private VideoPlayer videoPlayer;
     private Camera mainCam;
 
     private Dictionary<string, Action> actions;
-    private Coroutine uiInitRoutine;
 
     private enum NavMode { Home, Product, Video }
 
@@ -99,58 +98,53 @@ public class HomeScreen : MonoBehaviour
     {
         if (string.IsNullOrEmpty(currentProductId))
             currentProductId = defaultProductId;
+    }
+
+    private void OnEnable()
+    {
+        themeController = new HomeScreenThemeController(
+            this,
+            uiDocument,
+            themeBootstrap);
+
+        themeController.StartBoot(OnThemeReady);
+    }
+
+    private void OnDisable()
+    {
+        themeController?.StopBoot();
+        videoUI?.Unhook();
+    }
+
+    private void OnThemeReady(
+    VisualElement builtRoot,
+    HomeScreenUI builtUI,
+    RuntimeThemeData theme,
+    bool mobileLayout)
+    {
+        root = builtRoot;
+        ui = builtUI;
+        currentTheme = theme;
+        isMobileLayout = mobileLayout;
+
+        // Always run full init - this is what activates the UITK input system
+        // UIThemeApplicator.Apply guards against null theme internally
+        ApplyThemeAndBuildControllers();
+
+        if (theme == null)
+        {
+            // Theme failed - full init ran so input system is active
+            // Error panel button is now bound and clickable
+            themeController?.ShowErrorPanel(themeController?.LastError);
+            return;
+        }
 
         if (!ProductExists(currentProductId))
             currentProductId = GetFirstProductIdOrDefault(currentProductId);
 
         SelectProduct(currentProductId);
+        nav.ShowInitial(ui.WelcomeScreen);
     }
-
-    private void OnEnable()
-    {
-        if (uiInitRoutine != null)
-            StopCoroutine(uiInitRoutine);
-
-        uiInitRoutine = StartCoroutine(BootstrapUI());
-    }
-
-    private void OnDisable()
-    {
-        if (uiInitRoutine != null)
-        {
-            StopCoroutine(uiInitRoutine);
-            uiInitRoutine = null;
-        }
-
-        videoUI?.Unhook();
-    }
-
-    private IEnumerator BootstrapUI()
-    {
-        if (uiDocument == null) yield break;
-
-        root = uiDocument.rootVisualElement;
-        if (root == null) yield break;
-
-        isMobileLayout = DeviceDetection.IsMobileActive;
-        ui = new HomeScreenUI(root, isMobileLayout);
-
-        RuntimeThemeData loadedTheme = null;
-
-        if (themeBootstrap != null)
-        {
-            yield return StartCoroutine(themeBootstrap.LoadThemeForCurrentDevice(
-                isMobileLayout,
-                theme => loadedTheme = theme));
-        }
-
-        currentTheme = loadedTheme ??
-                       RuntimeThemeData.CreateDefault(
-                           themeBootstrap != null ? themeBootstrap.FontLibrary : null);
-
-        ApplyThemeAndBuildControllers();
-    }
-
     private void ApplyThemeAndBuildControllers()
     {
         themeApplicator = new UIThemeApplicator(ui, isMobileLayout);
@@ -283,6 +277,9 @@ public class HomeScreen : MonoBehaviour
             [UINames.Video_MuteBtn] = () => videoUI?.Mute(),
             [UINames.Video_UnmuteBtn] = () => videoUI?.Unmute(),
             [UINames.Video_ReplayBtn] = () => videoUI?.Replay(),
+
+            [UINames.Error_Panel_Retry] = () => themeController?.Retry(),
+
         };
     }
 
@@ -577,6 +574,9 @@ public class HomeScreen : MonoBehaviour
 
     private void SelectProduct(string id)
     {
+        if (ui == null || productSelectionUI == null)
+            return;
+
         if (currentProductId == id && currentProduct != null)
         {
             productSelectionUI?.UpdateSelected(currentProductId, currentProduct);

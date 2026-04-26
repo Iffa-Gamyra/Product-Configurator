@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
+    <ui:VisualElement name="Error_Panel_Root" class="error-panel-root">
+        <ui:VisualElement name="Error_Panel_Card" class="error-panel-card">
+            <ui:VisualElement name="Error_Panel_Header">
+                <ui:Label text="ERROR" name="Error_Panel_Title_Label" class="error-panel-title"/>
+            </ui:VisualElement>
+            <ui:Label text="" name="Error_Panel_Body_Label" class="error-panel-body"/>
+            <ui:VisualElement name="Error_Panel_Footer">
+                <ui:Button text="RETRY" name="Error_Panel_Retry_Button" class="error-panel-retry-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

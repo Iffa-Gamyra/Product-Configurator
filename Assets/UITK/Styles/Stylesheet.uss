@@ -453,8 +453,6 @@
     padding-top: 20px;
 }
 
-
-
 .desktop-products-list {
     flex-grow: 0;
     align-items: stretch;
@@ -1474,4 +1472,83 @@
     align-self: center;
     max-width: 420px;
     flex-shrink: 0;
+}
+
+.instance-error-panel {
+    flex-grow: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+}
+
+.error-panel-root {
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+}
+
+.error-panel-card {
+    background-color: rgb(28, 28, 28);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    min-width: 350px;
+    max-width: 520px;
+    align-items: center;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.04);
+    border-right-color: rgba(255, 255, 255, 0.04);
+    border-top-color: rgba(255, 255, 255, 0.04);
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+    padding-top: 36px;
+    padding-bottom: 36px;
+    padding-right: 48px;
+    padding-left: 48px;
+}
+
+.error-panel-title {
+    color: rgb(255, 4, 4);
+    -unity-font-style: bold;
+    font-size: 36px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+.error-panel-body {
+    color: rgb(253, 192, 72);
+    white-space: normal;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.error-panel-retry-button {
+    color: rgb(27, 165, 0);
+    -unity-font-style: bold;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-right: 32px;
+    padding-left: 32px;
+    letter-spacing: 1px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
 }

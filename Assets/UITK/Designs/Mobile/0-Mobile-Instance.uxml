@@ -5,7 +5,7 @@
     <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/Shared_InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#Shared_InfoPanel"/>
     <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement name="Mobile_Root" class="mobile-root">
-        <ui:Instance template="1-StartScreen_Mobile" name="Screen_Welcome_Root" class="instance-screen instance-screen--visible"/>
+        <ui:Instance template="1-StartScreen_Mobile" name="Screen_Welcome_Root" class="instance-screen"/>
         <ui:Instance template="2-HomeScreen_Mobile" name="Screen_Home_Root" class="instance-screen"/>
         <ui:Instance template="3-VideoScreen_Mobile" name="Screen_Video_Root" class="instance-screen"/>
         <ui:Instance template="Shared_InfoPanel" name="Overlay_Info_Root" class="instance-overlay"/>

@@ -1,5 +1,13 @@
 public static class UINames
 {
+    public const string Loading_Panel_Root = "LoadingPanel";
+    public const string Loading_Bar_Fill = "Loading_Bar_Fill";
+    public const string Error_Panel_Root = "Error_Panel_Root";
+    public const string Error_Panel_Body = "Error_Panel_Body_Label";
+    public const string Error_Panel_Retry = "Error_Panel_Retry_Button";
+
+    public const string LoadingScreen = "LoadingScreen";
+    public const string ErrorScreen = "ErrorScreen";
     public const string Screen_Welcome = "Screen_Welcome_Root";
     public const string Screen_Home = "Screen_Home_Root";
     public const string Screen_Video = "Screen_Video_Root";

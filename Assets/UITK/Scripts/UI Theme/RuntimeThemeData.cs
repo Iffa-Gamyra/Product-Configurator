@@ -8,50 +8,51 @@ public class RuntimeThemeData
     public RuntimeColorGroup colors = new();
     public RuntimeImageGroup images = new();
 
-    public static RuntimeThemeData CreateDefault(ThemeFontLibrary fontLibrary = null)
-    {
-        return CreateFromJson(new ThemeData(), fontLibrary);
-    }
-
     public static RuntimeThemeData CreateFromJson(ThemeData src, ThemeFontLibrary fontLibrary)
     {
-        src ??= new ThemeData();
-
         return new RuntimeThemeData
         {
-            text = src.text ?? new TextData(),
+            text = src.text,
+
             fonts = new RuntimeFontGroup
             {
-                bodyFont = fontLibrary != null ? fontLibrary.GetFont(src.fonts?.bodyFontKey) : null,
-                boldFont = fontLibrary != null ? fontLibrary.GetFont(src.fonts?.boldFontKey) : null,
-                lightFont = fontLibrary != null ? fontLibrary.GetFont(src.fonts?.lightFontKey) : null,
-                bodyFontSize = src.fonts?.bodyFontSize ?? 18,
-                boldFontSize = src.fonts?.boldFontSize ?? 30,
-                tabFontSize = src.fonts?.tabFontSize ?? 15,
-                titleFontSize = src.fonts?.titleFontSize ?? 18,
-                buttonFontSize = src.fonts?.buttonFontSize ?? 16,
-                smallFontSize = src.fonts?.smallFontSize ?? 10
+                bodyFont = fontLibrary.GetFont(src.fonts.bodyFontKey),
+                boldFont = fontLibrary.GetFont(src.fonts.boldFontKey),
+                lightFont = fontLibrary.GetFont(src.fonts.lightFontKey),
+
+                bodyFontSize = src.fonts.bodyFontSize,
+                boldFontSize = src.fonts.boldFontSize,
+                tabFontSize = src.fonts.tabFontSize,
+                titleFontSize = src.fonts.titleFontSize,
+                buttonFontSize = src.fonts.buttonFontSize,
+                smallFontSize = src.fonts.smallFontSize
             },
+
             colors = new RuntimeColorGroup
             {
-                accentPrimary = ThemeColorUtils.Parse(src.colors?.accentPrimary, new Color(0.992f, 0.749f, 0.282f, 1f)),
-                brandLogoColor = ThemeColorUtils.Parse(src.colors?.brandLogoColor, new Color(0.859f, 0.859f, 0.859f, 1f)),
-                accentSecondary = ThemeColorUtils.Parse(src.colors?.accentSecondary, new Color(0.459f, 0.663f, 0.929f, 1f)),
-                primaryText = ThemeColorUtils.Parse(src.colors?.primaryText, Color.white),
-                secondaryText = ThemeColorUtils.Parse(src.colors?.secondaryText, new Color(0.471f, 0.471f, 0.471f, 1f)),
-                actionButtonText = ThemeColorUtils.Parse(src.colors?.actionButtonText, new Color(0.012f, 0.137f, 0.114f, 1f)),
-                welcomeBg = ThemeColorUtils.Parse(src.colors?.welcomeBg, new Color(0f, 0f, 0f, 0.99f)),
-                topNavBg = ThemeColorUtils.Parse(src.colors?.topNavBg, new Color(0.114f, 0.114f, 0.114f, 1f)),
-                panelCardBg = ThemeColorUtils.Parse(src.colors?.panelCardBg, new Color(0.102f, 0.102f, 0.102f, 0.9f)),
-                overlayBackdropBg = ThemeColorUtils.Parse(src.colors?.overlayBackdropBg, new Color(0f, 0f, 0f, 0.47f)),
-                infoCardBg = ThemeColorUtils.Parse(src.colors?.infoCardBg, new Color(0.118f, 0.118f, 0.118f, 0.53f)),
-                actionButtonBg = ThemeColorUtils.Parse(src.colors?.actionButtonBg, new Color(0.906f, 0.906f, 0.906f, 1f)),
-                navIconActiveBg = ThemeColorUtils.Parse(src.colors?.navIconActiveBg, new Color(0.922f, 0.498f, 0f, 0.63f)),
-                navIconInactiveBg = ThemeColorUtils.Parse(src.colors?.navIconInactiveBg, new Color(0.153f, 0.149f, 0.149f, 0.51f)),
-                dividerColor = ThemeColorUtils.Parse(src.colors?.dividerColor, new Color(0.820f, 0.820f, 0.820f, 1f)),
-                progressBarFill = ThemeColorUtils.Parse(src.colors?.progressBarFill, new Color(0.384f, 0.690f, 0.973f, 1f)),
-                progressBarBg = ThemeColorUtils.Parse(src.colors?.progressBarBg, new Color(0.392f, 0.392f, 0.392f, 0.78f))
+                accentPrimary = ThemeColorUtils.Parse(src.colors.accentPrimary, Color.white),
+                brandLogoColor = ThemeColorUtils.Parse(src.colors.brandLogoColor, Color.white),
+                accentSecondary = ThemeColorUtils.Parse(src.colors.accentSecondary, Color.white),
+
+                primaryText = ThemeColorUtils.Parse(src.colors.primaryText, Color.white),
+                secondaryText = ThemeColorUtils.Parse(src.colors.secondaryText, Color.gray),
+                actionButtonText = ThemeColorUtils.Parse(src.colors.actionButtonText, Color.black),
+
+                welcomeBg = ThemeColorUtils.Parse(src.colors.welcomeBg, Color.black),
+                topNavBg = ThemeColorUtils.Parse(src.colors.topNavBg, Color.black),
+                panelCardBg = ThemeColorUtils.Parse(src.colors.panelCardBg, Color.black),
+                overlayBackdropBg = ThemeColorUtils.Parse(src.colors.overlayBackdropBg, Color.black),
+                infoCardBg = ThemeColorUtils.Parse(src.colors.infoCardBg, Color.black),
+
+                actionButtonBg = ThemeColorUtils.Parse(src.colors.actionButtonBg, Color.white),
+                navIconActiveBg = ThemeColorUtils.Parse(src.colors.navIconActiveBg, Color.white),
+                navIconInactiveBg = ThemeColorUtils.Parse(src.colors.navIconInactiveBg, Color.gray),
+
+                dividerColor = ThemeColorUtils.Parse(src.colors.dividerColor, Color.gray),
+                progressBarFill = ThemeColorUtils.Parse(src.colors.progressBarFill, Color.white),
+                progressBarBg = ThemeColorUtils.Parse(src.colors.progressBarBg, Color.gray)
             },
+
             images = new RuntimeImageGroup()
         };
     }
@@ -64,12 +65,12 @@ public class RuntimeFontGroup
     public Font boldFont;
     public Font lightFont;
 
-    public int bodyFontSize = 18;
-    public int boldFontSize = 30;
-    public int tabFontSize = 15;
-    public int titleFontSize = 18;
-    public int buttonFontSize = 16;
-    public int smallFontSize = 10;
+    public int bodyFontSize;
+    public int boldFontSize;
+    public int tabFontSize;
+    public int titleFontSize;
+    public int buttonFontSize;
+    public int smallFontSize;
 }
 
 [System.Serializable]

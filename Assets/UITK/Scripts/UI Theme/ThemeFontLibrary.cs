@@ -36,4 +36,11 @@ public class ThemeFontLibrary : MonoBehaviour
         fontMap.TryGetValue(key, out var font);
         return font;
     }
+
+    public bool HasFont(string key)
+    {
+        return !string.IsNullOrWhiteSpace(key)
+               && fontMap != null
+               && fontMap.ContainsKey(key);
+    }
 }

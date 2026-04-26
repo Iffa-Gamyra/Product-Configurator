@@ -14,50 +14,41 @@ public class HomeScreenThemeBootstrap : MonoBehaviour
     public IEnumerator LoadThemeForCurrentDevice(
         bool isMobileLayout,
         Action<RuntimeThemeData> onSuccess,
-        Action<string> onError = null)
+        Action<string> onError = null,
+        Action<float> onProgress = null)
     {
+        if (themeLoader == null)
+        {
+            onError?.Invoke("ThemeLoader is not assigned.");
+            yield break;
+        }
+
+        if (themeFontLibrary == null)
+        {
+            onError?.Invoke("ThemeFontLibrary is not assigned.");
+            yield break;
+        }
+
         string themeFile = isMobileLayout ? mobileThemeFile : desktopThemeFile;
 
         RuntimeThemeData loadedTheme = null;
         string loadError = null;
 
-        // Coroutine yield must stay outside try/catch
-        if (themeLoader != null)
+        yield return StartCoroutine(themeLoader.LoadTheme(
+            themeFile,
+            themeFontLibrary,
+            theme => loadedTheme = theme,
+            error => loadError = error,
+            onProgress));
+
+        if (loadedTheme == null)
         {
-            yield return StartCoroutine(themeLoader.LoadTheme(
-                themeFile,
-                themeFontLibrary,
-                theme => loadedTheme = theme,
-                error => loadError = error));
+            onError?.Invoke(string.IsNullOrWhiteSpace(loadError)
+                ? $"Could not load theme: {themeFile}"
+                : loadError);
+            yield break;
         }
 
-        RuntimeThemeData finalTheme = null;
-
-        try
-        {
-            if (loadedTheme != null)
-            {
-                finalTheme = loadedTheme;
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(loadError))
-                {
-                    Debug.LogWarning(loadError);
-                    onError?.Invoke(loadError);
-                }
-
-                finalTheme = RuntimeThemeData.CreateDefault(themeFontLibrary);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"Theme fallback failed. Using emergency defaults.\n{ex}");
-            onError?.Invoke(ex.Message);
-
-            finalTheme = new RuntimeThemeData();
-        }
-
-        onSuccess?.Invoke(finalTheme);
+        onSuccess?.Invoke(loadedTheme);
     }
 }

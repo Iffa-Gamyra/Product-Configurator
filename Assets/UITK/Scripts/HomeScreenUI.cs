@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
@@ -14,6 +15,16 @@ public class HomeScreenUI
     public VisualElement InfoOverlay { get; }
     public VisualElement BottomPanel { get; }
 
+    // Loading screen
+    public VisualElement LoadingScreen { get; }
+
+    // Error panel
+    public VisualElement ErrorScreen { get; }
+    public Label ErrorBodyLabel { get; }
+    public Button ErrorRetryButton { get; }
+    public VisualElement LoadingBarFill { get; }
+
+    // Error panel
     public Label WelcomeTitleLabel { get; }
     public Label WelcomeDescLabel { get; }
     public Button WelcomeStartBtn { get; }
@@ -88,7 +99,6 @@ public class HomeScreenUI
     public VisualElement ProgressBarTrack { get; private set; }
 
     public StyleTargets Targets { get; private set; }
-
     public List<VisualElement> AllScreens { get; }
 
     private readonly bool isMobileLayout;
@@ -98,6 +108,16 @@ public class HomeScreenUI
         Root = root;
         this.isMobileLayout = isMobileLayout;
 
+        // Loading screen wrapper controlled for show/hide
+        LoadingScreen = root.Q<VisualElement>(UINames.LoadingScreen);
+        LoadingBarFill = root.Q<VisualElement>(UINames.Loading_Bar_Fill);
+
+        // Error panel ErrorScreen is the instance wrapper
+        ErrorScreen = root.Q<VisualElement>(UINames.ErrorScreen);
+        ErrorBodyLabel = root.Q<Label>(UINames.Error_Panel_Body);
+        ErrorRetryButton = root.Q<Button>(UINames.Error_Panel_Retry);
+
+        // Screens
         WelcomeScreen = root.Q<VisualElement>(UINames.Screen_Welcome);
         HomeScreen = root.Q<VisualElement>(UINames.Screen_Home);
         VideoScreen = root.Q<VisualElement>(UINames.Screen_Video);
@@ -106,6 +126,7 @@ public class HomeScreenUI
         InspectProductScreen = root.Q<VisualElement>(UINames.Screen_Inspect);
         InfoOverlay = root.Q<VisualElement>(UINames.Overlay_Info);
         BottomPanel = root.Q<VisualElement>(UINames.Home_BottomPanel);
+
 
         WelcomeTitleLabel = root.Q<Label>(UINames.Welcome_Title);
         WelcomeDescLabel = root.Q<Label>(UINames.Welcome_Description);
@@ -136,6 +157,8 @@ public class HomeScreenUI
             ResetViewButton.style.display = DisplayStyle.None;
         if (InfoOverlay != null)
             InfoOverlay.style.display = DisplayStyle.None;
+        if (ErrorScreen != null)
+            ErrorScreen.style.display = DisplayStyle.None;
 
         Targets = new StyleTargets(root);
         AllScreens = BuildScreenList();
@@ -144,7 +167,6 @@ public class HomeScreenUI
     private void BindMobile()
     {
         ProductsContainer = HomeScreen?.Q<VisualElement>(UINames.Mobile_ProductsList);
-
         SpecsListContainer = HomeScreen?.Q<VisualElement>(UINames.Mobile_SpecsContainer);
         DownloadPdfButton = HomeScreen?.Q<Button>(UINames.Specs_DownloadBtn);
         SpecsDownloadLabel = HomeScreen?.Q<Label>(UINames.Specs_DownloadLabel);
@@ -169,68 +191,26 @@ public class HomeScreenUI
         TopNavContainers = new List<VisualElement>(0);
         BannerLabels = new List<Label>(0);
         RightContainers = new List<VisualElement>(0);
-
-        ProductSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_ProductsSection);
-        SpecsSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_SpecsSection);
-        InspectSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_InspectSection);
-        BrochureSectionRoot = HomeScreen?.Q<VisualElement>(UINames.Mobile_BrochureSection);
-
-        InspectListContainer = HomeScreen?.Q<VisualElement>(UINames.Mobile_InspectContainer);
-        ResetViewButton = HomeScreen?.Q<Button>(UINames.Inspect_ResetBtn);
-        InspectResetIcon = HomeScreen?.Q<Label>(UINames.Inspect_ResetIcon);
-        InspectResetLabel = HomeScreen?.Q<Label>(UINames.Inspect_ResetLabel);
-        InspectPrevButton = HomeScreen?.Q<Button>(UINames.Inspect_PrevBtn);
-        InspectPrevLabel = HomeScreen?.Q<Label>(UINames.Inspect_PrevLabel);
-        InspectNextButton = HomeScreen?.Q<Button>(UINames.Inspect_NextBtn);
-        InspectNextLabel = HomeScreen?.Q<Label>(UINames.Inspect_NextLabel);
-        SelectedProductInInspectScreen = HomeScreen?.Q<Label>(UINames.Mobile_SelectedProduct);
-
-        SpecsTitleLabel = HomeScreen?.Q<Label>(UINames.Specs_Title);
-        InspectTitleLabel = HomeScreen?.Q<Label>(UINames.Inspect_Title);
-        InspectBackNavLabel = HomeScreen?.Q<Label>(UINames.Inspect_BackNavLabel);
-        SpecsBackNavLabel = HomeScreen?.Q<Label>(UINames.Specs_BackNavLabel);
-
-        UtilsLogoLabel = HomeScreen?.Q<Label>(UINames.Utils_Logo);
-        UtilsHideBtn = HomeScreen?.Q<Button>(UINames.Utils_Hide);
-        UtilsScreenshotBtn = HomeScreen?.Q<Button>(UINames.Utils_Screenshot);
-        HomeLogoLabel = HomeScreen?.Q<Label>(UINames.Home_LogoLabel);
-        HomeProductTabBtn = HomeScreen?.Q<Button>(UINames.Home_ProductTabBtn);
-        HomeVideoTabBtn = HomeScreen?.Q<Button>(UINames.Home_VideoTabBtn);
-
-        SideNavHomeBtns = new List<Button>(0);
-        SideNavProductBtns = new List<Button>(0);
-        SideNavVideoBtns = new List<Button>(0);
-        SideNavInfoBtns = new List<Button>();
-        Root.Query<Button>(UINames.SideNav_Info).ForEach(b => SideNavInfoBtns.Add(b));
     }
 
     private void BindDesktop()
     {
-        
-        ProductsContainer = ProductSelectionScreen?.Q<VisualElement>(UINames.Products_List);
-
-        SpecsListContainer = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_Container);
-        DownloadPdfButton = ProductSpecsScreen?.Q<Button>(UINames.Specs_DownloadBtn);
-        SpecsDownloadLabel = ProductSpecsScreen?.Q<Label>(UINames.Specs_DownloadLabel);
-        SelectedProductInSpecScreen = ProductSpecsScreen?.Q<Label>(UINames.Specs_SelectedLabel);
-
-        SpecsButton = ProductSelectionScreen?.Q<Button>(UINames.Products_NextBtn);
-        InspectButton = ProductSpecsScreen?.Q<Button>(UINames.Specs_NextBtn);
+        SpecsButton = Root.Q<Button>(UINames.Specs_NextBtn);
+        InspectButton = ProductSelectionScreen?.Q<Button>(UINames.Products_NextBtn);
         InspectDoneBtn = InspectProductScreen?.Q<Button>(UINames.Inspect_DoneBtn);
 
-        SpecsTabButtons = new List<Button>(3);
-        InspectTabButtons = new List<Button>(3);
-        var productScreens = new[] { ProductSelectionScreen, ProductSpecsScreen, InspectProductScreen };
-        foreach (var screen in productScreens)
-        {
-            if (screen == null) continue;
-            var s = screen.Q<Button>(UINames.TopNav_Specs);
-            var ins = screen.Q<Button>(UINames.TopNav_Inspect);
-            if (s != null) SpecsTabButtons.Add(s);
-            if (ins != null) InspectTabButtons.Add(ins);
-        }
+        SpecsTabButtons = new List<Button>();
+        InspectTabButtons = new List<Button>();
+        Root.Query<Button>(UINames.TopNav_Specs).ForEach(b => SpecsTabButtons.Add(b));
+        Root.Query<Button>(UINames.TopNav_Inspect).ForEach(b => InspectTabButtons.Add(b));
 
-        TopNavContainers = new List<VisualElement>(3);
+        ProductsContainer = Root.Q<VisualElement>(UINames.Products_List);
+        SpecsListContainer = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_Container);
+        SelectedProductInSpecScreen = ProductSpecsScreen?.Q<Label>(UINames.Specs_SelectedLabel);
+        DownloadPdfButton = ProductSpecsScreen?.Q<Button>(UINames.Specs_DownloadBtn);
+        SpecsDownloadLabel = ProductSpecsScreen?.Q<Label>(UINames.Specs_DownloadLabel);
+
+        TopNavContainers = new List<VisualElement>();
         var tnProd = Root.Q<VisualElement>(UINames.TopNav_ProductContainer);
         var tnSpec = Root.Q<VisualElement>(UINames.TopNav_SpecsContainer);
         var tnInsp = Root.Q<VisualElement>(UINames.TopNav_InspectContainer);
@@ -319,6 +299,8 @@ public class HomeScreenUI
         BindIn(ProductSpecsScreen, actions);
         BindIn(InspectProductScreen, actions);
         BindIn(InfoOverlay, actions);
+        BindIn(ErrorScreen, actions);
+
     }
 
     private static void BindIn(
@@ -349,6 +331,10 @@ public class HomeScreenUI
             InfoCloseBtn.clicked += toggle;
         }
     }
+
+
+
+
 
     public class StyleTargets
     {

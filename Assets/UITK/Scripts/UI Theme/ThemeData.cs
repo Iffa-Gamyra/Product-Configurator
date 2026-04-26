@@ -27,72 +27,64 @@ public class FontData
 [Serializable]
 public class TextData
 {
-    public string brandLogoText = "GAMYRA";
+    public string brandLogoText;
 
-    public string welcomeDescription =
-        "This is an early version of our virtual showroom, where you can " +
-        "explore and interact with our products.\n" +
-        "For the full experience, please use a desktop computer.";
+    public string welcomeDescription;
 
-    public string startButtonText = "CLICK HERE TO START";
+    public string startButtonText;
 
-    public string homeTabProduct = "CHOOSE PRODUCT";
-    public string homeTabVideo = "VIDEOS";
+    public string homeTabProduct;
+    public string homeTabVideo;
 
-    public string mobileTabProducts = "PRODUCTS";
-    public string mobileTabVideo = "VIDEO";
+    public string mobileTabProducts;
+    public string mobileTabVideo;
 
-    public string topTabProduct = "CHOOSE PRODUCT";
-    public string topTabSpecs = "SPECS";
-    public string topTabInspect = "INSPECT";
+    public string topTabProduct;
+    public string topTabSpecs;
+    public string topTabInspect;
 
-    public string specsSectionTitle = "SPECS";
-    public string inspectSectionTitle = "INSPECT";
+    public string specsSectionTitle;
+    public string inspectSectionTitle;
 
-    public string viewSpecsButton = "NEXT";
-    public string inspectButton = "NEXT";
-    public string doneButton = "DONE";
-    public string backNavLabel = "BACK";
+    public string viewSpecsButton;
+    public string inspectButton;
+    public string doneButton;
+    public string backNavLabel;
 
-    public string resetViewLabel = "RESET VIEW";
-    public string prevNavLabel = "VIEW PREV";
-    public string nextNavLabel = "VIEW NEXT";
+    public string resetViewLabel;
+    public string prevNavLabel;
+    public string nextNavLabel;
 
-    public string downloadBrochureLabel = "DOWNLOAD BROCHURE";
+    public string downloadBrochureLabel;
 
-    public string infoOverlayTitle = "INFO";
-    public string infoOverlayBody =
-        "Mouse drag: Rotate model\n\n" +
-        "Scroll: Zoom in or out\n\n" +
-        "Inspect: Zoom into parts\n\n" +
-        "Specs: View details\n\n" +
-        "Replay: Restart video";
+    public string infoOverlayTitle;
+    public string infoOverlayBody;
 }
 
 [Serializable]
 public class ColorData
 {
-    public string accentPrimary = "#FDBF48";
-    public string brandLogoColor = "#DBDBDB";
-    public string accentSecondary = "#75A9ED";
+    public string accentPrimary;
+    public string brandLogoColor;
+    public string accentSecondary;
 
-    public string primaryText = "#FFFFFF";
-    public string secondaryText = "#787878";
-    public string actionButtonText = "#03231D";
+    public string primaryText;
+    public string secondaryText;
+    public string actionButtonText;
 
-    public string welcomeBg = "#000000FC";
-    public string topNavBg = "#1D1D1D";
-    public string panelCardBg = "#1A1A1AE6";
-    public string overlayBackdropBg = "#00000078";
-    public string infoCardBg = "#1E1E1E87";
+    public string welcomeBg;
+    public string topNavBg;
+    public string panelCardBg;
+    public string overlayBackdropBg;
+    public string infoCardBg;
 
-    public string actionButtonBg = "#E7E7E7";
-    public string navIconActiveBg = "#EB7F00A1";
-    public string navIconInactiveBg = "#27262682";
+    public string actionButtonBg;
+    public string navIconActiveBg;
+    public string navIconInactiveBg;
 
-    public string dividerColor = "#D1D1D1";
-    public string progressBarFill = "#62B0F8";
-    public string progressBarBg = "#646464C7";
+    public string dividerColor;
+    public string progressBarFill;
+    public string progressBarBg;
 }
 
 [Serializable]

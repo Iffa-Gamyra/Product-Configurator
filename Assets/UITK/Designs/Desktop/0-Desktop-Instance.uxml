@@ -3,17 +3,21 @@
     <ui:Template name="4-ProductSpecs_Desktop" src="project://database/Assets/UITK/Designs/Desktop/4-ProductSpecs_Desktop.uxml?fileID=9197481963319205126&amp;guid=cfcecaae1120dda49aa254630527a670&amp;type=3#4-ProductSpecs_Desktop"/>
     <ui:Template name="5-InspectProduct_Desktop" src="project://database/Assets/UITK/Designs/Desktop/5-InspectProduct_Desktop.uxml?fileID=9197481963319205126&amp;guid=ad505e81e607943489537de2f48090cd&amp;type=3#5-InspectProduct_Desktop"/>
     <ui:Template name="6-VideoScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/6-VideoScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=eb46023afb95fc646b8613cf3a2e1eaa&amp;type=3#6-VideoScreen_Desktop"/>
+    <ui:Template name="ErrorPanel" src="project://database/Assets/UITK/Designs/Templates/ErrorPanel.uxml?fileID=9197481963319205126&amp;guid=5886f9cffd771fe4a8157d6deaeaeb77&amp;type=3#ErrorPanel"/>
     <ui:Template name="HomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/2-HomeScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=5ec45ee19065b4f68956f27d714ec31f&amp;type=3#2-HomeScreen_Desktop"/>
-    <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/Shared_InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#Shared_InfoPanel"/>
+    <ui:Template name="LoadingPanel" src="project://database/Assets/UITK/Designs/Templates/LoadingPanel.uxml?fileID=9197481963319205126&amp;guid=74ae4d07a89a9a648a90018121d43ff7&amp;type=3#LoadingPanel"/>
+    <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#InfoPanel"/>
     <ui:Template name="WelcomeScreen_Desktop" src="project://database/Assets/UITK/Designs/Desktop/1-StartScreen_Desktop.uxml?fileID=9197481963319205126&amp;guid=30f79524e826b40d8aef65921449c98f&amp;type=3#1-StartScreen_Desktop"/>
     <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement name="Desktop_Root" class="desktop-screen-root">
-        <ui:Instance template="WelcomeScreen_Desktop" name="Screen_Welcome_Root" class="instance-screen instance-screen--visible"/>
+        <ui:Instance template="LoadingPanel" name="LoadingScreen" class="instance-screen instance-screen--visible"/>
+        <ui:Instance template="WelcomeScreen_Desktop" name="Screen_Welcome_Root" class="instance-screen"/>
         <ui:Instance template="HomeScreen_Desktop" name="Screen_Home_Root" class="instance-screen"/>
         <ui:Instance template="6-VideoScreen_Desktop" name="Screen_Video_Root" class="instance-screen"/>
         <ui:Instance template="3-ProductSelection_Desktop" name="Screen_ProductSelection_Root" class="instance-screen"/>
         <ui:Instance template="4-ProductSpecs_Desktop" name="Screen_ProductSpecs_Root" class="instance-screen"/>
         <ui:Instance template="5-InspectProduct_Desktop" name="Screen_InspectProduct_Root" class="instance-screen"/>
         <ui:Instance template="Shared_InfoPanel" name="Overlay_Info_Root" class="instance-overlay"/>
+        <ui:Instance template="ErrorPanel" name="ErrorScreen" class="instance-error-panel"/>
     </ui:VisualElement>
 </ui:UXML>
