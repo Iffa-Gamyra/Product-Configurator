@@ -2,7 +2,7 @@
 
 ## Overview
 
-Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content. A loading screen with progress bar shows during boot, and an error panel with retry appears if the server is unreachable. The external CMS server can be found at this repo: `https://github.com/Iffa-Gamyra/Product-Configurator-CMS.git`
+Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content. A loading screen with progress bar shows during boot, and an error panel with retry appears if the server is unreachable. The CMS can be found in the following repo - `https://github.com/Iffa-Gamyra/Product-Configurator-CMS/`
 
 ---
 
@@ -25,6 +25,17 @@ HomeScreenUI             — caches all element refs at startup
         ↓
 HomeScreen               — MonoBehaviour orchestrator
 ```
+
+---
+
+## CMS Server
+
+Theme data, colors, text, fonts and icons are served at runtime from a separate CMS server. See the [CMS repository](#) for setup instructions, theme JSON reference, and endpoint documentation.
+
+To point Unity at a different server, update the `Cms Base Url` field on the `ThemeLoader` component in the Inspector:
+
+- **Local development:** `http://localhost:3000`
+- **Production:** `https://your-domain.com`
 
 ---
 
@@ -80,97 +91,6 @@ Configure `fadeInDuration`, `fadeOutDuration`, `scaleUpDuration`, `scaleDownDura
 
 ---
 
-## CMS Server
-
-A lightweight Node.js/Express server that serves theme JSON and static assets. Unity fetches all theme data from this server at runtime.
-
-### Setup
-
-```bash
-cd server
-npm install
-npm run dev     # development with auto-restart
-npm start       # production
-```
-
-Server runs at `http://localhost:3000` by default.
-
-### Folder Structure
-
-```
-server/
-  server.js
-  package.json
-  themes/
-    desktop-theme.json
-    mobile-theme.json
-  icons/
-    home.png
-    product.png
-    ...
-  images/
-    start-button.png
-    home-tab-bg.png
-    ...
-```
-
-### Endpoints
-
-| Method | Route | Purpose |
-|---|---|---|
-| `GET` | `/themes/desktop-theme.json` | Unity fetches desktop theme on startup |
-| `GET` | `/themes/mobile-theme.json` | Unity fetches mobile theme on startup |
-| `GET` | `/icons/:filename` | Serves icon images |
-| `GET` | `/images/:filename` | Serves background images |
-| `POST` | `/themes/:filename` | CMS saves edited theme JSON to disk |
-| `POST` | `/upload/icons` | Uploads an image to `icons/` |
-| `POST` | `/upload/images` | Uploads an image to `images/` |
-
-### Changing the server URL in Unity
-
-Update the `Cms Base Url` field on the `ThemeLoader` component in the Inspector. For production, point this to your live server URL.
-
----
-
-## Theme JSON Structure
-
-Each theme file (`desktop-theme.json`, `mobile-theme.json`) follows this structure:
-
-```json
-{
-  "fonts": {
-    "bodyFontKey":  "body",
-    "boldFontKey":  "bold",
-    "lightFontKey": "light",
-    "bodyFontSize": 18,
-    "boldFontSize": 30,
-    "tabFontSize":  15,
-    "titleFontSize": 18,
-    "buttonFontSize": 16,
-    "smallFontSize": 10
-  },
-  "text": {
-    "brandLogoText": "GAMYRA",
-    "startButtonText": "CLICK HERE TO START",
-    ...
-  },
-  "colors": {
-    "accentPrimary": "#FDC048FF",
-    "primaryText":   "#FFFFFFFF",
-    ...
-  },
-  "images": {
-    "iconHome":    "/icons/home.png",
-    "startButtonBackground": "/images/start-button.png",
-    ...
-  }
-}
-```
-
-Colors use `#RRGGBBAA` hex format. Image paths are server-relative (prefixed with the base URL at runtime). Font keys must match entries in the `ThemeFontLibrary` Inspector list. Leave any image field as `""` to skip loading that asset.
-
----
-
 ## Adding a Product
 
 1. Right-click in the Project panel → Create → Product Configurator → Product
@@ -216,76 +136,6 @@ HomeScreen          (MonoBehaviour — orchestrates everything)
 ### Boot failure handling
 
 If the CMS server is unreachable or the theme JSON is invalid, the app shows an error panel with a Retry button. The full UI initialization always runs regardless of theme load result — this is intentional, as UITK's input system requires a complete initialization pass before buttons become clickable. The error panel button is bound through the same `BindButtons` path as all other UI buttons.
-
----
-
-## Customising the Theme
-
-Edit `themes/desktop-theme.json` or `themes/mobile-theme.json` in the CMS server folder. No Unity rebuild required — restart the server and hit Play (or reload the WebGL build).
-
-### FontData
-
-| Field | Controls | Default |
-|---|---|---|
-| `bodyFontKey` | Key for body font in ThemeFontLibrary | — |
-| `boldFontKey` | Key for bold/logo font | — |
-| `lightFontKey` | Key for light font | — |
-| `bodyFontSize` | Body text size | 18px |
-| `boldFontSize` | Logo text size | 30px |
-| `tabFontSize` | Tab button text size | 15px |
-| `titleFontSize` | Panel section title size | 18px |
-| `buttonFontSize` | Action button text size | 16px |
-| `smallFontSize` | Reset view label size | 10px |
-
-Font assets must be assigned in the `ThemeFontLibrary` Inspector list. The JSON keys link to those assets by name.
-
-### TextData
-
-Every visible string in the UI — welcome screen text, tab labels, button labels, section titles, navigation labels, info overlay body text.
-
-### ColorData
-
-| Field | Controls |
-|---|---|
-| `accentPrimary` | Active tab color, active nav icon background |
-| `brandLogoColor` | Logo labels, welcome title |
-| `primaryText` | All body labels |
-| `secondaryText` | Inactive tabs, separators |
-| `actionButtonText` | Text on NEXT / DONE buttons |
-| `welcomeBg` | Welcome screen background |
-| `topNavBg` | Desktop and mobile top nav bar background |
-| `panelCardBg` | Desktop and mobile panel card/section background |
-| `overlayBackdropBg` | Info overlay backdrop |
-| `infoCardBg` | Info overlay card background |
-| `actionButtonBg` | NEXT / DONE button background |
-| `navIconActiveBg` | Active side nav icon background |
-| `navIconInactiveBg` | Inactive side nav icon background |
-| `dividerColor` | Horizontal dividers throughout panels |
-| `progressBarFill` | Video progress bar fill color |
-| `progressBarBg` | Video progress bar track color |
-
-`accentSecondary` is defined but has no runtime effect — it is used only in USS hover/active pseudo-class states which cannot be overridden at runtime.
-
-### ImageData
-
-| Field | Element |
-|---|---|
-| `startButtonBackground` | Welcome screen start button background |
-| `homeTabButtonBackground` | Home screen large tab buttons |
-| `topTabActiveBanner` | Active banner diagonal label |
-| `iconHome/Product/Video/Info` | Side nav circle icons (desktop) and info button (mobile) |
-| `iconSpecsBackNavButton` | Back nav ghost button on Specs screen |
-| `iconInspectBackNavButton` | Back nav ghost button on Inspect screen |
-| `iconHide` | Hide UI utility button |
-| `iconScreenshot` | Screenshot utility button |
-| `iconFocus` | Inspect row focus buttons |
-| `iconResetView` | Reset view icon label |
-| `iconPrevNav / iconNextNav` | Prev / Next nav ghost buttons |
-| `iconPlay/Pause/Mute/Unmute/Replay` | Video control buttons |
-| `iconDownload` | Brochure download button |
-| `iconClose` | Info overlay close button |
-
-Leave any field as `""` to use the USS default.
 
 ---
 
@@ -377,15 +227,6 @@ On mobile the three product sections (Products, Specs, Inspect) all live inside 
 | `ScreenshotHandler.cs` | Captures screen and sends to browser via JS interop |
 | `WebGLDownloadManager.cs` | Constructs PDF URL and triggers browser download via JS interop |
 
-### CMS Server Files
-
-| File | Purpose |
-|---|---|
-| `server.js` | Express server — static file serving, theme save endpoint, image upload |
-| `package.json` | Node.js dependencies — express, cors, multer |
-| `themes/desktop-theme.json` | Desktop theme — all colors, text, font keys, image paths |
-| `themes/mobile-theme.json` | Mobile theme — same structure, mobile-specific text variants |
-
 ### UXML Files
 
 | File | Purpose |
@@ -460,4 +301,4 @@ PDF brochure files must be accessible at `WebGLDownloadManager.pdfBaseUrl + "/" 
 
 Mobile detection on WebGL uses a screen width threshold of 900px. Adjust `DeviceDetection.DetectMobile` if a different breakpoint is needed.
 
-For production, update `ThemeLoader.cmsBaseUrl` in the Inspector to point to your live server. The server runs identically in production — swap `localhost:3000` for your domain.
+For production, update `ThemeLoader.cmsBaseUrl` in the Inspector to point to your live server.
