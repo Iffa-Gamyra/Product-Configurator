@@ -2,7 +2,7 @@
 
 ## Overview
 
-Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content. A loading screen with progress bar shows during boot, and an error panel with retry appears if the server is unreachable.
+Unity WebGL product configurator built entirely with Unity UI Toolkit (UITK). Supports desktop and mobile layouts from a single codebase, switching at runtime based on screen width. All UI text, colors, fonts, and icons are driven at runtime from JSON files served by an external CMS server — no Unity rebuild required to change branding or content. A loading screen with progress bar shows during boot, and an error panel with retry appears if the server is unreachable. The external CMS server can be found at this repo: `https://github.com/Iffa-Gamyra/Product-Configurator-CMS.git`
 
 ---
 
@@ -139,9 +139,9 @@ Each theme file (`desktop-theme.json`, `mobile-theme.json`) follows this structu
 ```json
 {
   "fonts": {
-    "bodyFontKey":  "archivo-regular",
-    "boldFontKey":  "archivo-bold",
-    "lightFontKey": "archivo-light",
+    "bodyFontKey":  "body",
+    "boldFontKey":  "bold",
+    "lightFontKey": "light",
     "bodyFontSize": 18,
     "boldFontSize": 30,
     "tabFontSize":  15,
@@ -273,7 +273,7 @@ Every visible string in the UI — welcome screen text, tab labels, button label
 | `startButtonBackground` | Welcome screen start button background |
 | `homeTabButtonBackground` | Home screen large tab buttons |
 | `topTabActiveBanner` | Active banner diagonal label |
-| `iconHome/Product/Video/Info` | Side nav circle icons |
+| `iconHome/Product/Video/Info` | Side nav circle icons (desktop) and info button (mobile) |
 | `iconSpecsBackNavButton` | Back nav ghost button on Specs screen |
 | `iconInspectBackNavButton` | Back nav ghost button on Inspect screen |
 | `iconHide` | Hide UI utility button |
