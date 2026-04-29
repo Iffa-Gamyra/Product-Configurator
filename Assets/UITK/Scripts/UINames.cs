@@ -41,6 +41,7 @@ public static class UINames
     public const string MobileTopNav_Home = "HomeTab_Button";
     public const string MobileTopNav_Video = "VideoTab_Button";
     public const string MobileTopNav_Container = "Shared_TopNav_Container";
+    public const string MobileInfoOverlay_Button = "InfoOverlay_Button";
 
     public const string Utils_Hide = "Utils_Hide_Button";
     public const string Utils_Screenshot = "Utils_Screenshot_Button";

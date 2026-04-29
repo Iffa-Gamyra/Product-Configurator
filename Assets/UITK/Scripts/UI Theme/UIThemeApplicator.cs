@@ -144,6 +144,7 @@ public class UIThemeApplicator
         foreach (var b in ui.SideNavProductBtns) SetImg(b, img.iconProduct);
         foreach (var b in ui.SideNavVideoBtns) SetImg(b, img.iconVideo);
         foreach (var b in ui.SideNavInfoBtns) SetImg(b, img.iconInfo);
+        foreach (var b in ui.MobileInfoBtns) SetImg(b, img.iconInfo);
 
         if (img.topTabActiveBanner != null)
         {

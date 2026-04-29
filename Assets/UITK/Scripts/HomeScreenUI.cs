@@ -15,16 +15,13 @@ public class HomeScreenUI
     public VisualElement InfoOverlay { get; }
     public VisualElement BottomPanel { get; }
 
-    // Loading screen
     public VisualElement LoadingScreen { get; }
 
-    // Error panel
     public VisualElement ErrorScreen { get; }
     public Label ErrorBodyLabel { get; }
     public Button ErrorRetryButton { get; }
     public VisualElement LoadingBarFill { get; }
 
-    // Error panel
     public Label WelcomeTitleLabel { get; }
     public Label WelcomeDescLabel { get; }
     public Button WelcomeStartBtn { get; }
@@ -38,6 +35,7 @@ public class HomeScreenUI
     public List<Button> SideNavVideoBtns { get; private set; }
     public List<Button> SideNavInfoBtns { get; private set; }
 
+    public List<Button> MobileInfoBtns { get; private set; }
     public List<Button> MobileHomeTabBtns { get; private set; }
     public List<Button> MobileVideoTabBtns { get; private set; }
 
@@ -181,8 +179,10 @@ public class HomeScreenUI
 
         MobileHomeTabBtns = new List<Button>();
         MobileVideoTabBtns = new List<Button>();
+        MobileInfoBtns = new List<Button>();
         Root.Query<Button>(UINames.MobileTopNav_Home).ForEach(b => MobileHomeTabBtns.Add(b));
         Root.Query<Button>(UINames.MobileTopNav_Video).ForEach(b => MobileVideoTabBtns.Add(b));
+        Root.Query<Button>(UINames.MobileInfoOverlay_Button).ForEach(b => MobileInfoBtns.Add(b));
 
         MobileNavContainers = new List<VisualElement>();
         Root.Query<VisualElement>(UINames.MobileTopNav_Container)
@@ -191,6 +191,11 @@ public class HomeScreenUI
         TopNavContainers = new List<VisualElement>(0);
         BannerLabels = new List<Label>(0);
         RightContainers = new List<VisualElement>(0);
+
+        SideNavHomeBtns = new List<Button>(0);
+        SideNavProductBtns = new List<Button>(0);
+        SideNavVideoBtns = new List<Button>(0);
+        SideNavInfoBtns = new List<Button>(0);
     }
 
     private void BindDesktop()
@@ -229,6 +234,7 @@ public class HomeScreenUI
         MobileNavContainers = new List<VisualElement>(0);
         MobileHomeTabBtns = new List<Button>(0);
         MobileVideoTabBtns = new List<Button>(0);
+        MobileInfoBtns = new List<Button>(0);
 
         ProductSectionRoot = ProductSelectionScreen?.Q<VisualElement>(UINames.Products_PanelCard);
         SpecsSectionRoot = ProductSpecsScreen?.Q<VisualElement>(UINames.Specs_PanelCard);
@@ -325,15 +331,17 @@ public class HomeScreenUI
             b.clicked -= toggle;
             b.clicked += toggle;
         }
+        foreach (var b in MobileInfoBtns ?? new List<Button>(0))
+        {
+            b.clicked -= toggle;
+            b.clicked += toggle;
+        }
         if (InfoCloseBtn != null)
         {
             InfoCloseBtn.clicked -= toggle;
             InfoCloseBtn.clicked += toggle;
         }
     }
-
-
-
 
 
     public class StyleTargets

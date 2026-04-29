@@ -611,7 +611,7 @@
     height: auto;
     overflow: visible;
     position: relative;
-    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=5923138177525885446&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-left");
+    background-image: url("project://database/Assets/UITK/Images/arrow-left.png?fileID=2800000&guid=3f5218435b997f4429f7d6fad83e8569&type=3#arrow-left");
 }
 
 .panel-ghost-button-flipped {
@@ -631,7 +631,7 @@
     height: auto;
     overflow: visible;
     position: relative;
-    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-4521532143779581420&guid=dd7d7e0bc642a87409308441424d2d7b&type=3#arrow-right");
+    background-image: url("project://database/Assets/UITK/Images/arrow-right.png?fileID=2800000&guid=147203640f47e4f44b8c31bd6bf07386&type=3#arrow-right");
 }
 
 .panel-backnav-label {

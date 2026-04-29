@@ -2,12 +2,16 @@
     <ui:Template name="1-StartScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/1-StartScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=8b1d4ef2344a9451a8e8dabe85fe2192&amp;type=3#1-StartScreen_Mobile"/>
     <ui:Template name="2-HomeScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/2-HomeScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=e430740d7bdaef149b19749fa6b3d0f0&amp;type=3#2-HomeScreen_Mobile"/>
     <ui:Template name="3-VideoScreen_Mobile" src="project://database/Assets/UITK/Designs/Mobile/3-VideoScreen_Mobile.uxml?fileID=9197481963319205126&amp;guid=42cf63b1e6354cd4e916313128458c51&amp;type=3#3-VideoScreen_Mobile"/>
-    <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/Shared_InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#Shared_InfoPanel"/>
+    <ui:Template name="ErrorPanel" src="project://database/Assets/UITK/Designs/Templates/ErrorPanel.uxml?fileID=9197481963319205126&amp;guid=5886f9cffd771fe4a8157d6deaeaeb77&amp;type=3#ErrorPanel"/>
+    <ui:Template name="LoadingPanel" src="project://database/Assets/UITK/Designs/Templates/LoadingPanel.uxml?fileID=9197481963319205126&amp;guid=74ae4d07a89a9a648a90018121d43ff7&amp;type=3#LoadingPanel"/>
+    <ui:Template name="Shared_InfoPanel" src="project://database/Assets/UITK/Designs/Templates/InfoPanel.uxml?fileID=9197481963319205126&amp;guid=b78628b1b7a2dd74189254fabbc471b9&amp;type=3#InfoPanel"/>
     <Style src="project://database/Assets/UITK/Styles/Stylesheet.uss?fileID=7433441132597879392&amp;guid=ee4d659a18a0745b9b77368112ca47bc&amp;type=3#Stylesheet"/>
     <ui:VisualElement name="Mobile_Root" class="mobile-root">
+        <ui:Instance template="LoadingPanel" name="LoadingScreen" class="instance-screen instance-screen--visible"/>
         <ui:Instance template="1-StartScreen_Mobile" name="Screen_Welcome_Root" class="instance-screen"/>
         <ui:Instance template="2-HomeScreen_Mobile" name="Screen_Home_Root" class="instance-screen"/>
         <ui:Instance template="3-VideoScreen_Mobile" name="Screen_Video_Root" class="instance-screen"/>
         <ui:Instance template="Shared_InfoPanel" name="Overlay_Info_Root" class="instance-overlay"/>
+        <ui:Instance template="ErrorPanel" name="ErrorScreen" class="instance-error-panel"/>
     </ui:VisualElement>
 </ui:UXML>
